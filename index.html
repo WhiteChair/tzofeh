@@ -1113,46 +1113,43 @@ function energyBlock(e,country){
 /* ══════════════════════ ENERGY PIE (pure SVG) ══════════════════════ */
 function renderEnergyDonut(cid, mix){
   const el = document.getElementById('energy-pie-' + cid);
-  if(!el) return;
-  if(el.dataset.rendered) return; // already drawn
+  if(!el || el.dataset.rendered) return;
   el.dataset.rendered = '1';
 
   const entries = Object.entries(mix).filter(([,v]) => v > 0);
   const total   = entries.reduce((s,[,v]) => s+v, 0);
 
-  const W=260, H=180, cx=100, cy=90, R=78, ri=42;
-  let angle = -Math.PI/2; // start from top
-  let slices = '';
+  // ── Legend: plain HTML flex-wrap rows above the chart ──
+  const legendHTML = '<div style="display:flex;flex-wrap:wrap;gap:5px 14px;margin-bottom:10px">'
+    + entries.map(([key, val]) => {
+        const pct = Math.round(val/total*100);
+        const col = ENERGY_COLORS[key] || '#999';
+        return `<span style="display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${col};flex-shrink:0"></span>${key} ${pct}%</span>`;
+      }).join('')
+    + '</div>';
 
+  // ── Pie: centred SVG, full width ──
+  const W = 200, H = 200, cx = 100, cy = 100, R = 90, ri = 50;
+  let angle = -Math.PI / 2;
+  let slices = '';
   entries.forEach(([key, val]) => {
-    const sweep = (val/total) * 2 * Math.PI;
-    const x1 = cx + R*Math.cos(angle),         y1 = cy + R*Math.sin(angle);
-    const x2 = cx + R*Math.cos(angle+sweep),   y2 = cy + R*Math.sin(angle+sweep);
-    const ix1= cx + ri*Math.cos(angle),         iy1= cy + ri*Math.sin(angle);
-    const ix2= cx + ri*Math.cos(angle+sweep),   iy2= cy + ri*Math.sin(angle+sweep);
+    const sweep = (val / total) * 2 * Math.PI;
+    const x1  = cx + R  * Math.cos(angle),          y1  = cy + R  * Math.sin(angle);
+    const x2  = cx + R  * Math.cos(angle + sweep),  y2  = cy + R  * Math.sin(angle + sweep);
+    const ix1 = cx + ri * Math.cos(angle),           iy1 = cy + ri * Math.sin(angle);
+    const ix2 = cx + ri * Math.cos(angle + sweep),   iy2 = cy + ri * Math.sin(angle + sweep);
     const large = sweep > Math.PI ? 1 : 0;
     const col = ENERGY_COLORS[key] || '#999';
-    const pct = Math.round(val/total*100);
+    const pct = Math.round(val / total * 100);
     slices += `<path d="M${ix1.toFixed(1)},${iy1.toFixed(1)} L${x1.toFixed(1)},${y1.toFixed(1)} A${R},${R} 0 ${large},1 ${x2.toFixed(1)},${y2.toFixed(1)} L${ix2.toFixed(1)},${iy2.toFixed(1)} A${ri},${ri} 0 ${large},0 ${ix1.toFixed(1)},${iy1.toFixed(1)} Z"
-      fill="${col}" stroke="var(--surf)" stroke-width="1.5">
-      <title>${key}: ${pct}%</title></path>`;
+      fill="${col}" stroke="var(--surf)" stroke-width="1.5"><title>${key}: ${pct}%</title></path>`;
     angle += sweep;
   });
+  const pieHTML = `<svg viewBox="0 0 ${W} ${H}" style="display:block;width:180px;height:180px;margin:0 auto">${slices}</svg>`;
 
-  // Legend — right side
-  let legend = '';
-  entries.forEach(([key, val], i) => {
-    const pct = Math.round(val/total*100);
-    const col = ENERGY_COLORS[key] || '#999';
-    const y = 20 + i*18;
-    if(y > H-10) return;
-    legend += `<rect x="168" y="${y-7}" width="9" height="9" rx="2" fill="${col}"/>
-      <text x="182" y="${y+1}" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--mu)">${key} ${pct}%</text>`;
-  });
-
-  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-height:180px;overflow:visible">${slices}${legend}</svg>`;
+  el.innerHTML = legendHTML + pieHTML;
 }
-
 
 /* ══════════════════════ TICKER ══════════════════════ */
 function buildTicker(){
