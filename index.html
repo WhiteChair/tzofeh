@@ -2032,26 +2032,16 @@ function injectUSAExtras(){
   });
   leadersHTML += `</tbody></table>`;
 
-  // White House X feed card — direct link (embeds blocked by X CSP)
+  // White House live news feed card
   const xCard = `<div class="card" style="margin-bottom:16px">
     <div class="card-hdr">
-      <span class="card-title">Official White House Feeds</span>
+      <span class="card-title">White House — Latest Statements</span>
+      <span class="live-badge" id="wh-feed-badge">LOADING</span>
+      <a href="https://www.whitehouse.gov/news/" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--acc);text-decoration:none;margin-left:auto">whitehouse.gov ↗</a>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <a href="https://x.com/WhiteHouse" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surf2);border:1px solid var(--bd);border-left:3px solid #000;text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderLeftColor='var(--acc)'" onmouseout="this.style.borderLeftColor='#000'">
-        <span style="font-size:16px">𝕏</span>
-        <div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--tx)">@WhiteHouse</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px">Official White House X account ↗</div></div>
-      </a>
-      <a href="https://x.com/POTUS" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surf2);border:1px solid var(--bd);border-left:3px solid #B02020;text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderLeftColor='var(--acc)'" onmouseout="this.style.borderLeftColor='#B02020'">
-        <span style="font-size:16px">𝕏</span>
-        <div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--tx)">@POTUS</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px">Presidential account — Donald J. Trump ↗</div></div>
-      </a>
-      <a href="https://www.whitehouse.gov/news/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surf2);border:1px solid var(--bd);border-left:3px solid var(--bl);text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderLeftColor='var(--acc)'" onmouseout="this.style.borderLeftColor='var(--bl)'">
-        <span style="font-size:16px">🌐</span>
-        <div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--tx)">whitehouse.gov/news</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px">Official press releases & statements ↗</div></div>
-      </a>
+    <div id="wh-feed" style="display:flex;flex-direction:column;gap:1px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu);padding:8px 0">Fetching latest statements…</div>
     </div>
-    <div style="margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">X embeds blocked by platform CSP — direct links provided</div>
   </div>`;
 
   // Inject congressional leaders card after the parliament card
@@ -2117,6 +2107,36 @@ function switchTab(id){
 }
 
 /* ══════════════════════ INIT ══════════════════════ */
+
+/* ══════════════════════ WHITE HOUSE FEED ══════════════════════ */
+async function fetchWHFeed(){
+  const el    = document.getElementById('wh-feed');
+  const badge = document.getElementById('wh-feed-badge');
+  if(!el) return;
+  try {
+    const apiBase = window.location.hostname==='localhost'||window.location.protocol==='file:'
+      ? 'https://tzofeh.vercel.app' : '';
+    const r = await fetch(apiBase + '/api/news');
+    const data = await r.json();
+    if(!data.ok || !data.items?.length) throw new Error(data.error||'no items');
+
+    el.innerHTML = data.items.map(item => {
+      const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '';
+      const cat  = item.category ? `<span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;background:var(--info-bg);color:var(--bl);border:1px solid var(--info-bd);border-radius:2px;padding:1px 5px">${item.category}</span>` : '';
+      return `<a href="${item.link}" target="_blank" style="display:block;padding:9px 10px;border-bottom:1px solid var(--bd);text-decoration:none;transition:background .12s" onmouseover="this.style.background='var(--surf2)'" onmouseout="this.style.background='transparent'">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">${cat}<span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa);margin-left:auto">${date}</span></div>
+        <div style="font-size:12px;font-weight:600;color:var(--tx);line-height:1.45">${item.title}</div>
+        ${item.desc ? `<div style="font-size:10px;color:var(--mu);margin-top:3px;line-height:1.5">${item.desc}…</div>` : ''}
+      </a>`;
+    }).join('');
+
+    if(badge){ badge.className='live-badge'; badge.textContent='LIVE'; }
+  } catch(e){
+    if(el) el.innerHTML = `<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu);padding:8px 0">Could not load feed — <a href="https://www.whitehouse.gov/news/" target="_blank" style="color:var(--acc)">view on whitehouse.gov ↗</a></div>`;
+    if(badge){ badge.className='static-badge'; badge.textContent='ERROR'; }
+  }
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   // Restore saved theme
   if(localStorage.getItem('tzofeh-theme')==='dark'){
@@ -2131,6 +2151,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderEU();
   buildTicker();
   injectUSAExtras();
+  fetchWHFeed();
 
   // Init all charts (render all panels briefly for DOM presence)
   document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='block');
