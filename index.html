@@ -1449,8 +1449,8 @@ function renderCountry(cid){
             ${d.fx.note?`<div style="font-size:9px;color:var(--fa);margin-top:2px">${d.fx.note}</div>`:''}
           </div>
           <div class="ma-row" id="ma-${cid}">
-            <div class="ma-pill"><span class="ma-lbl">50d MA</span><span id="ma50-${cid}">—</span></div>
-            <div class="ma-pill"><span class="ma-lbl">200d MA</span><span id="ma200-${cid}">—</span></div>
+            <div class="ma-pill"><span class="ma-lbl">1d chg</span><span id="ma50-${cid}">—</span></div>
+            <div class="ma-pill"><span class="ma-lbl">vs 50d</span><span id="ma200-${cid}">—</span></div>
           </div>
           <div style="border-top:1px solid var(--bd);padding-top:10px;margin-top:10px">
             <div class="kpi-lbl">vs German Bund (10Y)</div>
@@ -1458,6 +1458,38 @@ function renderCountry(cid){
           </div>
         </div>
       </div>
+
+      <!-- CARRY TRADE (Japan only) -->
+      ${cid==='japan'?`<div class="card" style="border-left:3px solid var(--or);background:var(--surf)">
+        <div class="card-hdr"><span class="card-title">⚠ Yen Carry Trade — Market Risk</span><span class="badge bo">Active Concern</span></div>
+        <div style="font-size:12px;line-height:1.75;color:var(--tx);margin-bottom:14px">
+          <strong>What is the carry trade?</strong> Investors borrow yen at near-zero interest rates and invest the proceeds in higher-yielding assets — US Treasuries, equities, EM bonds — pocketing the rate differential. With BoJ rates anchored at 0–0.1% for years and US rates at 5%+, the JPY carry trade became one of the most crowded positions in global finance, estimated at <strong style="color:var(--or)">$4 trillion+</strong> in notional exposure.
+        </div>
+        <div style="font-size:12px;line-height:1.75;color:var(--tx);margin-bottom:14px">
+          <strong>Why does the <em>speed</em> of BoJ rate changes matter?</strong> The carry trade is not unwound by rate levels — it is unwound by <em>surprise</em>. When the BoJ raises rates faster than markets expect, the JPY appreciates sharply. Carry traders face a double loss: their yen-denominated borrowing cost rises <em>and</em> the JPY leg of their position moves against them. Forced liquidations cascade across asset classes — the unwind of August 2024, when the BoJ hiked unexpectedly, triggered a <strong style="color:var(--rd)">12% single-day Nikkei crash</strong> and a global equity sell-off, briefly the largest single-day point loss in Nikkei history.
+        </div>
+        <div style="background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:4px;padding:10px 12px;margin-bottom:12px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:var(--or);letter-spacing:.1em;margin-bottom:5px">BESSENT WARNING — US TREASURY SECRETARY</div>
+          <div style="font-size:11px;line-height:1.65;color:var(--tx)">Scott Bessent has publicly flagged BoJ policy normalisation as a key macro risk. His concern is not that Japan raises rates per se — it is the <strong>pace relative to market pricing</strong>. An abrupt BoJ move forces simultaneous deleveraging across carry positions, amplifying volatility in US Treasuries (a primary carry destination), tightening financial conditions at precisely the moment the US fiscal position is most stretched. Bessent has indicated the US Treasury is actively monitoring JPY volatility as a systemic risk indicator.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div style="background:var(--surf2);border:1px solid var(--bd);border-radius:4px;padding:8px 10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px">Est. Carry Exposure</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;color:var(--or)">$4T+</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">Notional, est.</div>
+          </div>
+          <div style="background:var(--surf2);border:1px solid var(--bd);border-radius:4px;padding:8px 10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px">Aug 2024 Unwind</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;color:var(--rd)">−12%</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">Nikkei, single day</div>
+          </div>
+          <div style="background:var(--surf2);border:1px solid var(--bd);border-radius:4px;padding:8px 10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px">BoJ Rate (2024→)</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;color:var(--rd)">0→0.5%</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">First hikes in 17 yrs</div>
+          </div>
+        </div>
+      </div>`:''}
 
       <!-- YIELDS -->
       <div class="card">
@@ -1880,8 +1912,18 @@ function updateFXDisplay(cid, { current, change, ma50, ma200, decimals }) {
     const col = change > 0 ? 'var(--or)' : 'var(--green)';
     chgEl.innerHTML = `<span style="color:${col}">${change >= 0 ? '+' : ''}${change.toFixed(decimals)}</span>&nbsp;<span style="color:var(--mu)">1d</span>`;
   }
-  if (ma50El)  ma50El.textContent  = fmt(ma50);
-  if (ma200El) ma200El.textContent = fmt(ma200);
+  // 1d % change
+  if (ma50El && current != null && change != null) {
+    const pct1d = (change / (current - change)) * 100;
+    const col1d = change > 0 ? 'var(--or)' : 'var(--green)';
+    ma50El.innerHTML = `<span style="color:${col1d};font-weight:600">${pct1d >= 0 ? '+' : ''}${pct1d.toFixed(2)}%</span>`;
+  }
+  // % vs 50d MA (trend deviation)
+  if (ma200El && current != null && ma50 != null) {
+    const pctMa = ((current - ma50) / ma50) * 100;
+    const colMa = pctMa > 0 ? 'var(--or)' : 'var(--green)';
+    ma200El.innerHTML = `<span style="color:${colMa};font-weight:600">${pctMa >= 0 ? '+' : ''}${pctMa.toFixed(2)}%</span>`;
+  }
   if (mxEl && current != null) {
     mxEl.innerHTML = `<strong style="font-family:'IBM Plex Mono',monospace">${fmt(current)}</strong><br>`
       + `<span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">${pair}</span>`
