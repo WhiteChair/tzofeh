@@ -1106,7 +1106,6 @@ function energyBlock(e,country){
     <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-bottom:6px">Historical mix breakdown</div>
     <canvas id="energy-donut-${countryId}" height="200"></canvas>
   </div>`;
-  setTimeout(() => renderEnergyDonut(countryId, e.mix), 80);
   return html;
 }
 
@@ -2154,9 +2153,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     Object.keys(C).forEach(cid=>{initYieldChart(cid,C[cid].yields);initPopChart(cid,C[cid].population.pyramid);});
     initYieldChart('china',CHINA.yields);
     initPopChart('china',CHINA.population.pyramid);
-    // Energy donuts
-    Object.keys(C).forEach(cid=>{ if(C[cid].energy?.mix) renderEnergyDonut(cid,C[cid].energy.mix); });
-    if(CHINA.energy?.mix) renderEnergyDonut('china',CHINA.energy.mix);
+    // Energy donuts — IDs must match countryId derived in energyBlock (country.toLowerCase().replace non-alpha)
+    const energyIdMap={usa:'usa',france:'fra',uk:'gbr',germany:'deu',japan:'jpn'};
+    Object.keys(C).forEach(cid=>{ if(C[cid].energy?.mix) renderEnergyDonut(energyIdMap[cid]||cid,C[cid].energy.mix); });
+    if(CHINA.energy?.mix) renderEnergyDonut('chn',CHINA.energy.mix);
 
     // Apply dark theme to charts if needed
     if(document.body.classList.contains('dark')) applyChartTheme(true);
