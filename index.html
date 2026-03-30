@@ -1075,7 +1075,7 @@ function energyBlock(e,country){
     `<div class="energy-price"><div class="energy-price-lbl">Gas Price</div><div class="energy-price-val">${e.gasPrice} <span style="font-size:10px;color:var(--mu)">${e.gasUnit}</span></div></div>`:
     `<div class="energy-price"><div class="energy-price-lbl">Gas</div><div style="font-size:11px;color:var(--mu)">Import dependent</div></div>`;
 
-  return`
+  const html=`
   <div class="card-hdr"><span class="card-title">Electricity Generation Mix</span><span class="static-badge">IEA / OWID 2023</span></div>
   <div class="energy-legend">${legend}</div>
   <div class="energy-bar">${segs}</div>
@@ -1106,8 +1106,8 @@ function energyBlock(e,country){
     <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-bottom:6px">Historical mix breakdown</div>
     <canvas id="energy-donut-${countryId}" height="200"></canvas>
   </div>`;
-  /* render donut after DOM paint */
   setTimeout(() => renderEnergyDonut(countryId, e.mix), 80);
+  return html;
 }
 
 
