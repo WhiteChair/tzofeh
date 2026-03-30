@@ -1435,25 +1435,20 @@ function initPopChart(cid,pyramid){
 }
 
 /* ══════════════════════ LIVE DATA — /api/fx serverless ══════════════════════
-   FX:     open.er-api.com  (free, no auth, all pairs vs USD in one call)
-   Yields: Yahoo Finance v7 (crumb-based, server-side so no CORS)
+   FX spot + MA50/MA200:  frankfurter.app  (free, no auth, 210d history)
+   US yields:             stooq.com        (free, no auth, CSV)
 ══════════════════════════════════════════════════════════════════════════════ */
 
-function calcMA(closes, n) {
-  const clean = closes.filter(v => v != null);
-  if (clean.length < n) return null;
-  return clean.slice(-n).reduce((a, b) => a + b, 0) / n;
-}
-
 function updateFXDisplay(cid, { current, change, ma50, ma200, decimals }) {
-  const pair = C[cid]?.fx?.pair || CHINA.fx.pair;
-  const fmt  = v => (v != null ? v.toFixed(decimals) : '—');
+  const pair    = C[cid]?.fx?.pair || CHINA.fx.pair;
+  const fmt     = v => (v != null ? v.toFixed(decimals) : '—');
   const valEl   = document.getElementById(`fx-val-${cid}`);
   const chgEl   = document.getElementById(`fx-chg-${cid}`);
   const badgeEl = document.getElementById(`fx-badge-${cid}`);
   const ma50El  = document.getElementById(`ma50-${cid}`);
   const ma200El = document.getElementById(`ma200-${cid}`);
   const mxEl    = document.getElementById(`mx-fx-${cid}`);
+
   if (valEl && current != null) {
     valEl.textContent = fmt(current);
     if (badgeEl) { badgeEl.className = 'live-badge'; badgeEl.textContent = 'LIVE'; }
@@ -1462,8 +1457,8 @@ function updateFXDisplay(cid, { current, change, ma50, ma200, decimals }) {
     const col = change > 0 ? 'var(--or)' : 'var(--green)';
     chgEl.innerHTML = `<span style="color:${col}">${change >= 0 ? '+' : ''}${change.toFixed(decimals)}</span>&nbsp;<span style="color:var(--mu)">1d</span>`;
   }
-  if (ma50El  && ma50  != null) ma50El.textContent  = fmt(ma50);
-  if (ma200El && ma200 != null) ma200El.textContent = fmt(ma200);
+  if (ma50El)  ma50El.textContent  = fmt(ma50);
+  if (ma200El) ma200El.textContent = fmt(ma200);
   if (mxEl && current != null) {
     mxEl.innerHTML = `<strong style="font-family:'IBM Plex Mono',monospace">${fmt(current)}</strong><br>`
       + `<span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">${pair}</span>`
@@ -1478,43 +1473,23 @@ async function doLiveFetch() {
   if (status)   status.textContent = 'fetching…';
   let ok = 0;
 
-  // ── FX: open.er-api.com — one call, all pairs, no auth ──────────────────
-  // Response: { rates: { EUR:0.923, GBP:0.789, JPY:149.5, CNY:7.24, ... } }
-  // EUR/USD = 1/rates.EUR,  USD/JPY = rates.JPY,  etc.
+  // ── FX spot + MA50 + MA200 (one call, all countries) ────────────────────
+  // decimals per country
+  const dec = { usa:2, france:4, uk:4, germany:4, japan:2, china:4 };
   try {
-    const [todayRes, prevRes] = await Promise.all([
-      fetch('/api/fx?mode=fx'),
-      fetch('/api/fx?mode=fx_prev'),
-    ]);
-    const today = await todayRes.json();
-    const prev  = prevRes.ok ? await prevRes.json() : today;
-
-    if (today.ok && today.rates) {
-      const r  = today.rates;
-      const rp = prev?.rates || r;
-
-      const dxy = rates => {
-        const eur = rates.EUR||1, jpy = rates.JPY||150, gbp = rates.GBP||1;
-        const cad = rates.CAD||1.4, sek = rates.SEK||10, chf = rates.CHF||1;
-        return 50.14348 * Math.pow(eur,-0.576) * Math.pow(jpy,0.136) * Math.pow(gbp,-0.119)
-          * Math.pow(cad,0.091) * Math.pow(sek,0.042) * Math.pow(chf,0.036);
-      };
-
-      const fxConfig = [
-        { cid:'usa',     dec:2, cur:r=>dxy(r) },
-        { cid:'france',  dec:4, cur:r=>1/r.EUR },
-        { cid:'uk',      dec:4, cur:r=>1/r.GBP },
-        { cid:'germany', dec:4, cur:r=>1/r.EUR },
-        { cid:'japan',   dec:2, cur:r=>r.JPY   },
-        { cid:'china',   dec:4, cur:r=>r.CNY   },
-      ];
-
-      fxConfig.forEach(({ cid, dec, cur }) => {
-        try {
-          const current  = cur(r);
-          const previous = cur(rp);
-          updateFXDisplay(cid, { current, change: current - previous, ma50: null, ma200: null, decimals: dec });
-        } catch(e) {}
+    const r    = await fetch('/api/fx?mode=fx');
+    const data = await r.json();
+    if (data.ok && data.fx) {
+      Object.entries(data.fx).forEach(([cid, vals]) => {
+        if (!vals) return;
+        const d = dec[cid] ?? 4;
+        updateFXDisplay(cid, {
+          current:  vals.current,
+          change:   (vals.current != null && vals.prev != null) ? vals.current - vals.prev : null,
+          ma50:     vals.ma50,
+          ma200:    vals.ma200,
+          decimals: d,
+        });
       });
       ok++;
     }
@@ -1522,10 +1497,9 @@ async function doLiveFetch() {
 
   // ── US Treasury Yields ───────────────────────────────────────────────────
   try {
-    const r = await fetch('/api/fx?mode=yields');
+    const r    = await fetch('/api/fx?mode=yields');
     const data = await r.json();
     if (data.ok && data.yields) {
-      // stooq response: { y5: 4.20, y10: 4.50, y30: 4.72 }
       ['y5','y10','y30'].forEach(key => {
         const price = data.yields[key];
         if (price == null) return;
