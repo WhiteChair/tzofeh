@@ -250,6 +250,62 @@ body{background:var(--bg);color:var(--tx);font-family:'Source Sans 3',-apple-sys
 .mono{font-family:'IBM Plex Mono',monospace;}
 .dim{color:var(--mu);}
 .chart-wrap{position:relative;width:100%;}
+
+/* RATINGS */
+.rating-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.rating-pill{background:var(--surf2);border:1px solid var(--bd);border-radius:4px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:72px;}
+.rating-agency{font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);}
+.rating-val{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1;}
+.rating-outlook{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:2px 6px;border-radius:2px;margin-top:1px;letter-spacing:.05em;}
+.ro-stable{background:#E0F5F0;color:var(--acc);}
+.ro-negative{background:var(--danger-bg);color:var(--rd);border:1px solid var(--danger-bd);}
+.ro-positive{background:var(--info-bg);color:var(--bl);border:1px solid var(--info-bd);}
+.ro-watch{background:var(--warn-bg);color:var(--or);border:1px solid var(--warn-bd);}
+.rating-compact{font-family:'IBM Plex Mono',monospace;font-size:10px;display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.rc-pill{padding:1px 5px;border-radius:3px;font-size:9px;font-weight:600;}
+
+/* UNEMPLOYMENT */
+.unemp-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
+.unemp-cell{background:var(--surf2);border:1px solid var(--bd);border-radius:4px;padding:8px 10px;}
+.unemp-lbl{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;}
+.unemp-val{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;line-height:1;}
+.unemp-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px;}
+.unemp-bar{height:3px;border-radius:2px;margin-top:5px;transition:width .6s ease;}
+
+/* GOVT EMPLOYMENT */
+.govtemp-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--bd);}
+.govtemp-row:last-child{border-bottom:none;}
+.govtemp-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);flex:1;}
+.govtemp-pct{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;}
+.govtemp-abs{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);}
+.govtemp-track{flex:2;height:4px;background:var(--surf3);border-radius:2px;}
+.govtemp-fill{height:100%;border-radius:2px;background:var(--pu);}
+
+/* POLITICAL TOPICS */
+.topic-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.topic-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:3px 9px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;border:1px solid;cursor:default;transition:filter .15s;}
+.topic-tag:hover{filter:brightness(1.15);}
+.tt-hot{background:var(--danger-bg);color:var(--rd);border-color:var(--danger-bd);}
+.tt-warm{background:var(--warn-bg);color:var(--or);border-color:var(--warn-bd);}
+.tt-neutral{background:var(--surf2);color:var(--mu);border-color:var(--bd);}
+.tt-blue{background:var(--info-bg);color:var(--bl);border-color:var(--info-bd);}
+.tt-green{background:#E8F5E3;color:var(--green);border-color:#9FD99F;}
+.topic-desc{font-size:11px;color:var(--mu);margin-top:8px;line-height:1.65;}
+
+/* ENERGY MIX */
+.energy-bar{display:flex;height:22px;border-radius:3px;overflow:hidden;gap:1px;margin:10px 0;}
+.energy-seg{display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;color:rgba(255,255,255,.9);transition:filter .15s;cursor:default;}
+.energy-seg:hover{filter:brightness(1.15);}
+.energy-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.energy-li{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);}
+.energy-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.energy-kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.energy-price{background:var(--surf2);border:1px solid var(--bd);border-radius:4px;padding:9px 11px;}
+.energy-price-lbl{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;}
+.energy-price-val{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1;}
+.compet-card{border-left:3px solid;padding:10px 14px;background:var(--surf2);border-radius:0 4px 4px 0;font-size:11px;color:var(--mu);line-height:1.7;}
+.compet-card strong{color:var(--tx);}
+.owid-embed{width:100%;border:1px solid var(--bd);border-radius:4px;margin-top:12px;}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px;}
@@ -342,6 +398,27 @@ const C = {
       gdpYoy:2.8,gdpQoQ:2.3,gdpSource:'BEA Q4 2024 (annualised)',gdpQLabel:'Q4 2024',
     },
     debtGdp:124,
+    ratings:{sp:{r:'AA+',o:'Stable'},moodys:{r:'Aa1',o:'Negative'},fitch:{r:'AA+',o:'Stable'}},
+    unemp:{overall:4.1,youth:8.8,primeAge:3.4,older:3.0,source:'BLS, Feb 2025',
+      govEmployment:{pct:15.0,millions:22.1,label:'Fed+State+Local govt workers',note:'~22M out of 158M employed; largest employers: DoD, USPS, VA'},
+    },
+    topics:[
+      {tag:'Immigration',heat:'hot',desc:'Mass deportation operations underway; border crossings at multi-year lows under Trump. Central political battleground.'},
+      {tag:'Tariffs / Trade',heat:'hot',desc:'Universal baseline tariff + China-specific levies reshaping supply chains; inflation & recession risk flagged by Fed.'},
+      {tag:'DEI Rollback',heat:'hot',desc:'Federal DEI programmes abolished by executive order; private sector under pressure to follow; culture war escalation.'},
+      {tag:'Fiscal Debt',heat:'warm',desc:'$36T+ national debt; debt-service now largest budget line; DOGE efficiency drive politically charged.'},
+      {tag:'Abortion Rights',heat:'warm',desc:'Post-Dobbs state-level battles continue; 2026 midterms shaped by reproductive rights referenda.'},
+      {tag:'Ukraine / NATO',heat:'warm',desc:'Administration signalling reduced NATO commitment; direct pressure on Europeans to self-fund defence.'},
+      {tag:'Housing',heat:'neutral',desc:'Affordability crisis in major metros; inventory shortage; 30Y mortgage at 6.8%.'},
+    ],
+    energy:{
+      mix:{coal:16,gas:43,oil:1,nuclear:19,hydro:6,wind:10,solar:5},
+      elecPrice:75,elecUnit:'$/MWh avg industrial',
+      gasPrice:2.8,gasUnit:'$/MMBtu Henry Hub',
+      competNote:'US shale revolution makes it the world\'s largest gas producer and an LNG exporter. Industrial electricity prices are among the lowest in the OECD — a major structural competitive advantage over Europe. Energy abundance underpins reindustrialisation (semiconductors, EV, AI data centres). Risk: protectionist energy policy creates distortions; coal subsidies conflict with climate commitments.',
+      competLevel:'advantage',
+    },
+
     yields:{
       tickers:{y5:'^FVX',y10:'^TNX',y30:'^TYX'},
       labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
@@ -398,6 +475,27 @@ const C = {
       gdpYoy:1.1,gdpQoQ:0.4,gdpSource:'INSEE Q4 2024',gdpQLabel:'Q4 2024',
     },
     debtGdp:112,
+    ratings:{sp:{r:'AA-',o:'Negative'},moodys:{r:'Aa3',o:'Stable'},fitch:{r:'AA-',o:'Stable'}},
+    unemp:{overall:7.3,youth:16.9,primeAge:6.2,older:5.8,source:'INSEE, Q4 2024',
+      govEmployment:{pct:22.1,millions:5.7,label:'Public sector (fonctionnaires + contrats publics)',note:'One of the highest public employment ratios in the OECD. Health, education and administration dominate.'},
+    },
+    topics:[
+      {tag:'Budget Deficit',heat:'hot',desc:'EC excessive deficit procedure active; Bayrou govt must cut €40bn+ without parliamentary majority. OAT spread risk.'},
+      {tag:'Immigration',heat:'hot',desc:'Far-right surge driven by immigration debate; Macron pushed rightward; Bayrou navigating RN threat without legitimising it.'},
+      {tag:'Pension Reform',heat:'hot',desc:'2023 pension age reform deeply unpopular; strikes ongoing; Bayrou floated re-opening — then backtracked under fiscal pressure.'},
+      {tag:'Housing',heat:'warm',desc:'Acute shortage in Paris and major cities; construction permits at 30-year low; rent controls paradoxically reducing supply.'},
+      {tag:'Deindustrialisation',heat:'warm',desc:'High energy costs post-Russia (despite nuclear advantage); German industrial slowdown spilling over. Car sector restructuring.'},
+      {tag:'Sovereignty / EU',heat:'neutral',desc:'Macron\'s "European sovereignty" agenda under domestic political pressure; RN anti-EU platform growing.'},
+      {tag:'Laïcité / Identity',heat:'warm',desc:'Religious expression in public life; headscarf debates; radicalisation response after 2023 attacks.'},
+    ],
+    energy:{
+      mix:{coal:1,gas:4,oil:1,nuclear:68,hydro:12,wind:10,solar:4},
+      elecPrice:85,elecUnit:'€/MWh avg industrial',
+      gasPrice:35,gasUnit:'€/MWh TTF-linked',
+      competNote:'France\'s nuclear fleet gives it a decisive energy cost advantage within Europe — wholesale electricity prices consistently 20-30% below Germany. This is strategically significant for energy-intensive industry: aluminium smelting, chemicals, data centres. Risk: EDF\'s ageing fleet (avg 37 years) requires €100bn+ in renovation and new EPR builds; maintenance outages in 2022 triggered temporary price spikes. Long-run nuclear competitiveness depends on construction cost control (Flamanville delays are a cautionary tale).',
+      competLevel:'advantage',
+    },
+
     yields:{
       labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
       y5:[2.95,3.15,2.60,2.85,2.90,2.85],y10:[3.05,3.22,2.95,3.05,3.15,3.20],y30:[3.30,3.45,3.25,3.42,3.50,3.55],
@@ -451,6 +549,26 @@ const C = {
       gdpYoy:1.1,gdpQoQ:0.1,gdpSource:'ONS Q4 2024',gdpQLabel:'Q4 2024',
     },
     debtGdp:100,
+    ratings:{sp:{r:'AA',o:'Stable'},moodys:{r:'Aa3',o:'Stable'},fitch:{r:'AA-',o:'Stable'}},
+    unemp:{overall:4.4,youth:13.5,primeAge:3.6,older:3.5,source:'ONS, Jan 2025',
+      govEmployment:{pct:17.1,millions:5.8,label:'Public sector (NHS, civil service, local govt, education)',note:'NHS alone employs 1.5M — largest single employer in Europe. Public sector pay disputes recurring.'},
+    },
+    topics:[
+      {tag:'NHS Crisis',heat:'hot',desc:'Record waiting lists (7.6M); junior doctor disputes settled but nursing and GP shortages structural. £22bn emergency funding announced.'},
+      {tag:'Immigration',heat:'hot',desc:'Small boats crossings: 36k+ in 2024; Rwanda scheme scrapped by Labour; legal migration at 685k — political pressure mounting.'},
+      {tag:'Housing',heat:'hot',desc:'1.5M homes pledge by 2029; planning reform being legislated; home ownership lowest since 1980s; London rents at records.'},
+      {tag:'Energy Costs',heat:'warm',desc:'Household energy price cap at £1,568/yr; industrial prices among Europe\'s highest. Net zero ambition vs. cost-of-living tension.'},
+      {tag:'Growth / Stagnation',heat:'warm',desc:'GDP per capita below 2008 peak in real terms; productivity puzzle unresolved; Chancellor\'s growth mission credibility under scrutiny.'},
+      {tag:'Devolution',heat:'neutral',desc:'Scottish independence support ~47%; Welsh devolution expansion; Northern Ireland protocol implementation ongoing friction.'},
+    ],
+    energy:{
+      mix:{coal:2,gas:32,oil:2,nuclear:15,hydro:2,wind:30,solar:4,other:13},
+      elecPrice:130,elecUnit:'£/MWh avg industrial',
+      gasPrice:28,gasUnit:'£/MWh NBP hub',
+      competNote:'The UK has built the world\'s largest offshore wind fleet and is on track for 50GW by 2030 — a genuine long-run advantage. However, high gas dependency today keeps industrial electricity prices among the highest in Europe, contributing to deindustrialisation (British Steel, Port Talbot steelworks closures). The Contracts for Difference (CfD) scheme provides investment certainty but passes higher strike prices to bills. North Sea decommissioning acceleration under Labour reduces domestic supply, increasing import exposure. Net energy cost position: weak today, improving over the decade.',
+      competLevel:'neutral',
+    },
+
     yields:{
       labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
       y5:[4.22,4.18,3.85,4.25,4.42,4.40],y10:[4.30,4.22,3.97,4.28,4.58,4.65],y30:[4.68,4.62,4.50,4.72,5.02,5.10],
@@ -506,6 +624,27 @@ const C = {
       gdpYoy:-0.2,gdpQoQ:-0.2,gdpSource:'Destatis Q4 2024',gdpQLabel:'Q4 2024',
     },
     debtGdp:63,
+    ratings:{sp:{r:'AAA',o:'Stable'},moodys:{r:'Aaa',o:'Stable'},fitch:{r:'AAA',o:'Stable'}},
+    unemp:{overall:3.4,youth:6.1,primeAge:2.9,older:3.5,source:'Destatis ILO, Feb 2025',
+      govEmployment:{pct:10.8,millions:4.9,label:'Öffentlicher Dienst (public service)',note:'Relatively lean by EU standards. Federal, state (Länder) and municipal employees. Rising public sector wages becoming fiscal pressure.'},
+    },
+    topics:[
+      {tag:'Energy / Industry',heat:'hot',desc:'Industrial electricity prices 3x US levels post-Nordstream. BASF, Volkswagen, chemical sector restructuring. Deindustrialisation risk is the defining economic threat.'},
+      {tag:'Immigration',heat:'hot',desc:'AfD surge driven by migration; Merz passed CDU/CSU migration bill with AfD votes — breaking the "firewall" norm; profound political fallout.'},
+      {tag:'AfD & Far-Right',heat:'hot',desc:'AfD at 20%+; classified as proven extremist by domestic intelligence (BfV); firewall debate ongoing; east-west political divide deepening.'},
+      {tag:'Fiscal Stimulus',heat:'warm',desc:'Partial debt brake relaxation + €500bn infrastructure fund — largest peacetime fiscal expansion in postwar history. Bond market absorbing well so far.'},
+      {tag:'Ukraine / Defence',heat:'warm',desc:'Germany committed to 3% GDP defence spending; Bundeswehr modernisation decades behind; NATO credibility depends on delivery.'},
+      {tag:'Housing',heat:'warm',desc:'Construction sector in recession; permits at 30-year lows; rents +40% since 2015 in major cities; Wohnungsnot (housing shortage) a Berlin flashpoint.'},
+      {tag:'Demographic Decline',heat:'neutral',desc:'Skills shortage projecting 7M worker gap by 2035; integration of 1.5M+ Ukrainian refugees; cultural integration debate.'},
+    ],
+    energy:{
+      mix:{coal:26,gas:13,oil:1,nuclear:0,hydro:3,wind:36,solar:12,other:9},
+      elecPrice:175,elecUnit:'€/MWh avg industrial',
+      gasPrice:38,gasUnit:'€/MWh TTF-linked',
+      competNote:'Germany\'s energy position is its most acute strategic vulnerability. The Energiewende — phasing out nuclear (completed Apr 2023) while replacing Russian gas — has produced the highest industrial electricity prices in the G7 at ~€175/MWh vs US ~$75/MWh. BASF has stated plainly it is redirecting €10bn+ capex from Ludwigshafen to China and the US. The Draghi report cites German energy costs as the primary driver of European competitiveness decline. The €500bn infrastructure fund includes substantial energy grid investment, but structural relief is years away. Coal remains at 26% — a climate and reputational cost. Wind and solar buildout is rapid but cannot close the baseload gap without storage investment.',
+      competLevel:'disadvantage',
+    },
+
     yields:{
       labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
       y5:[2.72,2.85,2.25,2.18,2.28,2.30],y10:[2.58,2.72,2.28,2.38,2.48,2.55],y30:[2.72,2.80,2.52,2.61,2.68,2.75],
@@ -560,6 +699,27 @@ const C = {
       gdpYoy:1.2,gdpQoQ:2.8,gdpSource:'Cabinet Office Q4 2024 (annualised)',gdpQLabel:'Q4 2024',
     },
     debtGdp:261,
+    ratings:{sp:{r:'A+',o:'Stable'},moodys:{r:'A1',o:'Stable'},fitch:{r:'A',o:'Stable'}},
+    unemp:{overall:2.5,youth:4.1,primeAge:2.2,older:2.3,source:'MIC, Jan 2025',
+      govEmployment:{pct:6.1,millions:3.8,label:'National + local public servants',note:'Exceptionally lean govt sector — smallest in G7. Reflects Japan\'s reliance on private sector and informal social structures. Ageing public workforce a succession risk.'},
+    },
+    topics:[
+      {tag:'Cost of Living',heat:'hot',desc:'Food and energy price inflation historically high; real wages fell for 2 consecutive years; public anger over rice prices, a cultural flashpoint.'},
+      {tag:'Political Scandal',heat:'hot',desc:'LDP slush fund / unreported donations scandal (Ura-gane); gutted Kishida then Ishiba govts; fundamental LDP credibility crisis.'},
+      {tag:'Demographic Crisis',heat:'hot',desc:'Population shrinking ~500k/yr; record-low births; immigration politically toxic; pension and healthcare system sustainability in question.'},
+      {tag:'China / Security',heat:'warm',desc:'Taiwan Strait tension; Japan-China economic interdependence vs. security competition; defence budget doubled to 2% GDP.'},
+      {tag:'BoJ Normalisation',heat:'warm',desc:'First rate hikes in 17 years; JPY depreciation easing; JGB yield pressure emerging; mortgage costs rising for households.'},
+      {tag:'Energy Self-Reliance',heat:'warm',desc:'Post-Fukushima nuclear restart slow but accelerating; LNG import dependency a strategic vulnerability.'},
+      {tag:'Tourism / Overtourism',heat:'neutral',desc:'Record 33M visitors in 2024; backlash in Kyoto, Fujikawaguchiko; overtourism management becoming policy issue.'},
+    ],
+    energy:{
+      mix:{coal:32,gas:35,oil:5,nuclear:9,hydro:8,wind:1,solar:10},
+      elecPrice:140,elecUnit:'¥/kWh (industrial equiv.)',
+      gasPrice:null,gasUnit:'LNG spot import dependent',
+      competNote:'Japan is structurally energy-poor: no domestic fossil fuel reserves, near-zero domestic gas production, and a Fukushima-induced nuclear shutdown that forced ~90% fossil fuel dependence from 2011–2021. LNG spot prices at global highs (2022: $70/MMBtu) inflicted a ¥30tn+ trade deficit shock. Industrial electricity prices at ~¥25/kWh put Japanese manufacturers — especially chemicals, steel and aluminium — at a severe disadvantage vs. Korean and Chinese competitors. Nuclear restarts (9 reactors as of 2024, target 20+) are the critical competitiveness lever. Each restart saves ~¥30bn/yr in import costs. Offshore wind ambitions face grid constraint bottlenecks.',
+      competLevel:'disadvantage',
+    },
+
     yields:{
       labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
       y5:[0.52,0.58,0.68,0.72,0.85,0.90],y10:[0.75,0.95,0.98,0.95,1.12,1.30],y30:[1.68,2.05,2.28,2.10,2.42,2.15],
@@ -624,6 +784,26 @@ const CHINA = {
     gdpYoy:5.4,gdpQoQ:1.6,gdpSource:'NBS Q4 2024',gdpQLabel:'Q4 2024',
   },
   debtGdp:85,
+  ratings:{sp:{r:'A+',o:'Stable'},moodys:{r:'A1',o:'Negative'},fitch:{r:'A+',o:'Stable'}},
+  unemp:{overall:5.1,youth:17.6,primeAge:4.2,older:3.8,source:'NBS, Feb 2025 (urban survey)',
+    govEmployment:{pct:null,millions:null,label:'State sector (SOE + civil service)',note:'~60M in SOEs + ~7M civil servants; SOE employment ~12% of urban workforce. True govt dependency significantly higher given SOE dominance in energy, banking, telecoms.'},
+  },
+  topics:[
+    {tag:'Youth Unemployment',heat:'hot',desc:'Urban youth (16-24) at 17.6% — data series suspended in 2023, methodology changed. A politically sensitive social stability risk.'},
+    {tag:'Property Sector',heat:'hot',desc:'Evergrande liquidated; Country Garden in default; residential prices falling in 70+ cities. Wealth destruction for the middle class.'},
+    {tag:'US-China Decoupling',heat:'hot',desc:'Technology export controls on semiconductors, AI chips; tariff escalation; supply chain friendshoring accelerating.'},
+    {tag:'Taiwan',heat:'hot',desc:'Military activity around Taiwan Strait at elevated levels; 2027 PLA modernisation deadline frequently cited by US intelligence.'},
+    {tag:'Deflation',heat:'warm',desc:'CPI at -0.7%; producer prices in deflation 26 consecutive months. Demand-side weakness persisting despite stimulus.'},
+    {tag:'Social Control',heat:'neutral',desc:'Post-Covid surveillance infrastructure permanent; crackdowns on civil society, platform companies, and academic freedom.'},
+  ],
+  energy:{
+    mix:{coal:59,gas:4,oil:3,nuclear:5,hydro:15,wind:9,solar:6},
+    elecPrice:55,elecUnit:'¥/kWh industrial (subsidised)',
+    gasPrice:null,gasUnit:'LNG import + domestic mix',
+    competNote:'China\'s massive coal base and rapid renewables buildout deliver the lowest industrial electricity prices in the G20 — a key competitive advantage underpinning export manufacturing competitiveness. Subsidised industrial tariffs amplify this. However, coal dependency (59%) creates carbon tariff exposure: the EU\'s Carbon Border Adjustment Mechanism (CBAM) targets precisely this. China added 300GW+ of renewables in 2023 alone — the largest annual buildout in history — signalling a genuine transition path, though coal capacity also keeps growing to meet demand. Energy abundance is a deliberate state industrial policy tool.',
+    competLevel:'advantage',
+  },
+
   yields:{
     labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
     y5:[2.12,2.05,1.95,1.65,1.55,1.50],y10:[2.31,2.28,2.18,2.08,1.92,1.85],y30:[2.52,2.47,2.40,2.28,2.18,2.10],
@@ -762,6 +942,230 @@ function sparkSVG(values,color){
   </svg>`;
 }
 
+
+/* ══════════════════════ RATINGS ══════════════════════ */
+function outlookClass(o){
+  const l=(o||'').toLowerCase();
+  return l.includes('neg')?'ro-negative':l.includes('pos')?'ro-positive':l.includes('watch')?'ro-watch':'ro-stable';
+}
+function ratingColor(r){
+  if(!r)return'var(--mu)';
+  const s=r.replace(/[^A-Za-z+]/g,'');
+  if(s==='AAA'||s==='Aaa')return'var(--green)';
+  if(s.startsWith('AA')||s.startsWith('Aa'))return'var(--acc)';
+  if(s.startsWith('A'))return'var(--bl)';
+  return'var(--or)';
+}
+function ratingsBlock(ratings){
+  if(!ratings)return'';
+  const agencies=[["S&P",ratings.sp],["Moody's",ratings.moodys],["Fitch",ratings.fitch]];
+  return`<div class="card-hdr" style="margin-top:14px"><span class="card-title">Sovereign Credit Ratings</span><span class="static-badge">Mar 2025</span></div>
+  <div class="rating-row">
+    ${agencies.map(([a,d])=>`<div class="rating-pill">
+      <div class="rating-agency">${a}</div>
+      <div class="rating-val" style="color:${ratingColor(d.r)}">${d.r}</div>
+      <div class="rating-outlook ${outlookClass(d.o)}">${d.o.toUpperCase()}</div>
+    </div>`).join('')}
+  </div>`;
+}
+function ratingsCompact(ratings){
+  if(!ratings)return'';
+  const agencies=[["S&P",ratings.sp],["Moody's",ratings.moodys],["Fitch",ratings.fitch]];
+  return`<div class="rating-compact">${agencies.map(([a,d])=>{
+    const oc=outlookClass(d.o);
+    const arrow=d.o.toLowerCase().includes('neg')?'↓':d.o.toLowerCase().includes('pos')?'↑':'↔';
+    return`<span class="rc-pill ${oc}" title="${a}: ${d.r} / ${d.o}">${d.r}${arrow}</span>`;
+  }).join('')}</div>`;
+}
+
+
+/* ══════════════════════ UNEMPLOYMENT ══════════════════════ */
+function unempColor(v,type){
+  if(type==='overall') return v>8?'var(--rd)':v>5?'var(--or)':v>3.5?'var(--bl)':'var(--green)';
+  if(type==='youth')   return v>20?'var(--rd)':v>12?'var(--or)':'var(--bl)';
+  return v>6?'var(--or)':v>4?'var(--bl)':'var(--green)';
+}
+function unempBlock(u){
+  if(!u) return '';
+  const bars=[
+    {lbl:'Overall',val:u.overall,type:'overall',max:12},
+    {lbl:'Youth 15–24',val:u.youth,type:'youth',max:30},
+    {lbl:'Prime 25–54',val:u.primeAge,type:'prime',max:12},
+    {lbl:'Older 55–64',val:u.older,type:'older',max:12},
+  ];
+  const cells=bars.map(b=>{
+    const col=unempColor(b.val,b.type);
+    const pct=Math.min(100,(b.val/b.max)*100).toFixed(0);
+    return`<div class="unemp-cell">
+      <div class="unemp-lbl">${b.lbl}</div>
+      <div class="unemp-val" style="color:${col}">${b.val}%</div>
+      <div class="unemp-bar" style="width:${pct}%;background:${col};opacity:.7"></div>
+    </div>`;
+  }).join('');
+  // Govt employment bar
+  const ge=u.govEmployment;
+  const gePct=ge.pct;
+  const geCol=gePct>20?'var(--rd)':gePct>15?'var(--or)':'var(--pu)';
+  const geBlock=gePct!=null?`
+  <div class="card-hdr" style="margin-top:14px"><span class="card-title">Government Employment</span><span class="static-badge">ILO/OECD 2024</span></div>
+  <div class="govtemp-row">
+    <div class="govtemp-lbl">${ge.label}</div>
+    <div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <div class="govtemp-pct" style="color:${geCol}">${gePct}%</div>
+        ${ge.millions?`<div class="govtemp-abs">${ge.millions}M workers</div>`:''}
+      </div>
+      <div class="govtemp-track" style="margin-top:5px">
+        <div class="govtemp-fill" style="width:${Math.min(100,gePct/25*100).toFixed(0)}%;background:${geCol}"></div>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa);margin-top:4px">${ge.note}</div>
+    </div>
+  </div>`:
+  `<div class="govtemp-row"><div class="govtemp-lbl">${ge.label}</div><div style="font-size:11px;color:var(--mu)">${ge.note}</div></div>`;
+  return`
+  <div class="card-hdr"><span class="card-title">Unemployment by Age Group</span><span class="static-badge">${u.source}</span></div>
+  <div class="unemp-grid">${cells}</div>
+  ${geBlock}`;
+}
+
+/* ══════════════════════ POLITICAL TOPICS ══════════════════════ */
+function heatClass(h){return h==='hot'?'tt-hot':h==='warm'?'tt-warm':h==='blue'?'tt-blue':h==='green'?'tt-green':'tt-neutral';}
+function topicsBlock(topics){
+  if(!topics||!topics.length) return '';
+  const tags=topics.map(t=>`<span class="topic-tag ${heatClass(t.heat)}" title="${t.desc}">${t.tag}</span>`).join('');
+  const items=topics.map(t=>`<div style="padding:5px 0;border-bottom:1px solid var(--bd);display:flex;gap:10px;align-items:flex-start">
+    <span class="topic-tag ${heatClass(t.heat)}" style="flex-shrink:0;margin-top:1px">${t.tag}</span>
+    <span style="font-size:11px;color:var(--mu);line-height:1.6">${t.desc}</span>
+  </div>`).join('');
+  return`<div class="topic-wrap">${tags}</div>
+  <div style="margin-top:12px">${items}</div>`;
+}
+
+/* ══════════════════════ ENERGY MIX ══════════════════════ */
+const ENERGY_COLORS={
+  coal:'#2c2c2c', gas:'#e3a447', oil:'#8B4513',
+  nuclear:'#9B59B6', hydro:'#3498db',
+  wind:'#27ae60', solar:'#f1c40f', other:'#95a5a6'
+};
+function energyBlock(e,country){
+  const countryId=country.toLowerCase().replace(/[^a-z]/g,'');
+  if(!e) return '';
+  const mix=e.mix;
+  const total=Object.values(mix).reduce((s,v)=>s+v,0);
+  const segs=Object.entries(mix).filter(([k,v])=>v>0).map(([k,v])=>{
+    const pct=(v/total*100).toFixed(0);
+    const col=ENERGY_COLORS[k]||'#999';
+    return`<div class="energy-seg" style="width:${pct}%;background:${col}" title="${k}: ${v}%">${v>5?v+'%':''}</div>`;
+  }).join('');
+  const legend=Object.entries(mix).filter(([k,v])=>v>0).map(([k,v])=>{
+    const col=ENERGY_COLORS[k]||'#999';
+    return`<div class="energy-li"><div class="energy-dot" style="background:${col}"></div>${k} ${v}%</div>`;
+  }).join('');
+
+  // Renewables total
+  const renew=(mix.wind||0)+(mix.solar||0)+(mix.hydro||0);
+  const lowCarbon=renew+(mix.nuclear||0);
+  const fossil=(mix.coal||0)+(mix.gas||0)+(mix.oil||0);
+
+  const compBorderCol=e.competLevel==='advantage'?'var(--green)':e.competLevel==='disadvantage'?'var(--rd)':'var(--or)';
+  const compIcon=e.competLevel==='advantage'?'↑ COMPETITIVE ADVANTAGE':e.competLevel==='disadvantage'?'↓ COMPETITIVE DISADVANTAGE':'→ NEUTRAL POSITION';
+  const compIconCol=e.competLevel==='advantage'?'var(--green)':e.competLevel==='disadvantage'?'var(--rd)':'var(--or)';
+
+  const priceRow=e.gasPrice?
+    `<div class="energy-price"><div class="energy-price-lbl">Gas Price</div><div class="energy-price-val">${e.gasPrice} <span style="font-size:10px;color:var(--mu)">${e.gasUnit}</span></div></div>`:
+    `<div class="energy-price"><div class="energy-price-lbl">Gas</div><div style="font-size:11px;color:var(--mu)">Import dependent</div></div>`;
+
+  return`
+  <div class="card-hdr"><span class="card-title">Electricity Generation Mix</span><span class="static-badge">IEA / OWID 2023</span></div>
+  <div class="energy-legend">${legend}</div>
+  <div class="energy-bar">${segs}</div>
+  <div class="energy-kpi">
+    <div class="energy-price">
+      <div class="energy-price-lbl">Renewables</div>
+      <div class="energy-price-val" style="color:var(--green)">${renew}%</div>
+    </div>
+    <div class="energy-price">
+      <div class="energy-price-lbl">Low-Carbon (incl. nuclear)</div>
+      <div class="energy-price-val" style="color:var(--bl)">${lowCarbon}%</div>
+    </div>
+    <div class="energy-price">
+      <div class="energy-price-lbl">Fossil Fuels</div>
+      <div class="energy-price-val" style="color:${fossil>70?'var(--rd)':fossil>50?'var(--or)':'var(--mu)'}">${fossil}%</div>
+    </div>
+    <div class="energy-price">
+      <div class="energy-price-lbl">Industrial Elec. Price</div>
+      <div class="energy-price-val">${e.elecPrice||'—'} <span style="font-size:9px;color:var(--mu)">${e.elecUnit}</span></div>
+    </div>
+  </div>
+  ${priceRow?`<div class="energy-kpi" style="margin-top:-4px">${priceRow}</div>`:''}
+  <div class="compet-card" style="border-left-color:${compBorderCol}">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:${compIconCol};letter-spacing:.1em;margin-bottom:5px">${compIcon}</div>
+    <strong></strong>${e.competNote}
+  </div>
+  <div style="margin-top:14px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-bottom:6px">Historical mix breakdown</div>
+    <canvas id="energy-donut-${countryId}" height="200"></canvas>
+  </div>`;
+  /* render donut after DOM paint */
+  setTimeout(() => renderEnergyDonut(countryId, e.mix), 80);
+}
+
+
+/* ══════════════════════ ENERGY DONUT ══════════════════════ */
+function renderEnergyDonut(cid, mix){
+  const canvasId = `energy-donut-${cid}`;
+  const ctx = document.getElementById(canvasId);
+  if(!ctx) return;
+  if(CHARTS[canvasId]) { CHARTS[canvasId].destroy(); delete CHARTS[canvasId]; }
+  const labels = Object.keys(mix).filter(k => mix[k] > 0);
+  const values = labels.map(k => mix[k]);
+  const colors = labels.map(k => ENERGY_COLORS[k] || '#999');
+  const isDark = document.body.classList.contains('dark');
+  const ttBg = isDark ? '#0d1117' : '#fff';
+  const ttTitle = isDark ? '#cdd9e5' : '#1A1614';
+  const ttBody  = isDark ? '#768390' : '#6B5E52';
+  const ttBd    = isDark ? '#1c2333' : '#E2D5C8';
+  CHARTS[canvasId] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: colors,
+        borderColor: isDark ? '#0d1117' : '#fff',
+        borderWidth: 2,
+        hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: {
+          display: true,
+          position: 'right',
+          labels: {
+            color: isDark ? '#768390' : '#6B5E52',
+            font: { family: "'IBM Plex Mono'", size: 9 },
+            padding: 8,
+            boxWidth: 10,
+            usePointStyle: true,
+          }
+        },
+        tooltip: {
+          backgroundColor: ttBg,
+          titleColor: ttTitle,
+          bodyColor: ttBody,
+          borderColor: ttBd,
+          borderWidth: 1,
+          callbacks: { label: c => ` ${c.label}: ${c.parsed}%` }
+        }
+      }
+    }
+  });
+}
+
 /* ══════════════════════ TICKER ══════════════════════ */
 function buildTicker(){
   const alerts=[];
@@ -800,6 +1204,7 @@ function renderMatrix(){
     const gdpCol=d.macro.gdpYoy<0?'var(--rd)':d.macro.gdpYoy<1?'var(--or)':'var(--green)';
     return`<tr onclick="switchTab('${d.id}')" style="cursor:pointer">
       <td><strong>${d.name}</strong></td>
+      <td>${d.ratings?ratingsCompact(d.ratings):'<span style="color:var(--mu)">—</span>'}</td>
       <td>${apD}</td>
       <td><span class="coal-badge ${cs.cls}">${cs.status}</span></td>
       <td>${days!=null?`<span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${elColor(days)}">${days.toLocaleString()}d</span>`:'<span style="color:var(--mu)">—</span>'}</td>
@@ -807,6 +1212,7 @@ function renderMatrix(){
       <td>${spreadLabel(d.bundSpread)}</td>
       <td><span style="font-family:'IBM Plex Mono',monospace;font-weight:600">${d.centralBank.display}</span> ${trajLabel(d.centralBank.trajectory)}</td>
       <td id="mx-fx-${d.id}"><span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px">—</span><br><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">${d.fx.pair}</span></td>
+      <td>${d.unemp?`<span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${unempColor(d.unemp.overall,'overall')}">${d.unemp.overall}%</span><br><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">Y:${d.unemp.youth}%</span>`:'<span style="color:var(--mu)">—</span>'}</td>
       <td><span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${cpiCol}">${d.macro.cpiYoy}%</span></td>
       <td><span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${gdpCol}">${d.macro.gdpYoy}%</span></td>
       <td><span style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;color:${fg.color}">${fg.grade}</span></td>
@@ -828,10 +1234,10 @@ function renderMatrix(){
   <div class="card" style="padding:0;overflow:auto">
     <table class="matrix-table" style="min-width:1000px">
       <thead><tr>
-        <th>Country</th><th>Leader Approval</th><th>Coalition</th><th>Next Election</th>
+        <th>Country</th><th>Ratings</th><th>Leader Approval</th><th>Coalition</th><th>Next Election</th>
         <th>10Y Yield</th><th>vs Bund</th><th>CB Rate</th>
         <th>FX <span id="fx-live-lbl"></span></th>
-        <th>CPI YoY</th><th>GDP YoY</th><th>Fiscal</th>
+        <th>Unemployment</th><th>CPI YoY</th><th>GDP YoY</th><th>Fiscal</th>
       </tr></thead>
       <tbody>${rows.join('')}</tbody>
     </table>
@@ -991,6 +1397,10 @@ function renderCountry(cid){
         <div class="el-grid">${elH}</div>
       </div>
       <div class="card">
+        <div class="card-hdr"><span class="card-title">Key Political Topics</span><span class="static-badge">Mar 2025</span></div>
+        ${topicsBlock(d.topics)}
+      </div>
+      <div class="card">
         <div class="card-hdr"><span class="card-title">${cid==='france'?'Approval Ratings — President & PM':('Approval — '+(apPerson.title||'')+': '+apPerson.name)}</span></div>
         ${apH}
       </div>
@@ -1023,6 +1433,16 @@ function renderCountry(cid){
             <div class="kpi-val" style="color:${d.debtGdp>120?'var(--rd)':d.debtGdp>80?'var(--or)':'var(--green)'}">${d.debtGdp}%</div>
           </div>
         </div>
+      </div>
+
+      <!-- UNEMPLOYMENT -->
+      <div class="card">
+        ${unempBlock(d.unemp)}
+      </div>
+
+      <!-- RATINGS -->
+      <div class="card">
+        ${ratingsBlock(d.ratings)}
       </div>
 
       <!-- CB + FX -->
@@ -1104,6 +1524,11 @@ function renderCountry(cid){
         ${budH}
       </div>
 
+      <!-- ENERGY -->
+      <div class="card">
+        ${energyBlock(d.energy, d.id==='usa'?'USA':d.id==='france'?'FRA':d.id==='uk'?'GBR':d.id==='germany'?'DEU':d.id==='japan'?'JPN':d.id)}
+      </div>
+
       <!-- DEMOGRAPHICS -->
       <div class="card">
         <div class="card-hdr"><span class="card-title">Demographics</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">${pop.total} · Median age ${pop.medianAge}yr</span></div>
@@ -1154,6 +1579,7 @@ function renderCountry(cid){
 /* ══════════════════════ CHINA ══════════════════════ */
 function renderChina(){
   const d=CHINA;
+  d.ratings=d.ratings||CHINA.ratings;
   const fg=fiscalGrade(d.fiscal.deficit,d.fiscal.debtService,d.debtGdp);
   const mc=d.macro;
   const pop=d.population;
@@ -1219,6 +1645,14 @@ function renderChina(){
       <div class="sec-title">Economic Intelligence</div>
 
       <div class="card">
+        ${ratingsBlock(d.ratings)}
+      </div>
+
+      <div class="card">
+        ${unempBlock(d.unemp)}
+      </div>
+
+      <div class="card">
         <div class="card-hdr"><span class="card-title">Macro Indicators</span><span class="updated">${mc.gdpSource}</span></div>
         <div class="kpi-grid-4" style="margin-bottom:0">
           <div class="kpi-card"><div class="kpi-lbl">CPI YoY</div><div class="kpi-val" style="color:${cpiCol}">${mc.cpiYoy}%</div><div class="kpi-delta" style="color:var(--bl)">Deflation risk</div></div>
@@ -1270,6 +1704,10 @@ function renderChina(){
             <div style="background:white;border:1px solid var(--bd);border-radius:4px;padding:7px 9px"><div class="kpi-lbl">Debt Service</div><div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:var(--acc)">${d.fiscal.debtService}%</div></div>
           </div>
         </div>
+      </div>
+
+      <div class="card">
+        ${energyBlock(d.energy, 'CHN')}
       </div>
 
       <div class="card"><div class="card-hdr"><span class="card-title">Top Budget Items</span><span class="updated">${d.budget.fy} · ${d.budget.currency}</span></div>${budH}</div>
@@ -1477,7 +1915,8 @@ async function doLiveFetch() {
   // decimals per country
   const dec = { usa:2, france:4, uk:4, germany:4, japan:2, china:4 };
   try {
-    const r    = await fetch('/api/fx?mode=fx');
+    const apiBase = window.location.hostname === 'localhost' || window.location.protocol === 'file:' ? 'https://tzofeh.vercel.app' : '';
+    const r    = await fetch(apiBase + '/api/fx?mode=fx');
     const data = await r.json();
     if (data.ok && data.fx) {
       Object.entries(data.fx).forEach(([cid, vals]) => {
@@ -1497,7 +1936,7 @@ async function doLiveFetch() {
 
   // ── US Treasury Yields ───────────────────────────────────────────────────
   try {
-    const r    = await fetch('/api/fx?mode=yields');
+    const r    = await fetch(apiBase + '/api/fx?mode=yields');
     const data = await r.json();
     if (data.ok && data.yields) {
       ['y5','y10','y30'].forEach(key => {
@@ -1543,6 +1982,13 @@ const CHART_COLORS = {
 
 function applyChartTheme(dark){
   const col = dark ? CHART_COLORS.dark : CHART_COLORS.light;
+  // Re-render energy donuts with updated theme
+  Object.keys(CHARTS).filter(id => id.startsWith('energy-donut-')).forEach(id => {
+    const cid = id.replace('energy-donut-','');
+    const country = ['usa','france','uk','germany','japan','china'].find(c=>c===cid) || cid;
+    const d = C[country] || CHINA;
+    if(d?.energy?.mix) renderEnergyDonut(cid, d.energy.mix);
+  });
   Object.entries(CHARTS).forEach(([id, chart]) => {
     if(!chart) return;
     const isYield = id.startsWith('yield-');
@@ -1607,27 +2053,26 @@ function injectUSAExtras(){
   });
   leadersHTML += `</tbody></table>`;
 
-  // White House X feed card
+  // White House X feed card — direct link (embeds blocked by X CSP)
   const xCard = `<div class="card" style="margin-bottom:16px">
     <div class="card-hdr">
-      <span class="card-title">White House — Official X/Twitter Feed</span>
-      <a href="https://twitter.com/WhiteHouse" target="_blank"
-         style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--acc);text-decoration:none">
-        @WhiteHouse ↗
+      <span class="card-title">Official White House Feeds</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a href="https://x.com/WhiteHouse" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surf2);border:1px solid var(--bd);border-left:3px solid #000;text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderLeftColor='var(--acc)'" onmouseout="this.style.borderLeftColor='#000'">
+        <span style="font-size:16px">𝕏</span>
+        <div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--tx)">@WhiteHouse</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px">Official White House X account ↗</div></div>
+      </a>
+      <a href="https://x.com/POTUS" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surf2);border:1px solid var(--bd);border-left:3px solid #B02020;text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderLeftColor='var(--acc)'" onmouseout="this.style.borderLeftColor='#B02020'">
+        <span style="font-size:16px">𝕏</span>
+        <div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--tx)">@POTUS</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px">Presidential account — Donald J. Trump ↗</div></div>
+      </a>
+      <a href="https://www.whitehouse.gov/news/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surf2);border:1px solid var(--bd);border-left:3px solid var(--bl);text-decoration:none;transition:border-color .15s" onmouseover="this.style.borderLeftColor='var(--acc)'" onmouseout="this.style.borderLeftColor='var(--bl)'">
+        <span style="font-size:16px">🌐</span>
+        <div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--tx)">whitehouse.gov/news</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px">Official press releases & statements ↗</div></div>
       </a>
     </div>
-    <div id="wh-x-feed" style="min-height:120px">
-      <a class="twitter-timeline"
-         data-height="420"
-         data-theme="light"
-         data-chrome="noheader nofooter noborders transparent"
-         href="https://twitter.com/WhiteHouse?ref_src=tzofeh">
-        Loading @WhiteHouse feed…
-      </a>
-    </div>
-    <div style="margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">
-      Embedded via Twitter/X widget · requires browser to allow third-party scripts
-    </div>
+    <div style="margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">X embeds blocked by platform CSP — direct links provided</div>
   </div>`;
 
   // Inject congressional leaders card after the parliament card
@@ -1650,15 +2095,7 @@ function injectUSAExtras(){
   const firstCol = panel.querySelector('.two-col > div:first-child');
   if(firstCol) firstCol.appendChild(xDiv.firstElementChild);
 
-  // Load Twitter widget script
-  if(!window.twitterWidgetsLoaded){
-    window.twitterWidgetsLoaded = true;
-    const s = document.createElement('script');
-    s.src = 'https://platform.twitter.com/widgets.js';
-    s.async = true;
-    s.charset = 'utf-8';
-    document.head.appendChild(s);
-  }
+  // Twitter widget removed — using direct links
 }
 
 /* ══════════════════════ PARTY TOOLTIP ══════════════════════ */
@@ -1717,6 +2154,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     Object.keys(C).forEach(cid=>{initYieldChart(cid,C[cid].yields);initPopChart(cid,C[cid].population.pyramid);});
     initYieldChart('china',CHINA.yields);
     initPopChart('china',CHINA.population.pyramid);
+    // Energy donuts
+    Object.keys(C).forEach(cid=>{ if(C[cid].energy?.mix) renderEnergyDonut(cid,C[cid].energy.mix); });
+    if(CHINA.energy?.mix) renderEnergyDonut('china',CHINA.energy.mix);
 
     // Apply dark theme to charts if needed
     if(document.body.classList.contains('dark')) applyChartTheme(true);
