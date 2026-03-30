@@ -1103,67 +1103,56 @@ function energyBlock(e,country){
     <strong></strong>${e.competNote}
   </div>
   <div style="margin-top:14px">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-bottom:6px">Historical mix breakdown</div>
-    <canvas id="energy-donut-${countryId}" data-mix='${JSON.stringify(mix)}' height="200"></canvas>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-bottom:6px">Energy mix breakdown</div>
+    <div id="energy-pie-${countryId}" data-mix='${JSON.stringify(mix)}'></div>
   </div>`;
   return html;
 }
 
 
-/* ══════════════════════ ENERGY DONUT ══════════════════════ */
+/* ══════════════════════ ENERGY PIE (pure SVG) ══════════════════════ */
 function renderEnergyDonut(cid, mix){
-  const canvasId = `energy-donut-${cid}`;
-  const ctx = document.getElementById(canvasId);
-  if(!ctx) return;
-  if(CHARTS[canvasId]) { CHARTS[canvasId].destroy(); delete CHARTS[canvasId]; }
-  const labels = Object.keys(mix).filter(k => mix[k] > 0);
-  const values = labels.map(k => mix[k]);
-  const colors = labels.map(k => ENERGY_COLORS[k] || '#999');
-  const isDark = document.body.classList.contains('dark');
-  const ttBg = isDark ? '#0d1117' : '#fff';
-  const ttTitle = isDark ? '#cdd9e5' : '#1A1614';
-  const ttBody  = isDark ? '#768390' : '#6B5E52';
-  const ttBd    = isDark ? '#1c2333' : '#E2D5C8';
-  CHARTS[canvasId] = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels,
-      datasets: [{
-        data: values,
-        backgroundColor: colors,
-        borderColor: isDark ? '#0d1117' : '#fff',
-        borderWidth: 2,
-        hoverOffset: 6,
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '55%',
-      plugins: {
-        legend: {
-          display: true,
-          position: 'right',
-          labels: {
-            color: isDark ? '#768390' : '#6B5E52',
-            font: { family: "'IBM Plex Mono'", size: 9 },
-            padding: 8,
-            boxWidth: 10,
-            usePointStyle: true,
-          }
-        },
-        tooltip: {
-          backgroundColor: ttBg,
-          titleColor: ttTitle,
-          bodyColor: ttBody,
-          borderColor: ttBd,
-          borderWidth: 1,
-          callbacks: { label: c => ` ${c.label}: ${c.parsed}%` }
-        }
-      }
-    }
+  const el = document.getElementById('energy-pie-' + cid);
+  if(!el) return;
+  if(el.dataset.rendered) return; // already drawn
+  el.dataset.rendered = '1';
+
+  const entries = Object.entries(mix).filter(([,v]) => v > 0);
+  const total   = entries.reduce((s,[,v]) => s+v, 0);
+
+  const W=260, H=180, cx=100, cy=90, R=78, ri=42;
+  let angle = -Math.PI/2; // start from top
+  let slices = '';
+
+  entries.forEach(([key, val]) => {
+    const sweep = (val/total) * 2 * Math.PI;
+    const x1 = cx + R*Math.cos(angle),         y1 = cy + R*Math.sin(angle);
+    const x2 = cx + R*Math.cos(angle+sweep),   y2 = cy + R*Math.sin(angle+sweep);
+    const ix1= cx + ri*Math.cos(angle),         iy1= cy + ri*Math.sin(angle);
+    const ix2= cx + ri*Math.cos(angle+sweep),   iy2= cy + ri*Math.sin(angle+sweep);
+    const large = sweep > Math.PI ? 1 : 0;
+    const col = ENERGY_COLORS[key] || '#999';
+    const pct = Math.round(val/total*100);
+    slices += `<path d="M${ix1.toFixed(1)},${iy1.toFixed(1)} L${x1.toFixed(1)},${y1.toFixed(1)} A${R},${R} 0 ${large},1 ${x2.toFixed(1)},${y2.toFixed(1)} L${ix2.toFixed(1)},${iy2.toFixed(1)} A${ri},${ri} 0 ${large},0 ${ix1.toFixed(1)},${iy1.toFixed(1)} Z"
+      fill="${col}" stroke="var(--surf)" stroke-width="1.5">
+      <title>${key}: ${pct}%</title></path>`;
+    angle += sweep;
   });
+
+  // Legend — right side
+  let legend = '';
+  entries.forEach(([key, val], i) => {
+    const pct = Math.round(val/total*100);
+    const col = ENERGY_COLORS[key] || '#999';
+    const y = 20 + i*18;
+    if(y > H-10) return;
+    legend += `<rect x="168" y="${y-7}" width="9" height="9" rx="2" fill="${col}"/>
+      <text x="182" y="${y+1}" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--mu)">${key} ${pct}%</text>`;
+  });
+
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-height:180px;overflow:visible">${slices}${legend}</svg>`;
 }
+
 
 /* ══════════════════════ TICKER ══════════════════════ */
 function buildTicker(){
@@ -1981,13 +1970,7 @@ const CHART_COLORS = {
 
 function applyChartTheme(dark){
   const col = dark ? CHART_COLORS.dark : CHART_COLORS.light;
-  // Re-render energy donuts with updated theme
-  Object.keys(CHARTS).filter(id => id.startsWith('energy-donut-')).forEach(id => {
-    const cid = id.replace('energy-donut-','');
-    const country = ['usa','france','uk','germany','japan','china'].find(c=>c===cid) || cid;
-    const d = C[country] || CHINA;
-    if(d?.energy?.mix) renderEnergyDonut(cid, d.energy.mix);
-  });
+  // Energy pies are static SVG — no theme re-render needed
   Object.entries(CHARTS).forEach(([id, chart]) => {
     if(!chart) return;
     const isYield = id.startsWith('yield-');
@@ -2126,9 +2109,9 @@ function switchTab(id){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   const _panel=document.getElementById(`tab-${id}`);
   _panel.style.display='block';
-  _panel.querySelectorAll('[id^="energy-donut-"]').forEach(c=>{
-    const cid=c.id.replace('energy-donut-','');
-    if(!CHARTS[c.id]&&c.dataset.mix){try{renderEnergyDonut(cid,JSON.parse(c.dataset.mix));}catch(e){console.warn('donut',e);}}
+  _panel.querySelectorAll('[id^="energy-pie-"]').forEach(c=>{
+    const cid=c.id.replace('energy-pie-','');
+    if(!c.dataset.rendered&&c.dataset.mix){try{renderEnergyDonut(cid,JSON.parse(c.dataset.mix));}catch(e){}}
   });
   const ids=['matrix','usa','france','uk','germany','japan','china','eu'];
   const idx=ids.indexOf(id);
