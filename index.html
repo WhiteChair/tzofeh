@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tzofeh — Geopolitical Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+/* ── LIGHT THEME (default) ── */
+:root{
+  --bg:#FFF1E0;--surf:#FFFFFF;--surf2:#FBF3E9;--surf3:#F5E8D6;
+  --bd:#E2D5C8;--bd2:#C8B9A8;
+  --tx:#1A1614;--mu:#6B5E52;--fa:#A8998C;
+  --acc:#0D7680;--acc2:#0A5F68;
+  --or:#EB6400;--rd:#B02020;--bl:#0F5499;--pu:#990F3D;--pi:#C6426B;
+  --green:#1A6600;
+  --warn-bg:#FFF3E0;--warn-bd:#F5C980;
+  --danger-bg:#FFF0F0;--danger-bd:#F0AAAA;
+  --info-bg:#E8F4F8;--info-bd:#90CAD8;
+  --nav-bg:rgba(255,241,224,0.97);--nav-border:#990F3D;
+  --card-shadow:0 1px 3px rgba(0,0,0,.04);
+  --theme-icon:"☽";
+}
+/* ── DARK THEME ── */
+body.dark{
+  --bg:#07090e;--surf:#0d1117;--surf2:#141b24;--surf3:#1c2333;
+  --bd:#1c2333;--bd2:#2d3748;
+  --tx:#cdd9e5;--mu:#768390;--fa:#3d4451;
+  --acc:#00d98b;--acc2:#00b377;
+  --or:#e3a447;--rd:#f47067;--bl:#4493f8;--pu:#d2a8ff;--pi:#e879a0;
+  --green:#3fb950;
+  --warn-bg:rgba(227,164,71,.08);--warn-bd:rgba(227,164,71,.25);
+  --danger-bg:rgba(244,112,103,.08);--danger-bd:rgba(244,112,103,.25);
+  --info-bg:rgba(68,147,248,.08);--info-bd:rgba(68,147,248,.25);
+  --nav-bg:rgba(7,9,14,0.97);--nav-border:#d2a8ff;
+  --card-shadow:none;
+  --theme-icon:"☀";
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Source Sans 3',-apple-system,sans-serif;font-size:13.5px;min-height:100vh;transition:background .25s,color .25s;}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:2px solid var(--nav-border);padding:0 16px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+.nav-brand{display:flex;align-items:center;gap:8px;padding:12px 16px 12px 0;border-right:1px solid var(--bd2);margin-right:6px;white-space:nowrap;text-decoration:none;}
+.brand-he{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--pu);letter-spacing:-.01em;}
+.brand-en{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;color:var(--mu);letter-spacing:.12em;text-transform:uppercase;margin-top:1px;}
+.live-dot{width:6px;height:6px;background:var(--acc);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.tab-btn{background:none;border:none;color:var(--mu);font-family:'Source Sans 3',sans-serif;font-size:12.5px;font-weight:500;padding:13px 11px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:var(--tx);}
+.tab-btn.active{color:var(--pu);border-bottom-color:var(--pu);font-weight:600;}
+.tab-btn.matrix-tab.active{color:var(--bl);border-bottom-color:var(--bl);}
+.theme-toggle{margin-left:auto;flex-shrink:0;background:var(--surf2);border:1px solid var(--bd2);color:var(--mu);font-size:15px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.theme-toggle:hover{border-color:var(--acc);color:var(--acc);}
+
+/* TICKER */
+.ticker-bar{background:var(--pu);padding:5px 24px;overflow:hidden;}
+.ticker-inner{display:flex;gap:0;white-space:nowrap;}
+.tick-item{display:inline-flex;align-items:center;gap:6px;padding:0 18px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,.9);border-right:1px solid rgba(255,255,255,.2);}
+.tick-item:first-child{padding-left:0;}
+
+/* PANELS */
+.tab-panel{display:none;padding:22px 28px 80px;max-width:1440px;margin:0 auto;}
+.tab-panel.active{display:block;}
+
+/* GRID */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+@media(max-width:1100px){.two-col{grid-template-columns:1fr;}.three-col{grid-template-columns:1fr 1fr;}}
+
+/* CARDS */
+.card{background:var(--surf);border:1px solid var(--bd);border-radius:6px;padding:16px 18px;margin-bottom:16px;box-shadow:var(--card-shadow);transition:background .25s,border-color .25s;}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bd);}
+.card-title{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:var(--mu);letter-spacing:.14em;text-transform:uppercase;}
+
+/* BADGES */
+.badge{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.04em;padding:2px 7px;border-radius:3px;}
+.bg{background:#E0F5F0;color:var(--acc);}
+.bo{background:var(--warn-bg);color:var(--or);border:1px solid var(--warn-bd);}
+.br{background:var(--danger-bg);color:var(--rd);border:1px solid var(--danger-bd);}
+.bb{background:var(--info-bg);color:var(--bl);border:1px solid var(--info-bd);}
+.bp{background:#F9EAF0;color:var(--pi);}
+.bpu{background:#F5EAF0;color:var(--pu);border:1px solid #DDB8CC;}
+.updated{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa);}
+.live-badge{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:#E0F5F0;color:var(--acc);border:1px solid #9FDDD5;}
+.static-badge{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--surf2);color:var(--fa);border:1px solid var(--bd);}
+
+/* PANEL HEADER */
+.panel-hdr{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:16px;border-bottom:2px solid var(--bd);}
+.flag{font-size:28px;}
+.ctry-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--tx);}
+.ctry-meta{font-size:11px;color:var(--mu);margin-top:2px;}
+.sec-title{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:var(--pu);letter-spacing:.14em;text-transform:uppercase;margin:20px 0 12px;display:flex;align-items:center;gap:8px;}
+.sec-title::before{content:'';display:inline-block;width:3px;height:10px;background:var(--pu);border-radius:2px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--bd);}
+
+/* TABLES */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;}
+.data-table th{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);text-align:left;padding:5px 8px;border-bottom:1px solid var(--bd);background:var(--surf2);}
+.data-table td{padding:7px 8px;border-bottom:1px solid var(--bd);color:var(--tx);vertical-align:middle;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:var(--surf2);}
+
+/* MATRIX TABLE */
+.matrix-table{width:100%;border-collapse:collapse;font-size:12px;}
+.matrix-table th{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);text-align:left;padding:8px 10px;border-bottom:2px solid var(--bd2);background:var(--surf2);white-space:nowrap;}
+.matrix-table td{padding:10px 10px;border-bottom:1px solid var(--bd);vertical-align:middle;}
+.matrix-table tr:hover td{background:var(--surf2);cursor:pointer;}
+.matrix-table tr:last-child td{border-bottom:none;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
+.kpi-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:4px;}
+.kpi-grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:4px;}
+.kpi-card{background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:11px 13px;}
+.kpi-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;}
+.kpi-val{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;line-height:1;color:var(--tx);}
+.kpi-delta{font-family:'IBM Plex Mono',monospace;font-size:10px;margin-top:3px;}
+.pos{color:var(--green);}
+.neg{color:var(--rd);}
+.neu{color:var(--mu);}
+
+/* PARLIAMENT */
+.parl-bar{display:flex;height:28px;border-radius:4px;overflow:hidden;gap:2px;margin:10px 0;}
+.parl-seg{height:100%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;color:rgba(255,255,255,.9);min-width:16px;cursor:pointer;transition:filter .15s;}
+.parl-seg:hover{filter:brightness(1.2);}
+#party-tip{position:fixed;display:none;background:var(--surf);border:1px solid var(--bd2);border-radius:8px;padding:14px 16px;z-index:9999;font-size:11px;max-width:260px;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,.14);}
+.party-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd);}
+.party-row:last-child{border-bottom:none;}
+.pdot{display:inline-block;width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.pstat{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu);}
+
+/* ELECTIONS */
+.el-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.el-card{background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:12px;}
+.el-type{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+.el-days{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;line-height:1;}
+
+/* LEADER */
+.leader-card{display:flex;align-items:center;gap:12px;background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:11px 13px;margin-bottom:10px;}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--surf3);border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--pu);flex-shrink:0;}
+.lname{font-size:13px;font-weight:600;}
+.lrole{font-size:10px;color:var(--mu);margin-top:1px;}
+.lparty{font-size:10px;color:var(--or);margin-top:2px;}
+
+/* APPROVAL */
+.approval-wrap{display:flex;align-items:flex-start;gap:16px;}
+.appr-num{font-family:'IBM Plex Mono',monospace;font-size:36px;font-weight:600;line-height:1;}
+.appr-src{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa);margin-top:5px;}
+
+/* YIELDS */
+.yield-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.yield-pill{background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:8px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:76px;}
+.ylbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);letter-spacing:.08em;}
+.yval{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;color:var(--tx);}
+.ychg{font-family:'IBM Plex Mono',monospace;font-size:9px;}
+.shape-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;border:1px solid;}
+.sh-n{color:var(--acc);border-color:rgba(13,118,128,.3);background:#E0F5F0;}
+.sh-f{color:var(--or);border-color:rgba(235,100,0,.3);background:var(--warn-bg);}
+.sh-i{color:var(--rd);border-color:rgba(176,32,32,.3);background:var(--danger-bg);}
+.inv-alert{background:var(--danger-bg);border:1px solid var(--danger-bd);color:var(--rd);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 10px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+
+/* FX */
+.fx-val{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:var(--tx);}
+.fx-pair{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);letter-spacing:.08em;}
+.ma-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.ma-pill{background:var(--surf2);border:1px solid var(--bd);border-radius:3px;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:9px;display:flex;gap:5px;align-items:center;}
+.ma-lbl{color:var(--mu);}
+.spread-pill{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 7px;border-radius:3px;display:inline-flex;align-items:center;gap:4px;}
+.sp-wide{background:var(--danger-bg);color:var(--rd);}
+.sp-mid{background:var(--warn-bg);color:var(--or);}
+.sp-tight{background:#E0F5F0;color:var(--acc);}
+.sp-neg{background:var(--info-bg);color:var(--bl);}
+
+/* CB */
+.cb-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--bd);}
+.cb-row:last-child{border-bottom:none;}
+.cb-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);width:110px;flex-shrink:0;}
+.cb-val{font-size:12px;font-weight:500;}
+.traj{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:600;}
+.tr-cut{background:#E0F5F0;color:var(--acc);}
+.tr-hik{background:var(--danger-bg);color:var(--rd);}
+.tr-eas{background:var(--info-bg);color:var(--bl);}
+.tr-hold{background:var(--surf2);color:var(--mu);border:1px solid var(--bd);}
+
+/* COALITION */
+.coal-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 8px;border-radius:3px;font-weight:600;}
+.coal-maj{background:#E0F5F0;color:var(--acc);}
+.coal-slim{background:var(--warn-bg);color:var(--or);}
+.coal-min{background:var(--danger-bg);color:var(--rd);}
+
+/* BUDGET */
+.bud-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--bd);}
+.bud-row:last-child{border-bottom:none;}
+.bud-rk{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;color:var(--bd2);width:18px;flex-shrink:0;}
+.bud-nm{flex:1;font-size:12px;}
+.bud-pct{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--acc);width:38px;text-align:right;font-weight:600;}
+.bud-amt{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu);width:90px;text-align:right;}
+
+/* FISCAL GRADE */
+.fiscal-card{border-radius:6px;padding:16px 18px;border-left:4px solid;margin-bottom:14px;background:var(--surf2);}
+.grade-lbl{font-family:'Playfair Display',serif;font-size:52px;font-weight:700;line-height:1;}
+
+/* FYP */
+.fyp-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);align-items:flex-start;}
+.fyp-row:last-child{border-bottom:none;}
+.fyp-st{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;white-space:nowrap;margin-top:1px;}
+.st-on{background:#E0F5F0;color:var(--acc);}
+.st-dl{background:var(--danger-bg);color:var(--rd);}
+.st-ex{background:var(--info-bg);color:var(--bl);}
+
+/* DEMOGRAPHIC ANALYSIS */
+.demo-analysis{background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:12px 14px;margin-bottom:12px;}
+.demo-status{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--bd);}
+.demo-icon{font-size:22px;}
+.demo-label{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;}
+.demo-text{font-size:12px;color:var(--mu);line-height:1.6;}
+.demo-stat-row{display:flex;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);}
+.demo-stat{flex:1;text-align:center;}
+.demo-stat-val{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;}
+.demo-stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--mu);text-transform:uppercase;margin-top:2px;}
+
+/* MACRO INDICATORS */
+.macro-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);}
+.macro-row:last-child{border-bottom:none;}
+.macro-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);flex:1;}
+.macro-val{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;}
+.macro-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-left:4px;}
+
+/* EU MEETINGS */
+.mtg-row{display:grid;grid-template-columns:88px 130px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:12px;align-items:start;}
+.mtg-row:last-child{border-bottom:none;}
+.mtg-dt{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--acc);}
+.mtg-body{color:var(--mu);font-size:11px;}
+
+/* MATRIX */
+.matrix-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--bd);}
+.matrix-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--bl);}
+.refresh-btn{background:var(--surf2);border:1px solid var(--bd2);color:var(--tx);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 12px;border-radius:4px;cursor:pointer;transition:all .15s;}
+.refresh-btn:hover{background:var(--surf3);border-color:var(--acc);color:var(--acc);}
+.refresh-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* FOOTER */
+.site-footer{background:var(--pu);color:rgba(255,255,255,.85);padding:20px 28px;text-align:center;margin-top:40px;}
+.site-footer a{color:rgba(255,255,255,.9);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:11px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:1px;transition:border-color .15s;}
+.site-footer a:hover{border-bottom-color:white;}
+.footer-brand{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:white;margin-bottom:6px;}
+
+.mono{font-family:'IBM Plex Mono',monospace;}
+.dim{color:var(--mu);}
+.chart-wrap{position:relative;width:100%;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <div class="live-dot"></div>
+    <div>
+      <div class="brand-he">צֹפֶה</div>
+      <div class="brand-en">Tzofeh</div>
+    </div>
+  </a>
+  <button class="tab-btn matrix-tab active" onclick="switchTab('matrix')">⬡ Matrix</button>
+  <button class="tab-btn" onclick="switchTab('usa')">USA</button>
+  <button class="tab-btn" onclick="switchTab('france')">France</button>
+  <button class="tab-btn" onclick="switchTab('uk')">UK</button>
+  <button class="tab-btn" onclick="switchTab('germany')">Germany</button>
+  <button class="tab-btn" onclick="switchTab('japan')">Japan</button>
+  <button class="tab-btn" onclick="switchTab('china')">China</button>
+  <button class="tab-btn" onclick="switchTab('eu')">EU</button>
+  <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle dark/light mode">☽</button>
+</nav>
+<div class="ticker-bar"><div class="ticker-inner" id="ticker-inner"></div></div>
+
+<div id="tab-matrix" class="tab-panel active"></div>
+<div id="tab-usa" class="tab-panel"></div>
+<div id="tab-france" class="tab-panel"></div>
+<div id="tab-uk" class="tab-panel"></div>
+<div id="tab-germany" class="tab-panel"></div>
+<div id="tab-japan" class="tab-panel"></div>
+<div id="tab-china" class="tab-panel"></div>
+<div id="tab-eu" class="tab-panel"></div>
+
+<footer class="site-footer">
+  <div class="footer-brand">צֹפֶה · Tzofeh — Geopolitical Intelligence</div>
+  <div style="font-size:11px;margin-bottom:10px;opacity:.7">Yield data via Yahoo Finance · Political data: static, last verified Mar 2025 · Not investment advice</div>
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap">
+    <a href="https://big-corp-tracker.vercel.app/" target="_blank">⬡ Corporate Tracker →</a>
+    <a href="https://consilium.europa.eu/en/meetings/" target="_blank">EU Council Calendar →</a>
+    <a href="https://europarl.europa.eu/plenary/" target="_blank">EP Plenary →</a>
+  </div>
+</footer>
+
+<div id="party-tip"></div>
+
+<script>
+/* ══════════════════════ DATA ══════════════════════ */
+const C = {
+  usa:{id:'usa',flag:'🇺🇸',name:'United States',system:'Presidential Federal Republic',lastUpdated:'Mar 20, 2025',
+    leader:{title:'President',name:'Donald J. Trump',party:'Republican',since:'Jan 2025',approval:45,disapproval:52,initials:'DT'},pm:null,
+    coalitionDef:'Republican majority — House 220R/215D · Senate 53R/47D',
+    cabinet:[
+      {role:'Vice President',name:'JD Vance',party:'Republican',since:'Jan 2025'},
+      {role:'Chief of Staff',name:'Susie Wiles',party:'Republican',since:'Jan 2025'},
+      {role:'Press Secretary',name:'Karoline Leavitt',party:'Republican',since:'Jan 2025'},
+      {role:'Secretary of State',name:'Marco Rubio',party:'Republican',since:'Jan 2025'},
+      {role:'Secretary of Defense',name:'Pete Hegseth',party:'Republican',since:'Jan 2025'},
+      {role:'Secretary of Treasury',name:'Scott Bessent',party:'Republican',since:'Jan 2025'},
+      {role:'Attorney General',name:'Pam Bondi',party:'Republican',since:'Feb 2025'},
+      {role:'Sec. Homeland Security',name:'Kristi Noem',party:'Republican',since:'Jan 2025'},
+      {role:'Sec. of Commerce',name:'Howard Lutnick',party:'Republican',since:'Feb 2025'},
+      {role:'National Security Advisor',name:'Mike Waltz',party:'Republican',since:'Jan 2025'},
+    ],
+    houseLeaders:[
+      {role:'House Speaker',name:'Mike Johnson',party:'Republican',note:'Majority Leader of the lower chamber'},
+      {role:'House Majority Leader',name:'Steve Scalise',party:'Republican',note:'Majority whip function; second-ranking Republican'},
+      {role:'House Minority Leader',name:'Hakeem Jeffries',party:'Democratic',note:'First Black House Minority Leader in US history'},
+      {role:'Senate Majority Leader',name:'John Thune',party:'Republican',note:'Replaced McConnell Jan 2025; South Dakota senator'},
+      {role:'Senate Minority Leader',name:'Chuck Schumer',party:'Democratic',note:'New York senator; led Democrats 2017–2025'},
+    ],
+    parliament:{name:'US Congress (Senate + House)',totalSeats:535,
+      parties:[
+        {name:'Republican Party',seats:273,color:'#B02020',leader:'Mike Johnson',role:'House Speaker',bio:'Louisiana congressman; House Speaker; key Trump ally driving MAGA legislative agenda',coalition:true},
+        {name:'Democratic Party',seats:262,color:'#0F5499',leader:'Hakeem Jeffries',role:'House Minority Leader',bio:'New York congressman; first Black House Minority Leader; pragmatic progressive',coalition:false},
+      ]},
+    elections:{
+      presidential:{date:'Nov 3, 2028',target:new Date('2028-11-03')},
+      legislative:{date:'Nov 3, 2026',target:new Date('2026-11-03'),label:'Midterm Elections'},
+    },
+    approvalTrend:[42,44,46,47,45,45],approvalSource:'Gallup, Mar 2025',approvalSourceUrl:'https://news.gallup.com/poll/203207/trump-job-approval-weekly.aspx',
+    whXHandle:'WhiteHouse',
+    centralBank:{name:'Federal Reserve',governor:'Jerome Powell',initials:'JP',display:'4.25–4.50%',trajectory:'cutting',nextMeeting:'May 7, 2025'},
+    fx:{yfTicker:'DX-Y.NYB',pair:'DXY Index',decimals:2,note:'USD vs basket of 6 major currencies'},
+    bundSpread:195,
+    macro:{
+      cpiYoy:3.2,cpiSource:'BLS, Feb 2025',
+      gdpYoy:2.8,gdpQoQ:2.3,gdpSource:'BEA Q4 2024 (annualised)',gdpQLabel:'Q4 2024',
+    },
+    debtGdp:124,
+    yields:{
+      tickers:{y5:'^FVX',y10:'^TNX',y30:'^TYX'},
+      labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
+      y5:[4.72,4.48,4.02,4.12,4.31,4.20],y10:[4.63,4.40,3.86,4.22,4.47,4.50],y30:[4.73,4.51,4.18,4.47,4.79,4.72],
+      current:{y5:4.20,y10:4.50,y30:4.72},yoy:{y5:-50,y10:-13,y30:+2},shape:'normal',inverted:false,
+    },
+    fiscal:{deficit:-6.4,deficitYoy:+0.8,debtService:16.1,debtServiceYoy:+1.2},
+    budget:{fy:'FY2024',currency:'USD bn',items:[
+      {name:'Medicare & Medicaid',amount:1554,pct:22.6},
+      {name:'Social Security',amount:1461,pct:21.3},
+      {name:'National Defence',amount:886,pct:12.9},
+    ]},
+    population:{total:'334.9M',medianAge:38.9,tfr:1.62,replacementTfr:2.1,
+      trend:'decline',birthRate:10.8,
+      analysis:'The US fertility rate (TFR 1.62) is well below replacement. Net positive immigration has masked demographic decline in GDP terms, but this is under political pressure. Entitlement liabilities — Social Security and Medicare — represent an existential long-run fiscal challenge: the worker-to-retiree ratio fell from 5:1 in 1960 to 2.7:1 today, projected at 2:1 by 2040. Without structural entitlement reform, debt-service crowding-out accelerates significantly post-2030.',
+      pyramid:[
+        {a:'80+',m:-5.0,f:7.2},{a:'75–79',m:-4.8,f:5.7},{a:'70–74',m:-6.5,f:7.2},{a:'65–69',m:-8.1,f:8.6},
+        {a:'60–64',m:-9.4,f:9.6},{a:'55–59',m:-10.0,f:10.1},{a:'50–54',m:-10.5,f:10.4},{a:'45–49',m:-10.8,f:10.7},
+        {a:'40–44',m:-10.9,f:10.7},{a:'35–39',m:-11.3,f:11.1},{a:'30–34',m:-11.6,f:11.4},{a:'25–29',m:-11.8,f:11.5},
+        {a:'20–24',m:-11.2,f:10.8},{a:'15–19',m:-10.7,f:10.3},{a:'10–14',m:-10.4,f:10.0},{a:'5–9',m:-10.1,f:9.6},{a:'0–4',m:-9.7,f:9.3},
+      ]},
+  },
+  france:{id:'france',flag:'🇫🇷',name:'France',system:'Semi-Presidential Republic (Fifth Republic)',lastUpdated:'Mar 20, 2025',
+    leader:{title:'President',name:'Emmanuel Macron',party:'Renaissance (MoDem)',since:'May 2017',approval:22,disapproval:76,initials:'EM'},
+    pm:{title:'Prime Minister',name:'François Bayrou',party:'MoDem',since:'Dec 2024',initials:'FB',approval:28,disapproval:62},
+    coalitionDef:'Ensemble minority — 166/577 seats. Governs without majority; relies on case-by-case support',
+    cabinet:[
+      {role:'Prime Minister',name:'François Bayrou',party:'MoDem',since:'Dec 2024'},
+      {role:'Foreign Affairs',name:'Jean-Noël Barrot',party:'MoDem',since:'Dec 2024'},
+      {role:'Interior',name:'Bruno Retailleau',party:'LR',since:'Sep 2024'},
+      {role:'Finance & Economy',name:'Éric Lombard',party:'Independent',since:'Jan 2025'},
+      {role:'Justice',name:'Gérald Darmanin',party:'Renaissance',since:'Dec 2024'},
+      {role:'Defence',name:'Sébastien Lecornu',party:'Renaissance',since:'May 2022'},
+      {role:'Education',name:'Élisabeth Borne',party:'Renaissance',since:'Jan 2025'},
+      {role:'Health',name:'Yannick Neuder',party:'LR',since:'Jan 2025'},
+    ],
+    parliament:{name:'Assemblée Nationale (577 seats)',totalSeats:577,
+      parties:[
+        {name:'Nouveau Front Populaire',seats:193,color:'#B02020',leader:'Olivier Faure',role:'First Secretary (PS)',bio:'Socialist Party leader; left-wing coalition; fiscally expansionist; key veto threat to Bayrou budget',coalition:false},
+        {name:'Ensemble (Macron coalition)',seats:166,color:'#F4A020',leader:'Gabriel Attal',role:'Former PM / Renaissance',bio:'Youngest-ever PM (resigned Sep 2024); now leads Ensemble; centrist reformist; crucial coalition anchor',coalition:true},
+        {name:'Rassemblement National',seats:143,color:'#1A3A6B',leader:'Marine Le Pen (suspended)',role:'RN President',bio:'Convicted of embezzlement; barred from office; RN led by Jordan Bardella; far-right nationalist opposition',coalition:false},
+        {name:'Others / Independents',seats:75,color:'#999',leader:'Various',role:'—',bio:'LR, regionalists, independents',coalition:false},
+      ]},
+    elections:{
+      presidential:{date:'Apr–May 2027',target:new Date('2027-04-23')},
+      legislative:{date:'Jun 2027',target:new Date('2027-06-11'),label:'Législatives'},
+    },
+    approvalTrend:[30,28,26,25,24,22],approvalSource:'Ifop, Mar 2025',approvalSourceUrl:'https://www.ifop.com/barometre-politique',
+    centralBank:{name:'ECB (European Central Bank)',governor:'Christine Lagarde',initials:'CL',display:'2.65%',trajectory:'cutting',nextMeeting:'Apr 17, 2025'},
+    fx:{yfTicker:'EURUSD=X',pair:'EUR/USD',decimals:4},
+    bundSpread:65,
+    macro:{
+      cpiYoy:1.1,cpiSource:'INSEE, Feb 2025',
+      gdpYoy:1.1,gdpQoQ:0.4,gdpSource:'INSEE Q4 2024',gdpQLabel:'Q4 2024',
+    },
+    debtGdp:112,
+    yields:{
+      labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
+      y5:[2.95,3.15,2.60,2.85,2.90,2.85],y10:[3.05,3.22,2.95,3.05,3.15,3.20],y30:[3.30,3.45,3.25,3.42,3.50,3.55],
+      current:{y5:2.85,y10:3.20,y30:3.55},yoy:{y5:-30,y10:-15,y30:+10},shape:'normal',inverted:false,
+    },
+    fiscal:{deficit:-5.5,deficitYoy:+0.3,debtService:9.5,debtServiceYoy:+0.7},
+    budget:{fy:'2024',currency:'EUR bn',items:[
+      {name:'Social Protection',amount:618,pct:40.2},
+      {name:'Education & Research',amount:168,pct:10.9},
+      {name:'Defence',amount:47,pct:3.0},
+    ]},
+    population:{total:'68.4M',medianAge:42.3,tfr:1.68,replacementTfr:2.1,trend:'decline',birthRate:10.4,
+      analysis:'France\'s TFR (1.68) is among the highest in the EU but still below replacement. Historically generous pro-natalist policy (family allowances, crèches) has slowed the decline but not reversed it. The pension system — reformed acrimoniously in 2023 — faces structural pressure as the dependency ratio climbs. Projections show working-age population shrinking by ~3M by 2040, compressing payroll tax revenue while healthcare and pension costs expand. Debt-service already absorbs ~€55bn/yr; demographic headwinds compound this over the next decade.',
+      pyramid:[
+        {a:'80+',m:-3.4,f:5.9},{a:'75–79',m:-3.9,f:5.1},{a:'70–74',m:-5.2,f:6.2},{a:'65–69',m:-6.4,f:7.2},
+        {a:'60–64',m:-6.9,f:7.5},{a:'55–59',m:-7.2,f:7.6},{a:'50–54',m:-7.8,f:7.9},{a:'45–49',m:-8.1,f:8.1},
+        {a:'40–44',m:-7.8,f:7.8},{a:'35–39',m:-7.5,f:7.5},{a:'30–34',m:-7.2,f:7.2},{a:'25–29',m:-7.0,f:6.9},
+        {a:'20–24',m:-6.8,f:6.7},{a:'15–19',m:-6.5,f:6.4},{a:'10–14',m:-6.2,f:6.1},{a:'5–9',m:-6.0,f:5.9},{a:'0–4',m:-5.8,f:5.7},
+      ]},
+  },
+  uk:{id:'uk',flag:'🇬🇧',name:'United Kingdom',system:'Constitutional Monarchy / Parliamentary Democracy',lastUpdated:'Mar 20, 2025',
+    leader:{title:'King (Head of State)',name:'HM King Charles III',party:'—',since:'Sep 2022',approval:null,disapproval:null,initials:'KC'},
+    pm:{title:'Prime Minister',name:'Keir Starmer',party:'Labour',since:'Jul 2024',initials:'KS',approval:30,disapproval:57},
+    coalitionDef:'Labour supermajority — 411/650 seats. No coalition required; largest majority since 1997 landslide',
+    cabinet:[
+      {role:'Prime Minister',name:'Keir Starmer',party:'Labour',since:'Jul 2024'},
+      {role:'Chancellor of the Exchequer',name:'Rachel Reeves',party:'Labour',since:'Jul 2024'},
+      {role:'Home Secretary',name:'Yvette Cooper',party:'Labour',since:'Jul 2024'},
+      {role:'Foreign Secretary',name:'David Lammy',party:'Labour',since:'Jul 2024'},
+      {role:'Defence Secretary',name:'John Healey',party:'Labour',since:'Jul 2024'},
+      {role:'Justice Secretary',name:'Shabana Mahmood',party:'Labour',since:'Jul 2024'},
+      {role:'Health Secretary',name:'Wes Streeting',party:'Labour',since:'Jul 2024'},
+      {role:'Education Secretary',name:'Bridget Phillipson',party:'Labour',since:'Jul 2024'},
+    ],
+    parliament:{name:'House of Commons (650 seats)',totalSeats:650,
+      parties:[
+        {name:'Labour',seats:411,color:'#B02020',leader:'Keir Starmer',role:'Prime Minister',bio:'Former Director of Public Prosecutions; centrist Labour PM; large majority but falling approval on cost-of-living & NHS',coalition:true},
+        {name:'Conservative',seats:121,color:'#1A3A6B',leader:'Kemi Badenoch',role:'Leader of the Opposition',bio:'Nigerian-British Conservative leader; right-wing reformist; youngest Tory leader; rebuilding after historic 2024 defeat',coalition:false},
+        {name:'Liberal Democrats',seats:72,color:'#F4A020',leader:'Ed Davey',role:'LD Leader',bio:'Led historic LD revival to 72 seats; targets southern Blue Wall seats; strong on local issues',coalition:false},
+        {name:'Others',seats:46,color:'#999',leader:'Various',role:'—',bio:'SNP, Reform UK, Greens, Plaid Cymru, independents',coalition:false},
+      ]},
+    elections:{presidential:null,
+      legislative:{date:'May 2029',target:new Date('2029-05-02'),label:'General Election'},
+    },
+    approvalTrend:[38,35,32,30,29,30],approvalSource:'YouGov, Mar 2025',approvalSourceUrl:'https://yougov.co.uk/topics/politics/trackers/keir-starmer-approval-rating',
+    centralBank:{name:'Bank of England',governor:'Andrew Bailey',initials:'AB',display:'4.50%',trajectory:'cutting',nextMeeting:'May 8, 2025'},
+    fx:{yfTicker:'GBPUSD=X',pair:'GBP/USD',decimals:4},
+    bundSpread:210,
+    macro:{
+      cpiYoy:3.4,cpiSource:'ONS, Feb 2025',
+      gdpYoy:1.1,gdpQoQ:0.1,gdpSource:'ONS Q4 2024',gdpQLabel:'Q4 2024',
+    },
+    debtGdp:100,
+    yields:{
+      labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
+      y5:[4.22,4.18,3.85,4.25,4.42,4.40],y10:[4.30,4.22,3.97,4.28,4.58,4.65],y30:[4.68,4.62,4.50,4.72,5.02,5.10],
+      current:{y5:4.40,y10:4.65,y30:5.10},yoy:{y5:+18,y10:+35,y30:+42},shape:'normal',inverted:false,
+    },
+    fiscal:{deficit:-4.5,deficitYoy:-0.3,debtService:8.8,debtServiceYoy:+0.5},
+    budget:{fy:'FY2024/25',currency:'GBP bn',items:[
+      {name:'Social Protection',amount:326,pct:32.0},
+      {name:'Health (NHS)',amount:184,pct:18.1},
+      {name:'Education',amount:122,pct:12.0},
+    ]},
+    population:{total:'67.8M',medianAge:40.6,tfr:1.49,replacementTfr:2.1,trend:'decline',birthRate:10.1,
+      analysis:'The UK\'s TFR (1.49) is the lowest it has been in modern times, and the population is only growing due to net migration of ~740k/yr — itself a politically contentious issue. NHS demand is rising structurally as the population ages: over-65s will comprise 24% of the population by 2040, up from 18% today. State pension age has already been raised to 67 (rising to 68); further rises are politically difficult but arithmetically necessary. OBR projects debt/GDP rising to 270% by 2070 without structural fiscal adjustment.',
+      pyramid:[
+        {a:'80+',m:-3.2,f:5.4},{a:'75–79',m:-3.8,f:4.9},{a:'70–74',m:-5.1,f:5.9},{a:'65–69',m:-6.3,f:7.0},
+        {a:'60–64',m:-6.8,f:7.3},{a:'55–59',m:-7.0,f:7.4},{a:'50–54',m:-7.5,f:7.7},{a:'45–49',m:-7.8,f:7.9},
+        {a:'40–44',m:-7.5,f:7.6},{a:'35–39',m:-7.8,f:7.8},{a:'30–34',m:-7.9,f:7.8},{a:'25–29',m:-7.5,f:7.4},
+        {a:'20–24',m:-6.9,f:6.7},{a:'15–19',m:-6.3,f:6.1},{a:'10–14',m:-6.0,f:5.9},{a:'5–9',m:-5.8,f:5.7},{a:'0–4',m:-5.7,f:5.6},
+      ]},
+  },
+  germany:{id:'germany',flag:'🇩🇪',name:'Germany',system:'Federal Parliamentary Republic',lastUpdated:'Mar 20, 2025',
+    leader:{title:'President (Ceremonial)',name:'Frank-Walter Steinmeier',party:'SPD',since:'Mar 2017',approval:null,disapproval:null,initials:'FS'},
+    pm:{title:'Chancellor',name:'Friedrich Merz',party:'CDU/CSU',since:'Mar 2025',initials:'FM',approval:38,disapproval:48},
+    coalitionDef:'CDU/CSU (208) + SPD (120) = 328/630 seats — thin majority of 16 above threshold of 316',
+    cabinet:[
+      {role:'Chancellor',name:'Friedrich Merz',party:'CDU',since:'Mar 2025'},
+      {role:'Vice Chancellor / Finance',name:'Lars Klingbeil',party:'SPD',since:'Mar 2025'},
+      {role:'Foreign Affairs',name:'Johann Wadephul',party:'CDU',since:'Mar 2025'},
+      {role:'Interior',name:'Alexander Dobrindt',party:'CSU',since:'Mar 2025'},
+      {role:'Defence',name:'Boris Pistorius',party:'SPD',since:'Jan 2023'},
+      {role:'Economy & Climate',name:'Katherina Reiche',party:'CDU',since:'Mar 2025'},
+      {role:'Justice',name:'Marco Buschmann',party:'FDP',since:'Mar 2025'},
+      {role:'Labour & Social Affairs',name:'Barbara Bas',party:'SPD',since:'Mar 2025'},
+    ],
+    parliament:{name:'Bundestag (630 seats)',totalSeats:630,
+      parties:[
+        {name:'CDU/CSU',seats:208,color:'#2c3e50',leader:'Friedrich Merz',role:'Chancellor',bio:'Conservative CDU leader; fiscal hawk; sworn in Mar 2025; advocating European defence autonomy and economic liberalisation',coalition:true},
+        {name:'AfD',seats:152,color:'#1658a8',leader:'Alice Weidel',role:'AfD Co-Chair',bio:'Far-right opposition leader; historic 20%+ result; excluded from all coalitions by "firewall" consensus',coalition:false},
+        {name:'SPD',seats:120,color:'#B02020',leader:'Lars Klingbeil',role:'SPD Co-Chair / Vice Chancellor',bio:'Social Democrats join CDU/CSU in GroKo; hold Finance Ministry; weakened after historic low election result',coalition:true},
+        {name:'Greens',seats:85,color:'#196f3d',leader:'Robert Habeck',role:'Green Co-Leader',bio:'Former Economy Minister; climate hawk; in opposition; likely kingmaker in future coalition scenarios',coalition:false},
+        {name:'Others',seats:65,color:'#999',leader:'Various',role:'—',bio:'FDP remnants, BSW, SSW, independents',coalition:false},
+      ]},
+    elections:{
+      presidential:{date:'Mar 2027 (indirect)',target:new Date('2027-03-15'),label:'Bundespräsident (indirect)'},
+      legislative:{date:'Feb 2029',target:new Date('2029-02-01'),label:'Bundestagswahl'},
+    },
+    approvalTrend:[32,34,36,38,37,38],approvalSource:'ARD Deutschlandtrend, Mar 2025',approvalSourceUrl:'https://www.infratest-dimap.de/umfragen-analysen/bundesweit/ard-deutschlandtrend/',
+    centralBank:{name:'ECB (European Central Bank)',governor:'Christine Lagarde',initials:'CL',display:'2.65%',trajectory:'cutting',nextMeeting:'Apr 17, 2025'},
+    fx:{yfTicker:'EURUSD=X',pair:'EUR/USD',decimals:4},
+    bundSpread:0,
+    macro:{
+      cpiYoy:2.3,cpiSource:'Destatis, Feb 2025',
+      gdpYoy:-0.2,gdpQoQ:-0.2,gdpSource:'Destatis Q4 2024',gdpQLabel:'Q4 2024',
+    },
+    debtGdp:63,
+    yields:{
+      labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
+      y5:[2.72,2.85,2.25,2.18,2.28,2.30],y10:[2.58,2.72,2.28,2.38,2.48,2.55],y30:[2.72,2.80,2.52,2.61,2.68,2.75],
+      current:{y5:2.30,y10:2.55,y30:2.75},yoy:{y5:-42,y10:-38,y30:-28},shape:'normal',inverted:false,
+    },
+    fiscal:{deficit:-2.0,deficitYoy:-0.3,debtService:4.2,debtServiceYoy:-0.2},
+    budget:{fy:'2024',currency:'EUR bn',items:[
+      {name:'Social Affairs / Labour',amount:178,pct:43.4},
+      {name:'Transport / Infrastructure',amount:36,pct:8.8},
+      {name:'Defence',amount:32,pct:7.8},
+    ]},
+    population:{total:'84.5M',medianAge:45.7,tfr:1.46,replacementTfr:2.1,trend:'decline',birthRate:9.0,
+      analysis:'Germany faces the steepest demographic cliff in the G7. TFR of 1.46, the oldest median age in the EU at 45.7, and 2.8M annual pension entries against 1.7M workforce entrants. The Rentenversicherung (state pension) will require an estimated €400bn+ additional subsidy by 2030 without parametric reform. Germany\'s economic model — built on skilled manufacturing labour — faces an acute skills gap: the Bundesagentur für Arbeit projects a 7M worker shortfall by 2035. Post-pandemic immigration has provided partial relief, but integration challenges remain a political flashpoint.',
+      pyramid:[
+        {a:'80+',m:-3.8,f:6.8},{a:'75–79',m:-4.5,f:6.0},{a:'70–74',m:-6.0,f:7.2},{a:'65–69',m:-7.2,f:8.0},
+        {a:'60–64',m:-7.8,f:8.4},{a:'55–59',m:-8.2,f:8.5},{a:'50–54',m:-8.0,f:8.1},{a:'45–49',m:-7.5,f:7.5},
+        {a:'40–44',m:-6.8,f:6.7},{a:'35–39',m:-6.2,f:6.1},{a:'30–34',m:-6.0,f:5.9},{a:'25–29',m:-5.8,f:5.6},
+        {a:'20–24',m:-5.5,f:5.2},{a:'15–19',m:-5.2,f:4.9},{a:'10–14',m:-5.0,f:4.8},{a:'5–9',m:-4.5,f:4.3},{a:'0–4',m:-4.1,f:3.9},
+      ]},
+  },
+  japan:{id:'japan',flag:'🇯🇵',name:'Japan',system:'Constitutional Monarchy / Parliamentary Democracy',lastUpdated:'Mar 20, 2025',
+    leader:{title:'Emperor (Ceremonial)',name:'Emperor Naruhito',party:'—',since:'May 2019',approval:null,disapproval:null,initials:'EN'},
+    pm:{title:'Prime Minister',name:'Shigeru Ishiba',party:'LDP',since:'Oct 2024',initials:'SI',approval:33,disapproval:52},
+    coalitionDef:'LDP (191) + Komeito (24) = 215/465 — minority by 18 seats; relies on opposition case-by-case support',
+    cabinet:[
+      {role:'Prime Minister',name:'Shigeru Ishiba',party:'LDP',since:'Oct 2024'},
+      {role:'Chief Cabinet Secretary',name:'Yoshimasa Hayashi',party:'LDP',since:'Oct 2024'},
+      {role:'Foreign Affairs',name:'Takeshi Iwaya',party:'LDP',since:'Oct 2024'},
+      {role:'Finance',name:'Katsunobu Kato',party:'LDP',since:'Oct 2024'},
+      {role:'Defence',name:'Gen Nakatani',party:'LDP',since:'Oct 2024'},
+      {role:'Economy, Trade & Industry',name:'Yoji Muto',party:'LDP',since:'Oct 2024'},
+      {role:'Digital Transformation',name:'Masaaki Taira',party:'LDP',since:'Oct 2024'},
+      {role:'Foreign Economic Policy',name:'Akazawa Ryosei',party:'LDP',since:'Oct 2024'},
+    ],
+    parliament:{name:'House of Representatives (465 seats)',totalSeats:465,
+      parties:[
+        {name:'Liberal Democratic Party',seats:191,color:'#2c3e50',leader:'Shigeru Ishiba',role:'PM / LDP President',bio:'Defence hawk; minority PM since Oct 2024; relying on opposition tolerance; Sangiin election Jul 2025 is existential test',coalition:true},
+        {name:'Constitutional Democratic Party',seats:148,color:'#B02020',leader:'Yoshihiko Noda',role:'CDP Leader / Former PM',bio:'Former PM (2011–12); led CDP to largest opposition gains in a decade; primary challenger to LDP dominance',coalition:false},
+        {name:'Komeito',seats:24,color:'#F4A020',leader:'Natsuo Yamaguchi',role:'Komeito Leader',bio:'Buddhist-backed centrist; LDP coalition partner since 1999; weakened in 2024 elections; renewal underway',coalition:true},
+        {name:'Others',seats:102,color:'#999',leader:'Various',role:'—',bio:'Nippon Ishin, DPP, Reiwa, JCP',coalition:false},
+      ]},
+    elections:{presidential:null,
+      legislative:{date:'Jul 2028 (est.)',target:new Date('2028-07-11'),label:'Upper House (Sangiin) Election'},
+      lowerHouse:{date:'By Oct 2028',target:new Date('2028-10-28'),label:'Lower House (Shugiin) Election'},
+    },
+    approvalTrend:[37,35,33,32,34,33],approvalSource:'NHK, Mar 2025',approvalSourceUrl:'https://www3.nhk.or.jp/news/special/yoron/',
+    centralBank:{name:'Bank of Japan',governor:'Kazuo Ueda',initials:'KU',display:'0.50%',trajectory:'hiking',nextMeeting:'Jun 2025'},
+    fx:{yfTicker:'USDJPY=X',pair:'USD/JPY',decimals:2},
+    bundSpread:-125,
+    macro:{
+      cpiYoy:3.7,cpiSource:'MIC, Feb 2025 (incl. food & energy)',
+      gdpYoy:1.2,gdpQoQ:2.8,gdpSource:'Cabinet Office Q4 2024 (annualised)',gdpQLabel:'Q4 2024',
+    },
+    debtGdp:261,
+    yields:{
+      labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
+      y5:[0.52,0.58,0.68,0.72,0.85,0.90],y10:[0.75,0.95,0.98,0.95,1.12,1.30],y30:[1.68,2.05,2.28,2.10,2.42,2.15],
+      current:{y5:0.90,y10:1.30,y30:2.15},yoy:{y5:+42,y10:+72,y30:+55},shape:'normal',inverted:false,
+    },
+    fiscal:{deficit:-3.9,deficitYoy:-0.2,debtService:22.4,debtServiceYoy:+0.8},
+    budget:{fy:'FY2024',currency:'JPY tn',items:[
+      {name:'Social Security',amount:37.7,pct:34.1},
+      {name:'National Debt Service',amount:27.1,pct:24.5},
+      {name:'Local Allocation Tax',amount:17.6,pct:15.9},
+    ]},
+    population:{total:'124.2M',medianAge:48.7,tfr:1.20,replacementTfr:2.1,trend:'severe_decline',birthRate:6.5,
+      analysis:'Japan is the world\'s most advanced case of demographic decline. TFR of 1.20 — half the replacement rate — combined with near-zero immigration produces a net population loss of ~500k per year. The working-age population has already shrunk by 10M since 2000. Debt service at 22.4% of the budget is the highest of any G7 nation; with JGBs now facing upward yield pressure as BoJ normalises policy, this share is structurally rising. Without radical immigration reform or a fertility miracle, Japan\'s economy faces irreversible contraction: the IMF projects GDP/capita growth turns negative before 2030 absent structural adjustment.',
+      pyramid:[
+        {a:'80+',m:-4.5,f:9.8},{a:'75–79',m:-5.0,f:7.8},{a:'70–74',m:-6.8,f:8.8},{a:'65–69',m:-7.8,f:8.9},
+        {a:'60–64',m:-7.2,f:7.7},{a:'55–59',m:-7.5,f:7.8},{a:'50–54',m:-8.2,f:8.4},{a:'45–49',m:-8.5,f:8.6},
+        {a:'40–44',m:-7.5,f:7.5},{a:'35–39',m:-6.5,f:6.4},{a:'30–34',m:-5.8,f:5.7},{a:'25–29',m:-5.5,f:5.3},
+        {a:'20–24',m:-5.2,f:5.0},{a:'15–19',m:-5.0,f:4.8},{a:'10–14',m:-4.8,f:4.6},{a:'5–9',m:-4.5,f:4.3},{a:'0–4',m:-3.8,f:3.6},
+      ]},
+  },
+};
+
+const CHINA = {
+  id:'china',flag:'🇨🇳',name:'China (PRC)',system:"People's Republic — CCP One-Party State",lastUpdated:'Mar 15, 2025',
+  politburo:[
+    {rank:1,name:'Xi Jinping',role:'General Secretary, President, CMC Chairman',age:71},
+    {rank:2,name:'Li Qiang',role:'Premier of the State Council',age:65},
+    {rank:3,name:'Zhao Leji',role:'Chairman, NPC Standing Committee',age:67},
+    {rank:4,name:'Wang Huning',role:'Chairman, CPPCC',age:69},
+    {rank:5,name:'Cai Qi',role:'Director, Central Secretariat',age:68},
+    {rank:6,name:'Ding Xuexiang',role:'Executive Vice Premier',age:62},
+    {rank:7,name:'Li Xi',role:'Secretary, Central Commission for Discipline Inspection',age:67},
+  ],
+  stateCouncil:[
+    {role:'Premier',name:'Li Qiang',since:'Mar 2023'},
+    {role:'Executive Vice Premier',name:'Ding Xuexiang',since:'Mar 2023'},
+    {role:'Vice Premier (Foreign Affairs)',name:'Wang Yi',since:'Mar 2023'},
+    {role:'Foreign Minister',name:'Wang Yi',since:'Jul 2023'},
+    {role:'Minister of Finance',name:"Lan Fo'an",since:'Mar 2023'},
+    {role:'Minister of National Defence',name:'Dong Jun',since:'Dec 2023'},
+    {role:'Minister of Commerce',name:'Wang Wentao',since:'Mar 2023'},
+    {role:'Governor, PBOC',name:'Pan Gongsheng',since:'Jul 2023'},
+  ],
+  fiveYearPlan:{
+    current:'14th Five-Year Plan (2021–2025)',
+    transitioning:'15th FYP (2026–2030) — Drafting Phase',
+    theme:'Dual Circulation: domestic demand as primary driver, selective global engagement',
+    targets:'GDP doubling by 2035 · R&D >2.5% GDP · 20% carbon intensity cut · PLA modernisation by 2027',
+    priorities:[
+      {name:'Technology Self-Reliance',desc:'Semiconductors, AI, quantum; reduce dependence on US supply chains; SMIC and Huawei advances',status:'on-track'},
+      {name:'Carbon Neutrality',desc:'Peak emissions before 2030; carbon-neutral by 2060; world\'s largest renewable build-out',status:'on-track'},
+      {name:'Common Prosperity',desc:'Reduce inequality; expand middle class; regulate platform tech monopolies',status:'delayed'},
+      {name:'Military Modernisation',desc:'World-class PLA by 2035/2049; Taiwan Strait readiness upgrades; naval expansion',status:'on-track'},
+      {name:'Digital Infrastructure',desc:'5G nationwide; smart cities; digital yuan (eCNY) deployment; AI governance framework',status:'exceeded'},
+    ],
+  },
+  centralBank:{name:"People's Bank of China",governor:'Pan Gongsheng',initials:'PG',display:'3.10%',trajectory:'easing',nextMeeting:'Quarterly review'},
+  fx:{yfTicker:'USDCNY=X',pair:'USD/CNY',decimals:4,note:'Managed float — PBOC 2% daily band'},
+  bundSpread:-70,
+  macro:{
+    cpiYoy:-0.7,cpiSource:'NBS, Feb 2025 (deflation)',
+    gdpYoy:5.4,gdpQoQ:1.6,gdpSource:'NBS Q4 2024',gdpQLabel:'Q4 2024',
+  },
+  debtGdp:85,
+  yields:{
+    labels:["Apr'24","Jun'24","Aug'24","Oct'24","Dec'24","Mar'25"],
+    y5:[2.12,2.05,1.95,1.65,1.55,1.50],y10:[2.31,2.28,2.18,2.08,1.92,1.85],y30:[2.52,2.47,2.40,2.28,2.18,2.10],
+    current:{y5:1.50,y10:1.85,y30:2.10},yoy:{y5:-62,y10:-46,y30:-42},shape:'normal',inverted:false,
+  },
+  fiscal:{deficit:-7.5,deficitYoy:+1.0,debtService:6.5,debtServiceYoy:+0.3},
+  budget:{fy:'2024',currency:'CNY tn',items:[
+    {name:'Education',amount:4.28,pct:15.0},
+    {name:'Social Security & Employment',amount:3.80,pct:13.3},
+    {name:'Agriculture & Environment',amount:2.73,pct:9.6},
+  ]},
+  population:{total:'1,409M',medianAge:39.0,tfr:1.09,replacementTfr:2.1,trend:'severe_decline',birthRate:6.4,
+    analysis:'China\'s TFR of 1.09 — one of the lowest ever recorded for a large economy — represents a structural reversal from the one-child policy era. The population officially peaked in 2022. An echo demographic creates a secondary fertility trough: the generation born during the one-child policy (now 25–45) is itself undersized, compressing the pool of potential parents. Pension system coverage remains incomplete; only ~37% of the rural elderly receive state pension. The "4-2-1 problem" (four grandparents, two parents, one child) places unprecedented care obligations on single children. Xi has warned of "demographic risks" publicly — a rare admission — and incentive policies (cash bonuses, paid leave) have seen negligible effect.',
+    pyramid:[
+      {a:'80+',m:-1.8,f:3.1},{a:'75–79',m:-2.5,f:3.8},{a:'70–74',m:-3.8,f:4.8},{a:'65–69',m:-5.0,f:5.8},
+      {a:'60–64',m:-6.2,f:6.8},{a:'55–59',m:-7.5,f:7.9},{a:'50–54',m:-8.2,f:8.5},{a:'45–49',m:-7.8,f:8.0},
+      {a:'40–44',m:-7.2,f:7.2},{a:'35–39',m:-7.0,f:6.9},{a:'30–34',m:-6.0,f:5.8},{a:'25–29',m:-5.8,f:5.5},
+      {a:'20–24',m:-6.2,f:5.8},{a:'15–19',m:-6.5,f:6.0},{a:'10–14',m:-6.8,f:6.2},{a:'5–9',m:-5.5,f:5.0},{a:'0–4',m:-4.5,f:4.1},
+    ]},
+};
+
+const EU = {
+  president:{name:'Ursula von der Leyen',country:'Germany 🇩🇪',since:'Dec 2024',termEnd:'Oct 2029',yearsLeft:4.6},
+  commissioners:[
+    {portfolio:'President of the Commission',name:'Ursula von der Leyen',country:'🇩🇪 Germany',termEnd:'Oct 2029',yearsLeft:4.6},
+    {portfolio:'EVP — Prosperity & Competitiveness',name:'Valdis Dombrovskis',country:'🇱🇻 Latvia',termEnd:'Oct 2029',yearsLeft:4.6},
+    {portfolio:'EVP — Green Deal & Sustainable Growth',name:'Teresa Ribera',country:'🇪🇸 Spain',termEnd:'Oct 2029',yearsLeft:4.6},
+    {portfolio:'EVP — Tech Sovereignty & Security',name:'Henna Virkkunen',country:'🇫🇮 Finland',termEnd:'Oct 2029',yearsLeft:4.6},
+    {portfolio:'EVP — Defence & Space',name:'Andrius Kubilius',country:'🇱🇹 Lithuania',termEnd:'Oct 2029',yearsLeft:4.6},
+    {portfolio:'Foreign Affairs & Security (HR/VP)',name:'Kaja Kallas',country:'🇪🇪 Estonia',termEnd:'Oct 2029',yearsLeft:4.6},
+    {portfolio:'Trade & Economic Security',name:'Maroš Šefčovič',country:'🇸🇰 Slovakia',termEnd:'Oct 2029',yearsLeft:4.6},
+    {portfolio:'Internal Market',name:'Stéphane Séjourné',country:'🇫🇷 France',termEnd:'Oct 2029',yearsLeft:4.6},
+  ],
+  epCoalition:[
+    {group:"European People's Party (EPP)",seats:188,color:'#1A3A6B',leader:'Manfred Weber (DE)',coalition:true},
+    {group:'Socialists & Democrats (S&D)',seats:136,color:'#B02020',leader:'Iratxe García (ES)',coalition:true},
+    {group:'Renew Europe',seats:77,color:'#F4A020',leader:'Valérie Hayer (FR)',coalition:true},
+    {group:'European Conservatives (ECR)',seats:78,color:'#2c3e50',leader:'Nicola Procaccini (IT)',coalition:false},
+    {group:'Greens / EFA',seats:53,color:'#196f3d',leader:'Terry Reintke (DE)',coalition:false},
+    {group:'The Left (GUE/NGL)',seats:46,color:'#6c3483',leader:'Martin Schirdewan (DE)',coalition:false},
+    {group:'Identity & Democracy (ID)',seats:58,color:'#0e2f44',leader:'Marco Zanni (IT)',coalition:false},
+    {group:'Non-Attached / Others',seats:84,color:'#999',leader:'Various',coalition:false},
+  ],
+  budget:{mff:'2021–2027',total:'€1,074.3bn (7-year commitments)',
+    categories:[
+      {name:'Cohesion & Regional Values',amount:377,pct:35.1},
+      {name:'Natural Resources & Agriculture',amount:356,pct:33.2},
+      {name:'Single Market, Innovation & Digital',amount:132,pct:12.3},
+      {name:'European Public Administration',amount:75,pct:7.0},
+      {name:'Security, Defence & Migration',amount:35,pct:3.3},
+    ],
+  },
+  meetings:[
+    {date:'Apr 7, 2025',body:'European Council',topic:'Competitiveness Strategy & Defence Industry Investment'},
+    {date:'Apr 14, 2025',body:'EU Commission',topic:'Digital Decade 2030 Progress Review & AI Act Implementation'},
+    {date:'Apr 22–25, 2025',body:'European Parliament',topic:'Plenary — Migration Package, EU-Mercosur Trade Agreement'},
+    {date:'May 5, 2025',body:'ECOFIN Council',topic:'Euro Area Fiscal Sustainability; Revised Stability & Growth Pact'},
+    {date:'May 12, 2025',body:'EU Commission',topic:'Clean Industrial Deal — Steel & Chemicals Roadmap'},
+    {date:'May 19–22, 2025',body:'European Parliament',topic:'Plenary — AI Liability Directive, Circular Economy Package'},
+    {date:'Jun 2–3, 2025',body:'European Council',topic:'Ukraine Reconstruction Fund; Eastern Enlargement Timeline'},
+    {date:'Jun 16, 2025',body:'EU Council (General)',topic:'Western Balkans Accession Progress; Rule of Law Reports'},
+  ],
+};
+
+/* ══════════════════════ CHART REGISTRY ══════════════════════ */
+const CHARTS = {};
+function destroyChart(id){if(CHARTS[id]){CHARTS[id].destroy();delete CHARTS[id];}}
+
+/* ══════════════════════ HELPERS ══════════════════════ */
+function daysUntil(t){return Math.max(0,Math.ceil((t-new Date())/864e5));}
+function elColor(d){return d<180?'var(--rd)':d<365?'var(--or)':'var(--green)';}
+function sign(v){return v>0?'+':'';}
+function posNeg(v,inverse=false){
+  const pos=inverse?(v<0):(v>0);
+  return pos?'pos':'neg';
+}
+
+function fiscalGrade(def,ds,dg){
+  const s1=def>=-2?35:def>=-3?28:def>=-5?18:def>=-7?8:0;
+  const s2=ds<5?35:ds<10?26:ds<15?16:ds<20?6:0;
+  const s3=dg<40?30:dg<60?24:dg<80?16:dg<100?8:dg<150?3:0;
+  const sc=s1+s2+s3;
+  const g=sc>=75?'A':sc>=55?'B':sc>=35?'C':sc>=18?'D':'F';
+  const col=g==='A'?'var(--green)':g==='B'?'var(--bl)':g==='C'?'var(--or)':'var(--rd)';
+  return {score:sc,grade:g,color:col};
+}
+
+function coalitionStatus(parl){
+  const maj=Math.floor(parl.totalSeats/2)+1;
+  const gov=parl.parties.filter(p=>p.coalition).reduce((s,p)=>s+p.seats,0);
+  const gap=gov-maj;
+  let status,cls;
+  if(gov>=maj){status=gap<30?'SLIM MAJ.':'MAJORITY';cls=gap<30?'coal-slim':'coal-maj';}
+  else{status='MINORITY';cls='coal-min';}
+  return{status,cls,gap,govSeats:gov,majority:maj,pct:(gov/parl.totalSeats*100).toFixed(1)};
+}
+
+function trajLabel(t){
+  const m={cutting:'↓ CUTTING',hiking:'↑ HIKING',easing:'↓ EASING',holding:'→ HOLDING'};
+  const c={cutting:'tr-cut',hiking:'tr-hik',easing:'tr-eas',holding:'tr-hold'};
+  return`<span class="traj ${c[t]||'tr-hold'}">${m[t]||t.toUpperCase()}</span>`;
+}
+
+function spreadLabel(bps){
+  if(bps===0)return`<span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu)">DE BUND BASE</span>`;
+  const cls=bps<0?'sp-neg':bps<80?'sp-tight':bps<150?'sp-mid':'sp-wide';
+  return`<span class="spread-pill ${cls}">${sign(bps)}${bps}bps vs Bund</span>`;
+}
+
+function demoStatusConfig(trend){
+  return{
+    growth:{icon:'📈',label:'POPULATION GROWTH',color:'var(--green)',bg:'#E8F5E3',border:'#9FD99F'},
+    stagnation:{icon:'➡',label:'NEAR-STAGNATION',color:'var(--or)',bg:'var(--warn-bg)',border:'var(--warn-bd)'},
+    decline:{icon:'📉',label:'DEMOGRAPHIC DECLINE',color:'var(--or)',bg:'var(--warn-bg)',border:'var(--warn-bd)'},
+    severe_decline:{icon:'⚠',label:'SEVERE DEMOGRAPHIC DECLINE',color:'var(--rd)',bg:'var(--danger-bg)',border:'var(--danger-bd)'},
+  }[trend]||{icon:'—',label:'UNKNOWN',color:'var(--mu)',bg:'var(--surf2)',border:'var(--bd)'};
+}
+
+function sparkSVG(values,color){
+  const w=200,h=60,p=8;
+  const iw=w-p*2,ih=h-p*2-10;
+  const mn=Math.min(...values),mx=Math.max(...values),rng=mx-mn||.5;
+  const pts=values.map((v,i)=>{
+    const x=p+(i/(values.length-1))*iw;
+    const y=p+ih-((v-mn)/rng)*ih;
+    return`${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const last=pts.split(' ').pop().split(',').map(Number);
+  const trend=values[values.length-1]-values[0];
+  const tc=trend>0?'var(--rd)':'var(--green)';
+  return`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="overflow:visible">
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${last[0]}" cy="${last[1]}" r="3" fill="${color}"/>
+    <text x="${p}" y="${h-1}" font-family="IBM Plex Mono,monospace" font-size="9" fill="#A8998C">${values[0].toFixed(1)}%</text>
+    <text x="${w-p}" y="${h-1}" font-family="IBM Plex Mono,monospace" font-size="9" fill="${tc}" text-anchor="end">${values[values.length-1].toFixed(1)}%</text>
+  </svg>`;
+}
+
+/* ══════════════════════ TICKER ══════════════════════ */
+function buildTicker(){
+  const alerts=[];
+  const all=[...Object.values(C),CHINA];
+  all.forEach(d=>{
+    const ap=d.pm?.approval??d.leader?.approval;
+    if(ap!=null&&ap<30) alerts.push(`${d.flag} ${d.name}: Leader approval ${ap}%`);
+    if(d.yields?.inverted) alerts.push(`${d.flag} ${d.name}: Yield curve INVERTED ⚠`);
+    if(d.fiscal?.deficit<-6.5) alerts.push(`${d.flag} Deficit at ${d.fiscal.deficit}% GDP`);
+    if(d.macro?.cpiYoy<0) alerts.push(`${d.flag} ${d.name}: DEFLATION — CPI ${d.macro.cpiYoy}%`);
+    if(d.id!=='china'&&d.parliament){
+      const cs=coalitionStatus(d.parliament);
+      if(cs.status==='MINORITY') alerts.push(`${d.flag} ${d.name}: Minority government — gap ${cs.gap} seats`);
+    }
+    if(d.elections){
+      const leg=d.elections.legislative?.target;
+      if(leg&&daysUntil(leg)<180) alerts.push(`${d.flag} ${d.name}: ${d.elections.legislative.label} in ${daysUntil(leg)} days`);
+    }
+    if(d.centralBank?.trajectory==='hiking') alerts.push(`${d.flag} BoJ hiking — JGB yield normalisation underway`);
+  });
+  const inner=document.getElementById('ticker-inner');
+  if(!alerts.length){document.querySelector('.ticker-bar').style.display='none';return;}
+  inner.innerHTML=alerts.map(a=>`<div class="tick-item">▸ ${a}</div>`).join('');
+}
+
+/* ══════════════════════ MATRIX ══════════════════════ */
+function renderMatrix(){
+  const rows=Object.values(C).map(d=>{
+    const ap=d.pm?.approval??d.leader?.approval;
+    const apD=ap==null?'<span style="color:var(--mu)">—</span>':`<span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${ap>=50?'var(--green)':ap>=35?'var(--or)':'var(--rd)'}">${ap}%</span>`;
+    const cs=coalitionStatus(d.parliament);
+    const nextEl=d.elections.legislative?.target||d.elections.presidential?.target;
+    const days=nextEl?daysUntil(nextEl):null;
+    const fg=fiscalGrade(d.fiscal.deficit,d.fiscal.debtService,d.debtGdp);
+    const cpiCol=d.macro.cpiYoy>5?'var(--rd)':d.macro.cpiYoy>3?'var(--or)':d.macro.cpiYoy<0?'var(--bl)':'var(--green)';
+    const gdpCol=d.macro.gdpYoy<0?'var(--rd)':d.macro.gdpYoy<1?'var(--or)':'var(--green)';
+    return`<tr onclick="switchTab('${d.id}')" style="cursor:pointer">
+      <td><strong>${d.name}</strong></td>
+      <td>${apD}</td>
+      <td><span class="coal-badge ${cs.cls}">${cs.status}</span></td>
+      <td>${days!=null?`<span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${elColor(days)}">${days.toLocaleString()}d</span>`:'<span style="color:var(--mu)">—</span>'}</td>
+      <td id="mx-10y-${d.id}"><span style="font-family:'IBM Plex Mono',monospace;font-weight:600">${d.yields.current.y10.toFixed(2)}%</span> <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:${d.yields.yoy.y10>0?'var(--rd)':'var(--green)'}">${sign(d.yields.yoy.y10)}${d.yields.yoy.y10}bps</span></td>
+      <td>${spreadLabel(d.bundSpread)}</td>
+      <td><span style="font-family:'IBM Plex Mono',monospace;font-weight:600">${d.centralBank.display}</span> ${trajLabel(d.centralBank.trajectory)}</td>
+      <td id="mx-fx-${d.id}"><span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px">—</span><br><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">${d.fx.pair}</span></td>
+      <td><span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${cpiCol}">${d.macro.cpiYoy}%</span></td>
+      <td><span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:${gdpCol}">${d.macro.gdpYoy}%</span></td>
+      <td><span style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;color:${fg.color}">${fg.grade}</span></td>
+    </tr>`;
+  });
+
+  document.getElementById('tab-matrix').innerHTML=`
+  <div class="matrix-hdr">
+    <div>
+      <div class="matrix-title">Global Risk Matrix</div>
+      <div style="font-size:11px;color:var(--mu);margin-top:4px">Click any row to open country detail · FX live via Yahoo Finance · <span id="mx-status" style="color:var(--fa)">loading live data…</span></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="updated">Political data: Mar 20, 2025</span>
+      <button class="refresh-btn" id="refresh-btn" onclick="doLiveFetch()">⟳ Refresh</button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:auto">
+    <table class="matrix-table" style="min-width:1000px">
+      <thead><tr>
+        <th>Country</th><th>Leader Approval</th><th>Coalition</th><th>Next Election</th>
+        <th>10Y Yield</th><th>vs Bund</th><th>CB Rate</th>
+        <th>FX <span id="fx-live-lbl"></span></th>
+        <th>CPI YoY</th><th>GDP YoY</th><th>Fiscal</th>
+      </tr></thead>
+      <tbody>${rows.join('')}</tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">🇨🇳 China — Key Indicators</span><span class="badge bo">State-Managed Data</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div class="kpi-card"><div class="kpi-lbl">10Y CGB</div><div class="kpi-val" style="font-size:18px">${CHINA.yields.current.y10.toFixed(2)}%</div><div class="kpi-delta" style="color:var(--green)">${CHINA.yields.yoy.y10}bps YoY</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">PBOC Rate</div><div class="kpi-val" style="font-size:18px">${CHINA.centralBank.display}</div><div class="kpi-delta">${trajLabel(CHINA.centralBank.trajectory)}</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">CPI YoY</div><div class="kpi-val" style="font-size:18px;color:var(--bl)">${CHINA.macro.cpiYoy}%</div><div class="kpi-delta" style="color:var(--bl)">Deflation</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">GDP YoY</div><div class="kpi-val" style="font-size:18px;color:var(--green)">${CHINA.macro.gdpYoy}%</div><div class="kpi-delta dim">${CHINA.macro.gdpQLabel}</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">Deficit/GDP</div><div class="kpi-val" style="font-size:18px;color:var(--rd)">${CHINA.fiscal.deficit}%</div></div>
+        <div class="kpi-card"><div class="kpi-lbl">Fiscal Grade</div><div class="kpi-val" style="font-size:28px;color:${fiscalGrade(CHINA.fiscal.deficit,CHINA.fiscal.debtService,CHINA.debtGdp).color}">${fiscalGrade(CHINA.fiscal.deficit,CHINA.fiscal.debtService,CHINA.debtGdp).grade}</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><span class="card-title">Fiscal Grade Methodology</span></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+        ${[['A','75–100','var(--green)'],['B','55–74','var(--bl)'],['C','35–54','var(--or)'],['D','18–34','var(--rd)'],['F','0–17','var(--rd)']].map(([g,r,c])=>`<div style="display:flex;align-items:center;gap:6px"><span style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:${c}">${g}</span><span style="font-size:10px;color:var(--mu)">${r}pts</span></div>`).join('')}
+      </div>
+      <div style="font-size:11px;color:var(--mu);line-height:1.6">Composite score: <strong>Deficit/GDP</strong> (35pts) + <strong>Debt Service % Budget</strong> (35pts) + <strong>Debt/GDP</strong> (30pts). A = fiscal strength · F = debt crisis risk.</div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════ COUNTRY ══════════════════════ */
+function renderCountry(cid){
+  const d=C[cid];
+  const cs=coalitionStatus(d.parliament);
+  const fg=fiscalGrade(d.fiscal.deficit,d.fiscal.debtService,d.debtGdp);
+  const apPerson=d.pm?.approval!=null?d.pm:d.leader;
+  const dc=demoStatusConfig(d.population.trend);
+
+  /* Cabinet */
+  let cab=`<table class="data-table"><thead><tr><th>Role</th><th>Name</th><th>Party</th><th>Since</th></tr></thead><tbody>`;
+  d.cabinet.forEach(c=>{cab+=`<tr><td class="dim">${c.role}</td><td style="font-weight:600">${c.name}</td><td class="dim" style="font-size:10px">${c.party}</td><td class="mono dim" style="font-size:10px">${c.since}</td></tr>`;});
+  cab+=`</tbody></table>`;
+
+  /* Parliament */
+  const tot=d.parliament.totalSeats;
+  let parlBar='',parlLeg='';
+  d.parliament.parties.forEach(p=>{
+    const pct=(p.seats/tot*100).toFixed(1);
+    const govBorder=p.coalition?'border-top:3px solid var(--acc);':'';
+    parlBar+=`<div class="parl-seg" style="width:${pct}%;background:${p.color};${govBorder}"
+      data-party="${p.name}" data-seats="${p.seats}" data-pct="${pct}"
+      data-leader="${p.leader}" data-role="${p.role}" data-bio="${p.bio}" data-coalition="${p.coalition}"
+      onclick="showPartyTip(event,this)">${p.seats>30?p.seats:''}</div>`;
+    const govB=p.coalition?`<span class="badge bg" style="margin-left:4px;font-size:8px">GOV</span>`:'';
+    parlLeg+=`<div class="party-row"><span class="pdot" style="background:${p.color}"></span><span style="flex:1">${p.name}${govB}</span><span class="pstat">${p.seats} · ${pct}%</span></div>
+    <div style="padding:2px 8px 5px;font-size:10px;color:var(--fa)">${p.leader} — ${p.role}</div>`;
+  });
+
+  /* Elections */
+  let elH='';
+  if(d.elections.presidential){
+    const days=daysUntil(d.elections.presidential.target);
+    elH+=`<div class="el-card"><div class="el-type">Presidential</div><div class="el-days" style="color:${elColor(days)}">${days.toLocaleString()}</div><div style="font-size:10px;color:var(--mu);margin-top:1px">days</div><div style="font-size:10px;color:var(--fa);margin-top:4px">${d.elections.presidential.date}</div></div>`;
+  }
+  if(d.elections.legislative){
+    const days=daysUntil(d.elections.legislative.target);
+    elH+=`<div class="el-card"><div class="el-type">${d.elections.legislative.label||'Legislative'}</div><div class="el-days" style="color:${elColor(days)}">${days.toLocaleString()}</div><div style="font-size:10px;color:var(--mu);margin-top:1px">days</div><div style="font-size:10px;color:var(--fa);margin-top:4px">${d.elections.legislative.date}</div></div>`;
+  }
+  if(d.elections.lowerHouse){
+    const days=daysUntil(d.elections.lowerHouse.target);
+    elH+=`<div class="el-card"><div class="el-type">${d.elections.lowerHouse.label}</div><div class="el-days" style="color:${elColor(days)}">${days.toLocaleString()}</div><div style="font-size:10px;color:var(--mu);margin-top:1px">days</div><div style="font-size:10px;color:var(--fa);margin-top:4px">${d.elections.lowerHouse.date}</div></div>`;
+  }
+
+  /* Approval — supports single person OR dual (President + PM) */
+  function approvalBlock(person,trend,src,srcUrl){
+    const ap=person.approval,dis=person.disapproval;
+    if(ap==null)return`<div style="color:var(--mu);font-size:11px;padding:6px 0">No independent polling available for ${person.title}</div>`;
+    const net=ap-dis;
+    return`<div style="margin-bottom:12px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:6px">${person.title}: ${person.name}</div>
+      <div class="approval-wrap">
+        <div style="min-width:88px">
+          <div class="appr-num" style="color:${ap>=50?'var(--green)':ap>=35?'var(--or)':'var(--rd)'}">${ap}%</div>
+          <div style="font-size:10px;color:var(--mu);margin-top:2px">Approve</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--rd);margin-top:6px">${dis}%</div>
+          <div style="font-size:10px;color:var(--mu)">Disapprove</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:${net>=0?'var(--green)':'var(--rd)'};margin-top:6px">${sign(net)}${net}pp</div>
+          <div style="font-size:10px;color:var(--mu)">Net</div>
+        </div>
+        <div style="flex:1">${trend?sparkSVG(trend,ap>=40?'#0D7680':ap>=30?'#EB6400':'#B02020'):''}
+          ${src?`<div class="appr-src">${src}${srcUrl?` · <a href="${srcUrl}" target="_blank" style="color:var(--acc);font-size:9px">Source ↗</a>`:''}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  let apH='';
+  // France: show both President and PM
+  if(cid==='france'&&d.leader.approval!=null){
+    apH=approvalBlock(d.leader,d.approvalTrend,d.approvalSource,d.approvalSourceUrl);
+    if(d.pm&&d.pm.approval!=null) apH+=`<div style="border-top:1px solid var(--bd);padding-top:10px;margin-top:2px">${approvalBlock(d.pm,null,null,null)}</div>`;
+  } else {
+    const person=d.pm&&d.pm.approval!=null?d.pm:d.leader;
+    if(person.approval==null){apH=`<div style="color:var(--mu);font-size:11px;padding:8px 0">No independent polling available</div>`;}
+    else{apH=approvalBlock(person,d.approvalTrend,d.approvalSource,d.approvalSourceUrl);}
+  }
+
+  /* Yields */
+  const yr=d.yields;
+  const invB=yr.inverted?`<div class="inv-alert">⚠ CURVE INVERTED — 10Y &lt; 5Y</div>`:'';
+  const shCls=yr.shape==='normal'?'sh-n':yr.shape==='flat'?'sh-f':'sh-i';
+
+  /* Macro */
+  const mc=d.macro;
+  const cpiCol=mc.cpiYoy>5?'var(--rd)':mc.cpiYoy>3?'var(--or)':mc.cpiYoy<0?'var(--bl)':'var(--green)';
+  const gdpCol=mc.gdpYoy<0?'var(--rd)':mc.gdpYoy<1?'var(--or)':'var(--green)';
+  const gdpQCol=mc.gdpQoQ<0?'var(--rd)':mc.gdpQoQ<0.5?'var(--or)':'var(--green)';
+
+  /* Budget */
+  let budH='';
+  d.budget.items.forEach((it,i)=>{
+    budH+=`<div class="bud-row"><div class="bud-rk">${i+1}</div><div class="bud-nm">${it.name}</div><div class="bud-amt">${it.amount} ${d.budget.currency.split(' ')[0]}</div><div class="bud-pct">${it.pct}%</div></div>`;
+  });
+
+  /* Population */
+  const pop=d.population;
+  const tfrGap=(pop.replacementTfr-pop.tfr).toFixed(2);
+  const tfrPct=((pop.tfr/pop.replacementTfr)*100).toFixed(0);
+
+  document.getElementById(`tab-${cid}`).innerHTML=`
+  <div class="panel-hdr">
+    <div class="flag">${d.flag}</div>
+    <div><div class="ctry-name">${d.name}</div><div class="ctry-meta">${d.system}</div></div>
+    <div style="margin-left:auto;text-align:right">
+      <div class="updated">Political data: ${d.lastUpdated}</div>
+      <div class="updated" style="color:var(--or);margin-top:2px">FX/Yields: live via Yahoo Finance</div>
+    </div>
+  </div>
+  <div class="two-col">
+    <!-- POLITICAL -->
+    <div>
+      <div class="sec-title">Political Intelligence</div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Executive Leadership</span></div>
+        ${d.pm?`<div class="leader-card"><div class="avatar">${d.leader.initials}</div><div><div class="lname">${d.leader.name}</div><div class="lrole">${d.leader.title}</div><div class="lparty">${d.leader.party} · since ${d.leader.since}</div></div></div>
+        <div class="leader-card"><div class="avatar" style="color:var(--or)">${d.pm.initials}</div><div><div class="lname">${d.pm.name}</div><div class="lrole">${d.pm.title}</div><div class="lparty">${d.pm.party} · since ${d.pm.since}</div></div></div>`:
+        `<div class="leader-card"><div class="avatar">${d.leader.initials}</div><div><div class="lname">${d.leader.name}</div><div class="lrole">${d.leader.title}</div><div class="lparty">${d.leader.party} · since ${d.leader.since}</div></div></div>`}
+        ${cab}
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">${d.parliament.name}</span><span class="coal-badge ${cs.cls}">${cs.status}</span></div>
+        <div style="font-size:11px;color:var(--mu);margin-bottom:8px">${d.coalitionDef}</div>
+        <div class="parl-bar">${parlBar}</div>
+        <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-bottom:8px"><span>0</span><span>Majority: ${cs.majority}</span><span>${tot}</span></div>
+        <div style="font-size:9px;color:var(--fa);margin-bottom:10px">Click a party segment for leader profile</div>
+        ${parlLeg}
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Election Countdown</span></div>
+        <div class="el-grid">${elH}</div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">${cid==='france'?'Approval Ratings — President & PM':('Approval — '+(apPerson.title||'')+': '+apPerson.name)}</span></div>
+        ${apH}
+      </div>
+    </div>
+    <!-- ECONOMIC -->
+    <div>
+      <div class="sec-title">Economic Intelligence</div>
+
+      <!-- MACRO KPIs -->
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Macro Indicators</span><span class="updated">${mc.gdpSource} · ${mc.cpiSource}</span></div>
+        <div class="kpi-grid-4" style="margin-bottom:0">
+          <div class="kpi-card">
+            <div class="kpi-lbl">CPI YoY</div>
+            <div class="kpi-val" style="color:${cpiCol}">${mc.cpiYoy}%</div>
+            <div class="kpi-delta" style="color:${cpiCol}">${mc.cpiYoy>3?'Above target':mc.cpiYoy<0?'Deflation':'On target'}</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-lbl">GDP YoY</div>
+            <div class="kpi-val" style="color:${gdpCol}">${mc.gdpYoy}%</div>
+            <div class="kpi-delta dim">Annual</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-lbl">GDP ${mc.gdpQLabel}</div>
+            <div class="kpi-val" style="color:${gdpQCol}">${mc.gdpQoQ}%</div>
+            <div class="kpi-delta dim">Quarterly</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-lbl">Debt / GDP</div>
+            <div class="kpi-val" style="color:${d.debtGdp>120?'var(--rd)':d.debtGdp>80?'var(--or)':'var(--green)'}">${d.debtGdp}%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CB + FX -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div class="card" style="margin-bottom:0">
+          <div class="card-hdr"><span class="card-title">Central Bank</span></div>
+          <div class="cb-row"><div class="cb-lbl">Institution</div><div class="cb-val" style="font-size:11px">${d.centralBank.name}</div></div>
+          <div class="cb-row"><div class="cb-lbl">Governor</div><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:26px;height:26px;font-size:9px;flex-shrink:0">${d.centralBank.initials}</div><span class="cb-val" style="font-size:11px">${d.centralBank.governor}</span></div></div>
+          <div class="cb-row"><div class="cb-lbl">Policy Rate</div><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600">${d.centralBank.display}</div></div>
+          <div class="cb-row"><div class="cb-lbl">Trajectory</div><div>${trajLabel(d.centralBank.trajectory)}</div></div>
+          <div class="cb-row"><div class="cb-lbl">Next Meeting</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--acc)">${d.centralBank.nextMeeting}</div></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="card-hdr"><span class="card-title">FX &amp; Spreads</span><span id="fx-badge-${cid}" class="static-badge">STATIC</span></div>
+          <div style="margin-bottom:10px">
+            <div class="fx-pair">${d.fx.pair}</div>
+            <div class="fx-val" id="fx-val-${cid}">—</div>
+            <div id="fx-chg-${cid}" style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-top:2px">—</div>
+            ${d.fx.note?`<div style="font-size:9px;color:var(--fa);margin-top:2px">${d.fx.note}</div>`:''}
+          </div>
+          <div class="ma-row" id="ma-${cid}">
+            <div class="ma-pill"><span class="ma-lbl">50d MA</span><span id="ma50-${cid}">—</span></div>
+            <div class="ma-pill"><span class="ma-lbl">200d MA</span><span id="ma200-${cid}">—</span></div>
+          </div>
+          <div style="border-top:1px solid var(--bd);padding-top:10px;margin-top:10px">
+            <div class="kpi-lbl">vs German Bund (10Y)</div>
+            <div style="margin-top:5px">${spreadLabel(d.bundSpread)}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- YIELDS -->
+      <div class="card">
+        <div class="card-hdr">
+          <span class="card-title">Sovereign Yield Curve</span>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span class="shape-badge ${shCls}">${yr.shape.toUpperCase()}</span>
+            <span id="yld-badge-${cid}" class="static-badge">STATIC</span>
+          </div>
+        </div>
+        ${invB}
+        <div class="yield-pills">
+          <div class="yield-pill"><div class="ylbl">5Y</div><div class="yval" id="y5-${cid}">${yr.current.y5.toFixed(2)}%</div><div class="ychg" style="color:${yr.yoy.y5>0?'var(--rd)':'var(--green)'}">${sign(yr.yoy.y5)}${yr.yoy.y5}bps YoY</div></div>
+          <div class="yield-pill"><div class="ylbl">10Y</div><div class="yval" id="y10-${cid}">${yr.current.y10.toFixed(2)}%</div><div class="ychg" style="color:${yr.yoy.y10>0?'var(--rd)':'var(--green)'}">${sign(yr.yoy.y10)}${yr.yoy.y10}bps YoY</div></div>
+          <div class="yield-pill"><div class="ylbl">30Y</div><div class="yval" id="y30-${cid}">${yr.current.y30.toFixed(2)}%</div><div class="ychg" style="color:${yr.yoy.y30>0?'var(--rd)':'var(--green)'}">${sign(yr.yoy.y30)}${yr.yoy.y30}bps YoY</div></div>
+        </div>
+        <div class="chart-wrap" style="height:175px"><canvas id="yield-${cid}"></canvas></div>
+      </div>
+
+      <!-- FISCAL GRADE -->
+      <div class="fiscal-card" style="border-left-color:${fg.color}">
+        <div style="display:flex;align-items:flex-start;gap:16px">
+          <div><div class="grade-lbl" style="color:${fg.color}">${fg.grade}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu);margin-top:2px">${fg.score}/100 pts</div></div>
+          <div style="flex:1">
+            <div class="kpi-lbl" style="margin-bottom:8px">Fiscal Health Score</div>
+            <div class="kpi-grid-3" style="margin-bottom:0">
+              <div style="background:white;border:1px solid var(--bd);border-radius:4px;padding:7px 9px">
+                <div class="kpi-lbl">Deficit/GDP</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:${d.fiscal.deficit<-5?'var(--rd)':d.fiscal.deficit<-3?'var(--or)':'var(--green)'}">${d.fiscal.deficit}%</div>
+                <div class="kpi-delta" style="color:${d.fiscal.deficitYoy>0?'var(--rd)':'var(--green)'}">${sign(d.fiscal.deficitYoy)}${d.fiscal.deficitYoy}pp</div>
+              </div>
+              <div style="background:white;border:1px solid var(--bd);border-radius:4px;padding:7px 9px">
+                <div class="kpi-lbl">Debt/GDP</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:${d.debtGdp>120?'var(--rd)':d.debtGdp>80?'var(--or)':'var(--green)'}">${d.debtGdp}%</div>
+              </div>
+              <div style="background:white;border:1px solid var(--bd);border-radius:4px;padding:7px 9px">
+                <div class="kpi-lbl">Debt Service</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:${d.fiscal.debtService>15?'var(--rd)':d.fiscal.debtService>8?'var(--or)':'var(--green)'}">${d.fiscal.debtService}%</div>
+                <div class="kpi-delta" style="color:${d.fiscal.debtServiceYoy>0?'var(--rd)':'var(--green)'}">${sign(d.fiscal.debtServiceYoy)}${d.fiscal.debtServiceYoy}pp</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUDGET ITEMS -->
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Top Budget Spending Items</span><span class="updated">${d.budget.fy} · ${d.budget.currency}</span></div>
+        ${budH}
+      </div>
+
+      <!-- DEMOGRAPHICS -->
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Demographics</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">${pop.total} · Median age ${pop.medianAge}yr</span></div>
+        <div class="kpi-grid" style="margin-bottom:12px">
+          <div class="kpi-card"><div class="kpi-lbl">Population</div><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600">${pop.total}</div></div>
+          <div class="kpi-card"><div class="kpi-lbl">Median Age</div><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600">${pop.medianAge} yrs</div></div>
+        </div>
+
+        <!-- DEMOGRAPHIC ANALYSIS -->
+        <div class="demo-analysis" style="background:${dc.bg};border-color:${dc.border}">
+          <div class="demo-status">
+            <div class="demo-icon">${dc.icon}</div>
+            <div>
+              <div class="demo-label" style="color:${dc.color}">${dc.label}</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:${dc.color};margin-top:2px">TFR ${pop.tfr} vs replacement ${pop.replacementTfr} — gap: ${tfrGap} · at ${tfrPct}% of replacement</div>
+            </div>
+          </div>
+          <div class="demo-text">${pop.analysis}</div>
+          <div class="demo-stat-row">
+            <div class="demo-stat">
+              <div class="demo-stat-val" style="color:${pop.tfr<1.5?'var(--rd)':pop.tfr<1.8?'var(--or)':'var(--green)'}">${pop.tfr}</div>
+              <div class="demo-stat-lbl">TFR</div>
+            </div>
+            <div class="demo-stat">
+              <div class="demo-stat-val" style="color:var(--mu)">${pop.replacementTfr}</div>
+              <div class="demo-stat-lbl">Replacement</div>
+            </div>
+            <div class="demo-stat">
+              <div class="demo-stat-val" style="color:${dc.color}">${tfrPct}%</div>
+              <div class="demo-stat-lbl">% of repl.</div>
+            </div>
+            <div class="demo-stat">
+              <div class="demo-stat-val">${pop.medianAge}</div>
+              <div class="demo-stat-lbl">Median Age</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin:10px 0 4px;padding:0 4px">
+          <span style="color:var(--bl)">◀ Male</span><span style="color:var(--pi)">Female ▶</span>
+        </div>
+        <div class="chart-wrap" style="height:300px"><canvas id="pop-${cid}"></canvas></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════ CHINA ══════════════════════ */
+function renderChina(){
+  const d=CHINA;
+  const fg=fiscalGrade(d.fiscal.deficit,d.fiscal.debtService,d.debtGdp);
+  const mc=d.macro;
+  const pop=d.population;
+  const dc=demoStatusConfig(pop.trend);
+  const tfrGap=(pop.replacementTfr-pop.tfr).toFixed(2);
+  const tfrPct=((pop.tfr/pop.replacementTfr)*100).toFixed(0);
+
+  let pb=`<table class="data-table"><thead><tr><th>#</th><th>Name</th><th>Role</th><th>Age</th></tr></thead><tbody>`;
+  d.politburo.forEach(m=>{
+    const isXi=m.rank===1;
+    pb+=`<tr${isXi?' style="background:#F0FBF8"':''}>
+      <td class="mono dim">${m.rank}</td>
+      <td style="font-weight:${isXi?'700':'500'};color:${isXi?'var(--acc)':'var(--tx)'}">${m.name}</td>
+      <td class="dim" style="font-size:11px">${m.role}</td>
+      <td class="mono" style="font-size:11px">${m.age}</td>
+    </tr>`;
+  });
+  pb+=`</tbody></table>`;
+
+  let sc=`<table class="data-table"><thead><tr><th>Role</th><th>Name</th><th>Since</th></tr></thead><tbody>`;
+  d.stateCouncil.forEach(c=>{sc+=`<tr><td class="dim">${c.role}</td><td style="font-weight:500">${c.name}</td><td class="mono dim" style="font-size:10px">${c.since}</td></tr>`;});
+  sc+=`</tbody></table>`;
+
+  let fyp='';
+  d.fiveYearPlan.priorities.forEach(p=>{
+    const sc2=p.status==='on-track'?'st-on':p.status==='delayed'?'st-dl':'st-ex';
+    const sl=p.status==='on-track'?'ON TRACK':p.status==='delayed'?'DELAYED':'EXCEEDED';
+    fyp+=`<div class="fyp-row"><div style="flex:1"><div style="font-weight:600;font-size:12px;margin-bottom:3px">${p.name}</div><div style="font-size:11px;color:var(--mu)">${p.desc}</div></div><div class="fyp-st ${sc2}">${sl}</div></div>`;
+  });
+
+  let budH='';
+  d.budget.items.forEach((it,i)=>{budH+=`<div class="bud-row"><div class="bud-rk">${i+1}</div><div class="bud-nm">${it.name}</div><div class="bud-amt">${it.amount} ${d.budget.currency.split(' ')[0]}</div><div class="bud-pct">${it.pct}%</div></div>`;});
+
+  const cpiCol=mc.cpiYoy<0?'var(--bl)':mc.cpiYoy>5?'var(--rd)':'var(--green)';
+
+  document.getElementById('tab-china').innerHTML=`
+  <div class="panel-hdr">
+    <div class="flag">${d.flag}</div>
+    <div><div class="ctry-name">${d.name}</div><div class="ctry-meta">${d.system}</div></div>
+    <div style="margin-left:auto;text-align:right">
+      <div class="updated">Static · ${d.lastUpdated}</div>
+      <div class="badge bo" style="margin-top:4px">Opaque governance — limited public data</div>
+    </div>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="sec-title">Political Structure</div>
+      <div class="card"><div class="card-hdr"><span class="card-title">Politburo Standing Committee</span><span class="badge br">7 Members</span></div>${pb}</div>
+      <div class="card"><div class="card-hdr"><span class="card-title">State Council (Cabinet)</span></div>${sc}</div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">${d.fiveYearPlan.current}</span><span class="badge bg">Active</span></div>
+        <div style="background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:10px 12px;margin-bottom:12px;font-size:11px">
+          <div style="color:var(--mu);margin-bottom:4px">Theme</div><div>${d.fiveYearPlan.theme}</div>
+          <div style="color:var(--mu);margin-top:8px;margin-bottom:4px">Key Targets</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--acc)">${d.fiveYearPlan.targets}</div>
+          <div style="color:var(--or);font-family:'IBM Plex Mono',monospace;font-size:9px;margin-top:8px">↪ ${d.fiveYearPlan.transitioning}</div>
+        </div>
+        <div class="card-hdr" style="margin-bottom:8px"><span class="card-title">Strategic Pillars — Status</span></div>
+        ${fyp}
+      </div>
+    </div>
+    <div>
+      <div class="sec-title">Economic Intelligence</div>
+
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Macro Indicators</span><span class="updated">${mc.gdpSource}</span></div>
+        <div class="kpi-grid-4" style="margin-bottom:0">
+          <div class="kpi-card"><div class="kpi-lbl">CPI YoY</div><div class="kpi-val" style="color:${cpiCol}">${mc.cpiYoy}%</div><div class="kpi-delta" style="color:var(--bl)">Deflation risk</div></div>
+          <div class="kpi-card"><div class="kpi-lbl">GDP YoY</div><div class="kpi-val" style="color:var(--green)">${mc.gdpYoy}%</div><div class="kpi-delta dim">Annual</div></div>
+          <div class="kpi-card"><div class="kpi-lbl">${mc.gdpQLabel}</div><div class="kpi-val" style="color:var(--green)">${mc.gdpQoQ}%</div><div class="kpi-delta dim">Quarterly</div></div>
+          <div class="kpi-card"><div class="kpi-lbl">Debt/GDP</div><div class="kpi-val" style="color:var(--or)">${d.debtGdp}%</div></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div class="card" style="margin-bottom:0">
+          <div class="card-hdr"><span class="card-title">PBOC</span></div>
+          <div class="cb-row"><div class="cb-lbl">Governor</div><div style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:26px;height:26px;font-size:9px;flex-shrink:0">${d.centralBank.initials}</div><span style="font-size:11px">${d.centralBank.governor}</span></div></div>
+          <div class="cb-row"><div class="cb-lbl">LPR Rate (1Y)</div><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600">${d.centralBank.display}</div></div>
+          <div class="cb-row"><div class="cb-lbl">Stance</div><div>${trajLabel(d.centralBank.trajectory)}</div></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="card-hdr"><span class="card-title">FX &amp; Spread</span><span id="fx-badge-china" class="static-badge">STATIC</span></div>
+          <div class="fx-pair">${d.fx.pair}</div>
+          <div class="fx-val" id="fx-val-china">—</div>
+          <div class="ma-row" id="ma-china" style="margin-top:6px">
+            <div class="ma-pill"><span class="ma-lbl">50d MA</span><span id="ma50-china">—</span></div>
+            <div class="ma-pill"><span class="ma-lbl">200d MA</span><span id="ma200-china">—</span></div>
+          </div>
+          <div style="font-size:9px;color:var(--fa);margin-top:6px">${d.fx.note}</div>
+          <div style="border-top:1px solid var(--bd);padding-top:10px;margin-top:10px">
+            <div class="kpi-lbl">vs German Bund</div>
+            <div style="margin-top:5px">${spreadLabel(d.bundSpread)}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">CGB Yield Curve</span><span class="shape-badge sh-n">NORMAL</span></div>
+        <div class="yield-pills">
+          <div class="yield-pill"><div class="ylbl">5Y</div><div class="yval">${d.yields.current.y5.toFixed(2)}%</div><div class="ychg" style="color:var(--green)">${d.yields.yoy.y5}bps YoY</div></div>
+          <div class="yield-pill"><div class="ylbl">10Y</div><div class="yval">${d.yields.current.y10.toFixed(2)}%</div><div class="ychg" style="color:var(--green)">${d.yields.yoy.y10}bps YoY</div></div>
+          <div class="yield-pill"><div class="ylbl">30Y</div><div class="yval">${d.yields.current.y30.toFixed(2)}%</div><div class="ychg" style="color:var(--green)">${d.yields.yoy.y30}bps YoY</div></div>
+        </div>
+        <div class="chart-wrap" style="height:175px"><canvas id="yield-china"></canvas></div>
+      </div>
+
+      <div class="fiscal-card" style="border-left-color:${fg.color}">
+        <div style="display:flex;align-items:flex-start;gap:16px">
+          <div><div class="grade-lbl" style="color:${fg.color}">${fg.grade}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mu);margin-top:2px">${fg.score}/100</div></div>
+          <div class="kpi-grid-3" style="flex:1;margin-bottom:0">
+            <div style="background:white;border:1px solid var(--bd);border-radius:4px;padding:7px 9px"><div class="kpi-lbl">Deficit/GDP</div><div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:var(--rd)">${d.fiscal.deficit}%</div><div style="font-size:9px;color:var(--fa)">Incl. off-B/S items</div></div>
+            <div style="background:white;border:1px solid var(--bd);border-radius:4px;padding:7px 9px"><div class="kpi-lbl">Debt/GDP</div><div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:var(--or)">${d.debtGdp}%</div></div>
+            <div style="background:white;border:1px solid var(--bd);border-radius:4px;padding:7px 9px"><div class="kpi-lbl">Debt Service</div><div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:var(--acc)">${d.fiscal.debtService}%</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card"><div class="card-hdr"><span class="card-title">Top Budget Items</span><span class="updated">${d.budget.fy} · ${d.budget.currency}</span></div>${budH}</div>
+
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Demographics</span></div>
+        <div class="kpi-grid" style="margin-bottom:12px">
+          <div class="kpi-card"><div class="kpi-lbl">Population</div><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600">${pop.total}</div></div>
+          <div class="kpi-card"><div class="kpi-lbl">Median Age</div><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600">${pop.medianAge} yrs</div></div>
+        </div>
+        <div class="demo-analysis" style="background:${dc.bg};border-color:${dc.border}">
+          <div class="demo-status"><div class="demo-icon">${dc.icon}</div><div><div class="demo-label" style="color:${dc.color}">${dc.label}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:${dc.color};margin-top:2px">TFR ${pop.tfr} vs replacement ${pop.replacementTfr} — at ${tfrPct}% of replacement</div></div></div>
+          <div class="demo-text">${pop.analysis}</div>
+          <div class="demo-stat-row">
+            <div class="demo-stat"><div class="demo-stat-val" style="color:var(--rd)">${pop.tfr}</div><div class="demo-stat-lbl">TFR</div></div>
+            <div class="demo-stat"><div class="demo-stat-val" style="color:var(--mu)">${pop.replacementTfr}</div><div class="demo-stat-lbl">Replacement</div></div>
+            <div class="demo-stat"><div class="demo-stat-val" style="color:${dc.color}">${tfrPct}%</div><div class="demo-stat-lbl">% of repl.</div></div>
+            <div class="demo-stat"><div class="demo-stat-val">${pop.medianAge}</div><div class="demo-stat-lbl">Median Age</div></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin:10px 0 4px;padding:0 4px"><span style="color:var(--bl)">◀ Male</span><span style="color:var(--pi)">Female ▶</span></div>
+        <div class="chart-wrap" style="height:300px"><canvas id="pop-china"></canvas></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════ EU ══════════════════════ */
+function renderEU(){
+  const d=EU;
+  const totalEP=d.epCoalition.reduce((s,g)=>s+g.seats,0);
+  const govSeats=d.epCoalition.filter(g=>g.coalition).reduce((s,g)=>s+g.seats,0);
+  const govPct=(govSeats/totalEP*100).toFixed(1);
+
+  let commH=`<table class="data-table"><thead><tr><th>Portfolio</th><th>Commissioner</th><th>Country</th><th>Term End</th></tr></thead><tbody>`;
+  d.commissioners.forEach((c,i)=>{
+    const isP=i===0;
+    commH+=`<tr${isP?' style="background:#F0FBF8"':''}><td class="dim" style="font-size:10px">${c.portfolio}</td><td style="font-weight:${isP?700:500};color:${isP?'var(--acc)':'var(--tx)'}">${c.name}</td><td style="font-size:11px">${c.country}</td><td class="mono dim" style="font-size:10px">${c.termEnd}</td></tr>`;
+  });
+  commH+=`</tbody></table>`;
+
+  let epBar='',epLeg='';
+  d.epCoalition.forEach(g=>{
+    const pct=(g.seats/totalEP*100).toFixed(1);
+    const govBdr=g.coalition?'border-top:3px solid var(--acc);':'';
+    epBar+=`<div class="parl-seg" style="width:${pct}%;background:${g.color};${govBdr}" title="${g.group}: ${g.seats}">${g.seats>50?g.seats:''}</div>`;
+    const govB=g.coalition?`<span class="badge bg" style="margin-left:4px;font-size:8px">COALITION</span>`:'';
+    epLeg+=`<div class="party-row"><span class="pdot" style="background:${g.color}"></span><span style="flex:1;font-size:11px">${g.group}${govB}</span><span class="pstat">${g.seats} · ${pct}%</span></div><div style="padding:2px 8px 4px;font-size:10px;color:var(--fa)">Leader: ${g.leader}</div>`;
+  });
+
+  let budH='';
+  d.budget.categories.forEach((c,i)=>{budH+=`<div class="bud-row"><div class="bud-rk">${i+1}</div><div class="bud-nm">${c.name}</div><div class="bud-amt">€${c.amount}bn</div><div class="bud-pct">${c.pct}%</div></div>`;});
+
+  let mtgH='';
+  d.meetings.forEach(m=>{mtgH+=`<div class="mtg-row"><div class="mtg-dt">${m.date}</div><div class="mtg-body">${m.body}</div><div>${m.topic}</div></div>`;});
+
+  document.getElementById('tab-eu').innerHTML=`
+  <div class="panel-hdr">
+    <div class="flag">🇪🇺</div>
+    <div><div class="ctry-name">European Union — Commission & Parliament</div><div class="ctry-meta">Von der Leyen II Commission · Term 2024–2029 · 27 Member States</div></div>
+    <div style="margin-left:auto;text-align:right"><div class="updated">Static · Mar 20, 2025</div></div>
+  </div>
+
+  <!-- COALITION EXPLAINER -->
+  <div class="card" style="border-left:4px solid var(--acc);background:var(--surf2)">
+    <div class="card-hdr"><span class="card-title">EP Governing Coalition — "Pro-European Majority"</span><span class="coal-badge coal-maj">MAJORITY</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+      <div style="background:white;border:1px solid var(--bd);border-radius:5px;padding:10px 12px;border-top:3px solid #1A3A6B">
+        <div class="kpi-lbl">EPP (European People's Party)</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700">188 seats</div>
+        <div style="font-size:11px;color:var(--mu);margin-top:3px">Centre-right · Manfred Weber (DE) · Von der Leyen's own group</div>
+      </div>
+      <div style="background:white;border:1px solid var(--bd);border-radius:5px;padding:10px 12px;border-top:3px solid #B02020">
+        <div class="kpi-lbl">S&D (Socialists & Democrats)</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700">136 seats</div>
+        <div style="font-size:11px;color:var(--mu);margin-top:3px">Centre-left · Iratxe García (ES) · Key coalition pillar</div>
+      </div>
+      <div style="background:white;border:1px solid var(--bd);border-radius:5px;padding:10px 12px;border-top:3px solid #F4A020">
+        <div class="kpi-lbl">Renew Europe</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700">77 seats</div>
+        <div style="font-size:11px;color:var(--mu);margin-top:3px">Liberal/centrist · Valérie Hayer (FR) · Pro-EU, pro-market</div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid var(--acc);border-radius:5px;padding:10px 14px;display:flex;align-items:center;gap:14px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--acc)">${govSeats}</div>
+      <div>
+        <div style="font-size:12px;font-weight:600">Coalition seats = ${govPct}% of Parliament (majority requires 50.1% = 361 seats)</div>
+        <div style="font-size:11px;color:var(--mu);margin-top:2px">Margin: +${govSeats-361} above threshold · Coalition backed von der Leyen's second term in Dec 2024 · Greens and Left provide occasional additional votes on specific dossiers</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="sec-title">EU Commission</div>
+      <div class="card"><div class="card-hdr"><span class="card-title">Key Commissioners</span><span class="badge bg">2024–2029</span></div>${commH}</div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">European Parliament — ${totalEP} Seats</span></div>
+        <div class="parl-bar">${epBar}</div>
+        <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu);margin-bottom:8px"><span>0</span><span>Majority: 361</span><span>${totalEP}</span></div>
+        ${epLeg}
+      </div>
+    </div>
+    <div>
+      <div class="sec-title">Budget & Agenda</div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">MFF Budget ${d.budget.mff}</span></div>
+        <div style="background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:10px 12px;margin-bottom:12px">
+          <div class="kpi-lbl">Total Commitments</div>
+          <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--acc)">${d.budget.total}</div>
+        </div>
+        ${budH}
+      </div>
+      <div class="card">
+        <div class="card-hdr"><span class="card-title">Upcoming Sessions</span><span class="badge bo">Next 8</span></div>
+        ${mtgH}
+        <div style="margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">Sources: consilium.europa.eu · europarl.europa.eu/plenary</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════ CHARTS ══════════════════════ */
+function initYieldChart(cid,data){
+  const ctx=document.getElementById(`yield-${cid}`);
+  if(!ctx)return;
+  destroyChart(`yield-${cid}`);
+  CHARTS[`yield-${cid}`]=new Chart(ctx,{type:'line',
+    data:{labels:data.labels,datasets:[
+      {label:'5Y',data:data.y5,borderColor:'#0F5499',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2,tension:.3},
+      {label:'10Y',data:data.y10,borderColor:'#0D7680',backgroundColor:'transparent',borderWidth:2,pointRadius:2,tension:.3},
+      {label:'30Y',data:data.y30,borderColor:'#EB6400',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2,tension:.3},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'top',labels:{color:'#6B5E52',font:{family:"'IBM Plex Mono'",size:10},boxWidth:10,padding:12}},
+        tooltip:{backgroundColor:'#fff',titleColor:'#1A1614',bodyColor:'#6B5E52',borderColor:'#E2D5C8',borderWidth:1}},
+      scales:{
+        x:{grid:{color:'rgba(226,213,200,.5)'},ticks:{color:'#A8998C',font:{family:"'IBM Plex Mono'",size:9}}},
+        y:{grid:{color:'rgba(226,213,200,.5)'},ticks:{color:'#A8998C',font:{family:"'IBM Plex Mono'",size:9},callback:v=>`${v.toFixed(1)}%`}},
+      }
+    }
+  });
+}
+
+function initPopChart(cid,pyramid){
+  const ctx=document.getElementById(`pop-${cid}`);
+  if(!ctx)return;
+  destroyChart(`pop-${cid}`);
+  const maxAbs=Math.max(...pyramid.flatMap(r=>[Math.abs(r.m),r.f]))+1;
+  CHARTS[`pop-${cid}`]=new Chart(ctx,{type:'bar',
+    data:{labels:pyramid.map(r=>r.a),datasets:[
+      {label:'Male',data:pyramid.map(r=>r.m),backgroundColor:'rgba(15,84,153,0.55)',borderWidth:0},
+      {label:'Female',data:pyramid.map(r=>r.f),backgroundColor:'rgba(198,66,107,0.55)',borderWidth:0},
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',titleColor:'#1A1614',bodyColor:'#6B5E52',borderColor:'#E2D5C8',borderWidth:1,callbacks:{label:c=>`${Math.abs(c.parsed.x).toFixed(1)}M`}}},
+      scales:{
+        x:{min:-maxAbs,max:maxAbs,grid:{color:'rgba(226,213,200,.5)'},ticks:{color:'#A8998C',font:{family:"'IBM Plex Mono'",size:8},callback:v=>`${Math.abs(v)}M`}},
+        y:{grid:{color:'rgba(226,213,200,.3)'},ticks:{color:'#A8998C',font:{family:"'IBM Plex Mono'",size:8}}},
+      }
+    }
+  });
+}
+
+/* ══════════════════════ LIVE DATA — /api/fx serverless ══════════════════════
+   FX:     open.er-api.com  (free, no auth, all pairs vs USD in one call)
+   Yields: Yahoo Finance v7 (crumb-based, server-side so no CORS)
+══════════════════════════════════════════════════════════════════════════════ */
+
+function calcMA(closes, n) {
+  const clean = closes.filter(v => v != null);
+  if (clean.length < n) return null;
+  return clean.slice(-n).reduce((a, b) => a + b, 0) / n;
+}
+
+function updateFXDisplay(cid, { current, change, ma50, ma200, decimals }) {
+  const pair = C[cid]?.fx?.pair || CHINA.fx.pair;
+  const fmt  = v => (v != null ? v.toFixed(decimals) : '—');
+  const valEl   = document.getElementById(`fx-val-${cid}`);
+  const chgEl   = document.getElementById(`fx-chg-${cid}`);
+  const badgeEl = document.getElementById(`fx-badge-${cid}`);
+  const ma50El  = document.getElementById(`ma50-${cid}`);
+  const ma200El = document.getElementById(`ma200-${cid}`);
+  const mxEl    = document.getElementById(`mx-fx-${cid}`);
+  if (valEl && current != null) {
+    valEl.textContent = fmt(current);
+    if (badgeEl) { badgeEl.className = 'live-badge'; badgeEl.textContent = 'LIVE'; }
+  }
+  if (chgEl && change != null) {
+    const col = change > 0 ? 'var(--or)' : 'var(--green)';
+    chgEl.innerHTML = `<span style="color:${col}">${change >= 0 ? '+' : ''}${change.toFixed(decimals)}</span>&nbsp;<span style="color:var(--mu)">1d</span>`;
+  }
+  if (ma50El  && ma50  != null) ma50El.textContent  = fmt(ma50);
+  if (ma200El && ma200 != null) ma200El.textContent = fmt(ma200);
+  if (mxEl && current != null) {
+    mxEl.innerHTML = `<strong style="font-family:'IBM Plex Mono',monospace">${fmt(current)}</strong><br>`
+      + `<span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mu)">${pair}</span>`
+      + `&nbsp;<span class="live-badge">LIVE</span>`;
+  }
+}
+
+async function doLiveFetch() {
+  const btn    = document.getElementById('refresh-btn');
+  const status = document.getElementById('mx-status');
+  if (btn)    { btn.disabled = true; btn.textContent = '⟳ Fetching…'; }
+  if (status)   status.textContent = 'fetching…';
+  let ok = 0;
+
+  // ── FX: open.er-api.com — one call, all pairs, no auth ──────────────────
+  // Response: { rates: { EUR:0.923, GBP:0.789, JPY:149.5, CNY:7.24, ... } }
+  // EUR/USD = 1/rates.EUR,  USD/JPY = rates.JPY,  etc.
+  try {
+    const [todayRes, prevRes] = await Promise.all([
+      fetch('/api/fx?mode=fx'),
+      fetch('/api/fx?mode=fx_prev'),
+    ]);
+    const today = await todayRes.json();
+    const prev  = prevRes.ok ? await prevRes.json() : today;
+
+    if (today.ok && today.rates) {
+      const r  = today.rates;
+      const rp = prev?.rates || r;
+
+      const dxy = rates => {
+        const eur = rates.EUR||1, jpy = rates.JPY||150, gbp = rates.GBP||1;
+        const cad = rates.CAD||1.4, sek = rates.SEK||10, chf = rates.CHF||1;
+        return 50.14348 * Math.pow(eur,-0.576) * Math.pow(jpy,0.136) * Math.pow(gbp,-0.119)
+          * Math.pow(cad,0.091) * Math.pow(sek,0.042) * Math.pow(chf,0.036);
+      };
+
+      const fxConfig = [
+        { cid:'usa',     dec:2, cur:r=>dxy(r) },
+        { cid:'france',  dec:4, cur:r=>1/r.EUR },
+        { cid:'uk',      dec:4, cur:r=>1/r.GBP },
+        { cid:'germany', dec:4, cur:r=>1/r.EUR },
+        { cid:'japan',   dec:2, cur:r=>r.JPY   },
+        { cid:'china',   dec:4, cur:r=>r.CNY   },
+      ];
+
+      fxConfig.forEach(({ cid, dec, cur }) => {
+        try {
+          const current  = cur(r);
+          const previous = cur(rp);
+          updateFXDisplay(cid, { current, change: current - previous, ma50: null, ma200: null, decimals: dec });
+        } catch(e) {}
+      });
+      ok++;
+    }
+  } catch(e) { console.warn('FX fetch failed:', e.message); }
+
+  // ── US Treasury Yields ───────────────────────────────────────────────────
+  try {
+    const r = await fetch('/api/fx?mode=yields');
+    const data = await r.json();
+    if (data.ok && data.yields) {
+      // stooq response: { y5: 4.20, y10: 4.50, y30: 4.72 }
+      ['y5','y10','y30'].forEach(key => {
+        const price = data.yields[key];
+        if (price == null) return;
+        const el = document.getElementById(`${key}-usa`);
+        if (el) el.textContent = `${price.toFixed(2)}%`;
+      });
+      const badge = document.getElementById('yld-badge-usa');
+      if (badge) { badge.className = 'live-badge'; badge.textContent = 'LIVE'; }
+      const mx = document.getElementById('mx-10y-usa');
+      if (mx && data.yields.y10 != null)
+        mx.innerHTML = `<span style="font-family:'IBM Plex Mono',monospace;font-weight:600">${data.yields.y10.toFixed(2)}%</span>&nbsp;<span class="live-badge">LIVE</span>`;
+      ok++;
+    }
+  } catch(e) { console.warn('Yields fetch failed:', e.message); }
+
+  const lbl = document.getElementById('fx-live-lbl');
+  if (lbl) lbl.innerHTML = '<span class="live-badge">LIVE</span>';
+  if (status) status.textContent = ok > 0
+    ? `${ok} data feeds live · ${new Date().toLocaleTimeString()}`
+    : 'Data unavailable — showing static values';
+  if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh'; }
+}
+
+/* ══════════════════════ THEME TOGGLE ══════════════════════ */
+const CHART_COLORS = {
+  light: {
+    grid:'rgba(226,213,200,.5)', tick:'#A8998C',
+    tooltipBg:'#fff', tooltipTitle:'#1A1614', tooltipBody:'#6B5E52', tooltipBorder:'#E2D5C8',
+    legend:'#6B5E52',
+    y5:'#0F5499', y10:'#0D7680', y30:'#EB6400',
+    maleBar:'rgba(15,84,153,0.55)', femaleBar:'rgba(198,66,107,0.55)',
+  },
+  dark: {
+    grid:'rgba(28,35,51,0.8)', tick:'#768390',
+    tooltipBg:'#0d1117', tooltipTitle:'#cdd9e5', tooltipBody:'#768390', tooltipBorder:'#1c2333',
+    legend:'#768390',
+    y5:'#4493f8', y10:'#00d98b', y30:'#e3a447',
+    maleBar:'rgba(68,147,248,0.7)', femaleBar:'rgba(232,121,160,0.7)',
+  }
+};
+
+function applyChartTheme(dark){
+  const col = dark ? CHART_COLORS.dark : CHART_COLORS.light;
+  Object.entries(CHARTS).forEach(([id, chart]) => {
+    if(!chart) return;
+    const isYield = id.startsWith('yield-');
+    const isPop = id.startsWith('pop-');
+    // Tooltip
+    chart.options.plugins.tooltip.backgroundColor = col.tooltipBg;
+    chart.options.plugins.tooltip.titleColor = col.tooltipTitle;
+    chart.options.plugins.tooltip.bodyColor = col.tooltipBody;
+    chart.options.plugins.tooltip.borderColor = col.tooltipBorder;
+    // Scales
+    if(chart.options.scales?.x){
+      chart.options.scales.x.grid.color = col.grid;
+      chart.options.scales.x.ticks.color = col.tick;
+    }
+    if(chart.options.scales?.y){
+      chart.options.scales.y.grid.color = col.grid;
+      chart.options.scales.y.ticks.color = col.tick;
+    }
+    if(isYield){
+      if(chart.options.plugins.legend) chart.options.plugins.legend.labels.color = col.legend;
+      chart.data.datasets[0].borderColor = col.y5;
+      chart.data.datasets[1].borderColor = col.y10;
+      chart.data.datasets[2].borderColor = col.y30;
+    }
+    if(isPop){
+      chart.data.datasets[0].backgroundColor = col.maleBar;
+      chart.data.datasets[1].backgroundColor = col.femaleBar;
+    }
+    chart.update('none');
+  });
+}
+
+function toggleTheme(){
+  const body = document.body;
+  const btn = document.getElementById('theme-btn');
+  const isDark = body.classList.toggle('dark');
+  btn.textContent = isDark ? '☀' : '☽';
+  btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+  localStorage.setItem('tzofeh-theme', isDark ? 'dark' : 'light');
+  applyChartTheme(isDark);
+}
+
+/* ══════════════════════ USA CONGRESSIONAL LEADERS (injected after render) ══════════════════════ */
+function injectUSAExtras(){
+  // Congressional leaders card — find the parliament card and append after it
+  const cid = 'usa';
+  const d = C[cid];
+  if(!d.houseLeaders) return;
+
+  // Find the approval card's container to insert after
+  const panel = document.getElementById('tab-usa');
+  if(!panel) return;
+
+  let leadersHTML = `<table class="data-table"><thead><tr><th>Role</th><th>Name</th><th>Party</th><th>Note</th></tr></thead><tbody>`;
+  d.houseLeaders.forEach(l => {
+    leadersHTML += `<tr>
+      <td class="dim">${l.role}</td>
+      <td style="font-weight:600">${l.name}</td>
+      <td class="dim" style="font-size:10px">${l.party}</td>
+      <td style="font-size:10px;color:var(--mu)">${l.note}</td>
+    </tr>`;
+  });
+  leadersHTML += `</tbody></table>`;
+
+  // White House X feed card
+  const xCard = `<div class="card" style="margin-bottom:16px">
+    <div class="card-hdr">
+      <span class="card-title">White House — Official X/Twitter Feed</span>
+      <a href="https://twitter.com/WhiteHouse" target="_blank"
+         style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--acc);text-decoration:none">
+        @WhiteHouse ↗
+      </a>
+    </div>
+    <div id="wh-x-feed" style="min-height:120px">
+      <a class="twitter-timeline"
+         data-height="420"
+         data-theme="light"
+         data-chrome="noheader nofooter noborders transparent"
+         href="https://twitter.com/WhiteHouse?ref_src=tzofeh">
+        Loading @WhiteHouse feed…
+      </a>
+    </div>
+    <div style="margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--fa)">
+      Embedded via Twitter/X widget · requires browser to allow third-party scripts
+    </div>
+  </div>`;
+
+  // Inject congressional leaders card after the parliament card
+  // We look for the el-grid (elections) card — insert before it
+  const elCards = panel.querySelectorAll('.el-card');
+  if(elCards.length){
+    const elParent = elCards[0].closest('.card');
+    if(elParent){
+      const leadCard = document.createElement('div');
+      leadCard.className = 'card';
+      leadCard.innerHTML = `<div class="card-hdr"><span class="card-title">Congressional Leadership</span></div>${leadersHTML}`;
+      elParent.parentNode.insertBefore(leadCard, elParent);
+    }
+  }
+
+  // Inject X feed card at the bottom of the political column
+  const xDiv = document.createElement('div');
+  xDiv.innerHTML = xCard;
+  // Append to first column (political)
+  const firstCol = panel.querySelector('.two-col > div:first-child');
+  if(firstCol) firstCol.appendChild(xDiv.firstElementChild);
+
+  // Load Twitter widget script
+  if(!window.twitterWidgetsLoaded){
+    window.twitterWidgetsLoaded = true;
+    const s = document.createElement('script');
+    s.src = 'https://platform.twitter.com/widgets.js';
+    s.async = true;
+    s.charset = 'utf-8';
+    document.head.appendChild(s);
+  }
+}
+
+/* ══════════════════════ PARTY TOOLTIP ══════════════════════ */
+function showPartyTip(e,el){
+  e.stopPropagation();
+  const tip=document.getElementById('party-tip');
+  const isGov=el.dataset.coalition==='true';
+  tip.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <span style="display:inline-block;width:10px;height:10px;background:${el.style.background};border-radius:2px"></span>
+    <strong style="font-size:13px">${el.dataset.party}</strong>
+    ${isGov?'<span class="badge bg">GOV</span>':''}
+  </div>
+  <div style="border-bottom:1px solid var(--bd);padding-bottom:6px;margin-bottom:6px">
+    <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:11px"><span style="color:var(--mu)">Seats</span><strong class="mono">${el.dataset.seats} (${el.dataset.pct}%)</strong></div>
+    <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:11px"><span style="color:var(--mu)">Leader</span><strong>${el.dataset.leader}</strong></div>
+    <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:11px"><span style="color:var(--mu)">Role</span><span>${el.dataset.role}</span></div>
+  </div>
+  <div style="font-size:11px;color:var(--mu);line-height:1.55">${el.dataset.bio}</div>`;
+  let x=e.clientX,y=e.clientY+16;
+  if(x+265>window.innerWidth)x=window.innerWidth-270;
+  if(y+200>window.innerHeight)y=e.clientY-220;
+  tip.style.left=x+'px';tip.style.top=y+'px';tip.style.display='block';
+}
+document.addEventListener('click',()=>{document.getElementById('party-tip').style.display='none';});
+
+/* ══════════════════════ TAB SWITCH ══════════════════════ */
+function switchTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`tab-${id}`).style.display='block';
+  const ids=['matrix','usa','france','uk','germany','japan','china','eu'];
+  const idx=ids.indexOf(id);
+  if(idx>=0)document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ══════════════════════ INIT ══════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  // Restore saved theme
+  if(localStorage.getItem('tzofeh-theme')==='dark'){
+    document.body.classList.add('dark');
+    const btn=document.getElementById('theme-btn');
+    if(btn){btn.textContent='☀';btn.title='Switch to light mode';}
+  }
+
+  renderMatrix();
+  Object.keys(C).forEach(cid=>renderCountry(cid));
+  renderChina();
+  renderEU();
+  buildTicker();
+  injectUSAExtras();
+
+  // Init all charts (render all panels briefly for DOM presence)
+  document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='block');
+  setTimeout(()=>{
+    Object.keys(C).forEach(cid=>{initYieldChart(cid,C[cid].yields);initPopChart(cid,C[cid].population.pyramid);});
+    initYieldChart('china',CHINA.yields);
+    initPopChart('china',CHINA.population.pyramid);
+
+    // Apply dark theme to charts if needed
+    if(document.body.classList.contains('dark')) applyChartTheme(true);
+
+    document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');
+    document.getElementById('tab-matrix').style.display='block';
+    doLiveFetch().catch(()=>{});
+  },80);
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const ids=['matrix','usa','france','uk','germany','japan','china','eu'];
+  const n=parseInt(e.key);
+  if(n>=1&&n<=8)switchTab(ids[n-1]);
+});
+</script>
+</body>
+</html>

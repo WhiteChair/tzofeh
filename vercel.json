@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "functions": {
+    "api/fx.js": {
+      "memory": 128,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    { "source": "/api/fx", "destination": "/api/fx" }
+  ]
+}
