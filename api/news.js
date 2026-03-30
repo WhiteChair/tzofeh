@@ -6,16 +6,36 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600'); // 5 min cache
 
   try {
-    const r = await fetch('https://www.whitehouse.gov/feed/', {
+    // Try standard WP RSS paths
+    const feedUrls = [
+      'https://www.whitehouse.gov/feed/',
+      'https://www.whitehouse.gov/?feed=rss2',
+      'https://www.whitehouse.gov/news/feed/',
+    ];
+    let xml = null;
+    for (const url of feedUrls) {
+      try {
+        const attempt = await fetch(url, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; tzofeh/1.0)',
+            'Accept': 'application/rss+xml, text/xml, application/xml, */*',
+          },
+        });
+        if (attempt.ok) {
+          const text = await attempt.text();
+          if (text.includes('<rss') || text.includes('<feed')) { xml = text; break; }
+        }
+      } catch(e) { /* try next */ }
+    }
+    if (!xml) throw new Error('No WH RSS feed responded');
+    const r = { ok: true }; // sentinel
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; tzofeh/1.0)',
         'Accept': 'application/rss+xml, text/xml, */*',
       },
     });
 
-    if (!r.ok) throw new Error(`WH feed ${r.status}`);
-
-    const xml = await r.text();
+    // xml already set above
 
     // Parse RSS items with regex (no DOM parser in Edge/Node serverless)
     const items = [];
