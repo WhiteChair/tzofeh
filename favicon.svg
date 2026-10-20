@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Tzofeh lighthouse">
+  <rect width="32" height="32" rx="7" fill="#0B3D73"/>
+  <polygon points="19.6,13.9 30.4,6.6 30.4,8.4" fill="#FFFCEC"/>
+  <polygon points="19.6,13.9 30.8,10.8 30.8,13.2" fill="#F6E7A8"/>
+  <polygon points="19.6,13.9 30.2,15.6 30.2,17.6" fill="#E8CE78"/>
+  <path d="M13.2 26.6 L18.8 26.6 L17.6 15.4 L14.4 15.4 Z" fill="#F4F8FC"/>
+  <rect x="12" y="12.4" width="8" height="3.8" rx="0.5" fill="#F4F8FC"/>
+  <rect x="13" y="13.1" width="6" height="2.1" fill="#F3C969"/>
+  <rect x="14.4" y="10" width="3.2" height="2.7" fill="#F4F8FC"/>
+  <rect x="10.8" y="25.9" width="10.4" height="2.7" rx="0.5" fill="#F4F8FC"/>
+</svg>

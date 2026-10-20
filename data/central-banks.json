@@ -1,0 +1,158 @@
+{
+  "asOf": "2026-10-20",
+  "note": "Latest policy-rate decisions recorded on 20 October 2026 from official central-bank statements. The weekday job confirms the Bank of Canada overnight target against Valet series V39079 and flags a mismatch instead of rewriting the decision. Other banks stay on this researched record until a free decision feed is wired.",
+  "banks": [
+    {
+      "id": "fed",
+      "countries": [
+        "US"
+      ],
+      "bank": "Federal Reserve",
+      "short": "Fed",
+      "action": "raised",
+      "changeBp": 25,
+      "rate": "3.75–4.00%",
+      "rateValue": null,
+      "rateLabel": "Federal funds target range",
+      "decisionDate": "2026-09-16",
+      "effectiveDate": "2026-09-16",
+      "summary": "Raised the target range by 25 bp to 3.75–4.00%.",
+      "sourceUrl": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+      "note": "Shown as the target range. The 27–28 October 2026 meeting had not announced a decision when this was recorded."
+    },
+    {
+      "id": "boc",
+      "countries": [
+        "CA"
+      ],
+      "bank": "Bank of Canada",
+      "short": "BoC",
+      "action": "held",
+      "changeBp": 0,
+      "rate": "2.25%",
+      "rateValue": 2.25,
+      "rateLabel": "Target for the overnight rate",
+      "decisionDate": "2026-09-02",
+      "effectiveDate": "2026-09-02",
+      "summary": "Held the overnight target at 2.25%.",
+      "sourceUrl": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
+      "note": "Bank Rate 2.50% and the deposit rate 2.20% were unchanged. The last change was a cut on 29 October 2025. The next decision, on 28 October 2026, had not been announced.",
+      "rateCheckedOn": "2026-10-20",
+      "rateFeed": {
+        "source": "Bank of Canada Valet V39079",
+        "asOf": "2026-10-16",
+        "value": 2.25
+      }
+    },
+    {
+      "id": "boe",
+      "countries": [
+        "GB"
+      ],
+      "bank": "Bank of England",
+      "short": "BoE",
+      "action": "held",
+      "changeBp": 0,
+      "rate": "3.75%",
+      "rateValue": 3.75,
+      "rateLabel": "Bank Rate",
+      "decisionDate": "2026-09-17",
+      "effectiveDate": "2026-09-17",
+      "summary": "Held Bank Rate at 3.75%.",
+      "sourceUrl": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/september-2026",
+      "note": "Announced 17 September 2026 after a meeting that ended on 16 September. The vote was 6–3. The next decision is 5 November 2026."
+    },
+    {
+      "id": "ecb",
+      "countries": [
+        "DE",
+        "FR",
+        "IT"
+      ],
+      "bank": "European Central Bank",
+      "short": "ECB",
+      "action": "raised",
+      "changeBp": 25,
+      "rate": "2.50%",
+      "rateValue": 2.5,
+      "rateLabel": "Deposit facility rate",
+      "decisionDate": "2026-09-10",
+      "effectiveDate": "2026-09-16",
+      "summary": "Raised the deposit facility rate by 25 bp to 2.50%.",
+      "sourceUrl": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html",
+      "note": "One decision covers Germany, France and Italy. The main refinancing rate is 2.65% and the marginal lending facility is 2.90%, effective 16 September 2026. The previous deposit rate was 2.25%."
+    },
+    {
+      "id": "boj",
+      "countries": [
+        "JP"
+      ],
+      "bank": "Bank of Japan",
+      "short": "BoJ",
+      "action": "raised",
+      "changeBp": 25,
+      "rate": "around 1.25%",
+      "rateValue": 1.25,
+      "rateLabel": "Uncollateralized overnight call rate",
+      "decisionDate": "2026-09-18",
+      "effectiveDate": "2026-09-24",
+      "summary": "Raised the overnight call rate by 25 bp to around 1.25%.",
+      "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260918a.pdf",
+      "note": "The previous guide was around 1.0%, set on 16 June 2026. The meeting that concludes on 30 October 2026 had not announced a decision."
+    },
+    {
+      "id": "rba",
+      "countries": [
+        "AU"
+      ],
+      "bank": "Reserve Bank of Australia",
+      "short": "RBA",
+      "action": "raised",
+      "changeBp": 25,
+      "rate": "4.60%",
+      "rateValue": 4.6,
+      "rateLabel": "Cash rate target",
+      "decisionDate": "2026-09-29",
+      "effectiveDate": "2026-09-30",
+      "summary": "Raised the cash rate target by 25 bp to 4.60%.",
+      "sourceUrl": "https://www.rba.gov.au/media-releases/2026/mr-26-27.html",
+      "note": "Effective 30 September 2026. There was no October decision. The next meeting is 3 November 2026."
+    },
+    {
+      "id": "pboc",
+      "countries": [
+        "CN"
+      ],
+      "bank": "People's Bank of China",
+      "short": "PBoC",
+      "action": "held",
+      "changeBp": 0,
+      "rate": "1.40%",
+      "rateValue": 1.4,
+      "rateLabel": "7-day reverse repo rate",
+      "decisionDate": "2026-10-19",
+      "effectiveDate": "2026-10-19",
+      "summary": "Held the 7-day reverse repo rate at 1.40%.",
+      "sourceUrl": "https://www.pbc.gov.cn/",
+      "note": "The 19 October 2026 open-market operation was CNY 80 billion at an unchanged 1.40%. The last change was a 10 bp cut from 1.50% to 1.40%, effective 8 May 2025. The PBoC has no fixed-date policy meeting; this confirms the rate, it is not a new change. No overnight policy rate has been announced."
+    },
+    {
+      "id": "rbi",
+      "countries": [
+        "IN"
+      ],
+      "bank": "Reserve Bank of India",
+      "short": "RBI",
+      "action": "raised",
+      "changeBp": 25,
+      "rate": "5.50%",
+      "rateValue": 5.5,
+      "rateLabel": "Policy repo rate",
+      "decisionDate": "2026-10-07",
+      "effectiveDate": "2026-10-07",
+      "summary": "Raised the policy repo rate by 25 bp to 5.50%.",
+      "sourceUrl": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=63742",
+      "note": "The stance moved to calibrated tightening. The standing deposit facility is 5.25% and the marginal standing facility and Bank Rate are 5.75%. The next MPC meeting is 2–4 December 2026."
+    }
+  ]
+}
