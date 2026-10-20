@@ -318,18 +318,26 @@ body{background:var(--bg);color:var(--tx);font-family:'Source Sans 3',-apple-sys
 .brand-mark{width:22px;height:22px;border-radius:6px;display:block;flex-shrink:0;}
 #matrix{scroll-margin-top:72px;margin-top:28px;}
 .section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--tx);margin:22px 0 12px;}
-.yield-board{background:#071428;color:#fff;border-radius:10px;padding:18px 16px 14px;overflow:auto;}
-.yield-board h2{font-family:'Playfair Display',serif;font-weight:600;font-size:26px;color:#fff;margin:0 0 4px;}
-.yield-caption{font-size:12px;color:#9bb0c9;margin-bottom:12px;}
-.yield-table{border-collapse:separate;border-spacing:4px;min-width:720px;width:100%;}
-.yield-table th,.yield-table td{font-family:'IBM Plex Mono',monospace;text-align:center;font-size:12px;color:#fff;}
-.yield-table th{font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px;}
-.yield-table td.tenor,.yield-table th.corner{position:sticky;left:0;background:#071428;text-align:left;z-index:2;padding-right:8px;}
-.yield-cell{border-radius:3px;padding:8px 4px;min-width:54px;}
-.yield-empty{background:#132033;color:#7f93a8;}
-.yield-meta,.yield-sources{font-size:10.5px;color:#8ea3bb;line-height:1.55;margin-top:10px;}
-.yield-sources{padding-left:16px;}
-.yield-sources a,.cb-src{color:#9ec4ea;}
+:root{--heat-low:#e8f3df;--heat-high:#1A6600;--heat-ink:#1A1614;--heat-ink-hot:#ffffff;}
+body.dark{--heat-low:#14261c;--heat-high:#3fb950;--heat-ink:#d7eee0;--heat-ink-hot:#06210f;}
+.yield-table{border-collapse:separate;border-spacing:3px;min-width:760px;width:100%;}
+.yield-table th,.yield-table td{font-family:'IBM Plex Mono',monospace;text-align:center;font-size:12px;color:var(--tx);}
+.yield-table th{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);padding:6px 4px;background:var(--surf2);}
+.yield-table td.tenor,.yield-table th.corner{position:sticky;left:0;background:var(--surf);text-align:left;z-index:2;padding:0 8px 0 10px;color:var(--mu);font-size:10px;letter-spacing:.06em;}
+.yield-table th.corner{background:var(--surf2);}
+.yield-cell{border-radius:3px;padding:8px 4px;min-width:58px;}
+.yield-cell.is-num{background:color-mix(in srgb, var(--heat-low) calc((1 - var(--t)) * 100%), var(--heat-high) calc(var(--t) * 100%));color:var(--heat-ink);}
+.yield-cell.is-num.hot{color:var(--heat-ink-hot);}
+.yield-empty{background:var(--surf2);color:var(--mu);}
+.yield-plain{background:transparent;font-size:11px;line-height:1.35;}
+.yield-table td.dec-raised{color:var(--rd);font-weight:600;}
+.yield-table td.dec-held{color:var(--mu);font-weight:600;}
+.yield-table td.dec-cut{color:var(--green);font-weight:600;}
+.yield-asof{font-size:11px;color:var(--mu);margin:8px 2px 0;}
+.yield-notes{margin-top:12px;font-size:12px;color:var(--mu);line-height:1.55;}
+.yield-notes summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx);}
+.yield-notes a,.cb-src{color:var(--bl);}
+.yield-sources{padding-left:16px;margin-top:8px;}
 .cb-grid,.lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
 .cb-card,.lab-card{margin-bottom:0;}
 .cb-action{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
@@ -346,12 +354,27 @@ body{background:var(--bg);color:var(--tx);font-family:'Source Sans 3',-apple-sys
 .lab-line{font-size:13px;line-height:1.45;margin-top:6px;}
 .lab-line span{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-bottom:2px;}
 .race-table tr:hover td{cursor:default;}
-.race-lead{margin-top:4px;max-width:720px;}
+.race-lead{margin-top:4px;max-width:760px;}
+.race-summary{font-size:13.5px;line-height:1.55;color:var(--tx);}
+.race-summary p{margin-top:8px;}
+.cost-chart{display:flex;flex-direction:column;gap:10px;}
+.cost-model{font-size:12px;font-weight:600;margin-bottom:3px;}
+.cost-line{display:grid;grid-template-columns:52px 1fr 88px;gap:8px;align-items:center;margin-top:3px;}
+.cost-kind{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);}
+.cost-track{background:var(--surf2);border-radius:3px;height:9px;overflow:hidden;}
+.cost-fill{height:9px;border-radius:3px;min-width:2px;}
+.cost-fill.us{background:var(--bl);}
+.cost-fill.cn{background:var(--rd);}
+.cost-val{font-family:'IBM Plex Mono',monospace;font-size:11px;text-align:right;}
+.cost-legend{display:flex;gap:14px;font-size:11px;color:var(--mu);margin-bottom:12px;}
+.cost-swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;}
+.cost-swatch.us{background:var(--bl);}
+.cost-swatch.cn{background:var(--rd);}
 @media(max-width:720px){
   .tab-panel{padding:14px 12px 64px;}
-  .yield-board{padding:14px 10px;}
-  .yield-board h2,.section-title{font-size:20px;}
+  .section-title{font-size:20px;}
   .matrix-hdr{flex-direction:column;align-items:flex-start;}
+  .cost-line{grid-template-columns:42px 1fr 72px;}
 }
 </style>
 </head>
@@ -1297,13 +1320,11 @@ function renderMatrix(){
   </div>`;
   document.getElementById('tab-matrix').insertAdjacentHTML('beforeend',
     '<section id="matrix">' +
-      '<div class="yield-board">' +
-        '<h2>Global Yield Matrix</h2>' +
-        '<p class="yield-caption">Government bond yields in percent. Darker green is lower, brighter green is higher.</p>' +
-        '<div id="yield-matrix"><p class="yield-meta">Loading published yields…</p></div>' +
-      '</div>' +
-      '<h2 class="section-title">Central bank decisions</h2>' +
-      '<div id="cb-decisions"><p class="cb-foot">Loading decisions…</p></div>' +
+      '<div class="matrix-hdr"><div>' +
+        '<div class="matrix-title">Global Yield Matrix</div>' +
+        '<div style="font-size:11px;color:var(--mu);margin-top:4px">Government bond yields in percent</div>' +
+      '</div></div>' +
+      '<div id="yield-matrix"><p class="cb-foot">Loading published yields…</p></div>' +
     '</section>');
 }
 
