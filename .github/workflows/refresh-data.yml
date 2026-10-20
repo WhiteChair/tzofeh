@@ -1,0 +1,40 @@
+name: Refresh market data
+
+on:
+  schedule:
+    # 22:00 UTC weekdays, after the U.S. Treasury close and the ChinaBond curve.
+    - cron: "0 22 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install fetch dependencies
+        run: pip install openpyxl pypdf
+
+      - name: Fetch yields and confirm the Bank of Canada rate
+        env:
+          WEBSTAT_API_KEY: ${{ secrets.WEBSTAT_API_KEY }}
+        run: python3 scripts/refresh_data.py
+
+      - name: Commit data changes
+        run: |
+          git config user.name "tzofeh-data"
+          git config user.email "tzofeh-data@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "No data change"
+          else
+            git commit -m "Refresh weekday market data"
+            git push
+          fi

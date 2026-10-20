@@ -1,0 +1,540 @@
+{
+  "asOf": "2026-10-19",
+  "sourceUrl": "https://arena.ai/leaderboard/agent",
+  "sourceName": "Arena agent leaderboard",
+  "scoreName": "Net improvement",
+  "sessions": 2665220,
+  "modelCount": 56,
+  "scoreNote": "Snapshot of https://arena.ai/leaderboard/agent on 19 October 2026, in the page's rank order. Scores were not re-sorted. From rank 31 down, the displayed point estimates are not strictly monotonic; they are copied as shown. A direct scrape often returns HTTP 403, so the weekday job keeps this snapshot unless a stable table parse succeeds.",
+  "models": [
+    {
+      "rank": 1,
+      "model": "Claude Opus 5.5 (Max)",
+      "lab": "Anthropic",
+      "score": 20.35,
+      "margin": 2.56
+    },
+    {
+      "rank": 2,
+      "model": "GPT-6 Astra (Max)",
+      "lab": "OpenAI",
+      "score": 15.15,
+      "margin": 2.24
+    },
+    {
+      "rank": 3,
+      "model": "Claude Fable 5.1 (Max)",
+      "lab": "Anthropic",
+      "score": 14.33,
+      "margin": 1.99
+    },
+    {
+      "rank": 4,
+      "model": "GPT-6.1 Sol (Max)",
+      "lab": "OpenAI",
+      "score": 13.72,
+      "margin": 1.77
+    },
+    {
+      "rank": 5,
+      "model": "Claude Sonnet 5.5 (Max)",
+      "lab": "Anthropic",
+      "score": 12.75,
+      "margin": 3.04
+    },
+    {
+      "rank": 6,
+      "model": "Gemini 4 Argon (High)",
+      "lab": "Google",
+      "score": 12.12,
+      "margin": 1.12
+    },
+    {
+      "rank": 7,
+      "model": "GPT-6 Sol (Max)",
+      "lab": "OpenAI",
+      "score": 9.33,
+      "margin": 1.83
+    },
+    {
+      "rank": 8,
+      "model": "Claude Fable 5 (High)",
+      "lab": "Anthropic",
+      "score": 8.37,
+      "margin": 1.45
+    },
+    {
+      "rank": 9,
+      "model": "Claude Opus 5 (Max)",
+      "lab": "Anthropic",
+      "score": 8.08,
+      "margin": 1.67
+    },
+    {
+      "rank": 10,
+      "model": "GPT-5.6 Sol (xHigh)",
+      "lab": "OpenAI",
+      "score": 6.59,
+      "margin": 1.39
+    },
+    {
+      "rank": 11,
+      "model": "DeepSeek-V4.1-Flash-20261017 (Max)",
+      "lab": "DeepSeek",
+      "score": 5.13,
+      "margin": 2.22
+    },
+    {
+      "rank": 12,
+      "model": "Claude Sonnet 5 (High)",
+      "lab": "Anthropic",
+      "score": 4.06,
+      "margin": 1.67
+    },
+    {
+      "rank": 13,
+      "model": "Muse Wonder (Max)",
+      "lab": "Meta",
+      "score": 3.77,
+      "margin": 1.63
+    },
+    {
+      "rank": 14,
+      "model": "MiMo-V2.6-Pro",
+      "lab": "Xiaomi",
+      "score": 3.74,
+      "margin": 0.92
+    },
+    {
+      "rank": 15,
+      "model": "Gemini 3.8 Flash (High)",
+      "lab": "Google",
+      "score": 3.69,
+      "margin": 1.11
+    },
+    {
+      "rank": 16,
+      "model": "Muse Spark 1.3 (Max)",
+      "lab": "Meta",
+      "score": 3.33,
+      "margin": 0.83
+    },
+    {
+      "rank": 17,
+      "model": "Grok 4.7 (xHigh)",
+      "lab": "SpaceXAI",
+      "score": 3.3,
+      "margin": 1.6
+    },
+    {
+      "rank": 18,
+      "model": "GPT-5.5 (xHigh)",
+      "lab": "OpenAI",
+      "score": 2.95,
+      "margin": 1.27
+    },
+    {
+      "rank": 19,
+      "model": "GPT-6 Luna (Max)",
+      "lab": "OpenAI",
+      "score": 2.86,
+      "margin": 0.42
+    },
+    {
+      "rank": 20,
+      "model": "DeepSeek-V4.1-Flash-20260910 (Max)",
+      "lab": "DeepSeek",
+      "score": 2.56,
+      "margin": 0.35
+    },
+    {
+      "rank": 21,
+      "model": "MiMo-V2.6-Flash",
+      "lab": "Xiaomi",
+      "score": 2.54,
+      "margin": 1.4
+    },
+    {
+      "rank": 22,
+      "model": "Hy4 preview",
+      "lab": "Tencent",
+      "score": 2.47,
+      "margin": 0.66
+    },
+    {
+      "rank": 23,
+      "model": "GLM-5.2 (Max)",
+      "lab": "Z.ai",
+      "score": 2.13,
+      "margin": 0.84
+    },
+    {
+      "rank": 24,
+      "model": "Kimi K3 (Max)",
+      "lab": "Moonshot",
+      "score": 1.89,
+      "margin": 0.75
+    },
+    {
+      "rank": 25,
+      "model": "Qwen3.8-Max",
+      "lab": "Alibaba",
+      "score": 1.63,
+      "margin": 0.61
+    },
+    {
+      "rank": 26,
+      "model": "Claude Haiku 5.5 (High)",
+      "lab": "Anthropic",
+      "score": 1.49,
+      "margin": 1.0
+    },
+    {
+      "rank": 27,
+      "model": "GLM-5.3 (Max)",
+      "lab": "Z.ai",
+      "score": 1.31,
+      "margin": 0.85
+    },
+    {
+      "rank": 28,
+      "model": "GPT-5.4 (High)",
+      "lab": "OpenAI",
+      "score": 1.25,
+      "margin": 1.08
+    },
+    {
+      "rank": 29,
+      "model": "Grok 4.6 (xHigh)",
+      "lab": "SpaceXAI",
+      "score": 0.91,
+      "margin": 1.13
+    },
+    {
+      "rank": 30,
+      "model": "GPT-5.6 Terra (xHigh)",
+      "lab": "OpenAI",
+      "score": 0.28,
+      "margin": 1.29
+    },
+    {
+      "rank": 31,
+      "model": "DeepSeek-V4-Pro (High, 20260813)",
+      "lab": "DeepSeek",
+      "score": 0.04,
+      "margin": 1.77
+    },
+    {
+      "rank": 32,
+      "model": "GPT-5.5",
+      "lab": "OpenAI",
+      "score": 0.4,
+      "margin": 1.24
+    },
+    {
+      "rank": 33,
+      "model": "GPT-6 Luna (Medium)",
+      "lab": "OpenAI",
+      "score": 1.04,
+      "margin": 1.24
+    },
+    {
+      "rank": 34,
+      "model": "Gemini 3.7 Flash (High)",
+      "lab": "Google",
+      "score": 1.06,
+      "margin": 0.96
+    },
+    {
+      "rank": 35,
+      "model": "GLM-5.3-Flash",
+      "lab": "Z.ai",
+      "score": 1.54,
+      "margin": 0.69
+    },
+    {
+      "rank": 36,
+      "model": "Step 5 Preview",
+      "lab": "StepFun",
+      "score": 1.84,
+      "margin": 1.48
+    },
+    {
+      "rank": 37,
+      "model": "GPT-5.6 Luna (xHigh)",
+      "lab": "OpenAI",
+      "score": 2.23,
+      "margin": 0.75
+    },
+    {
+      "rank": 38,
+      "model": "Qwen3.8-Flash-Next",
+      "lab": "Alibaba",
+      "score": 3.03,
+      "margin": 0.67
+    },
+    {
+      "rank": 39,
+      "model": "MiniMax-M3.1-Flash",
+      "lab": "MiniMax",
+      "score": 3.22,
+      "margin": 1.95
+    },
+    {
+      "rank": 40,
+      "model": "Qwen3.8-27B",
+      "lab": "Alibaba",
+      "score": 3.8,
+      "margin": 0.79
+    },
+    {
+      "rank": 41,
+      "model": "Gemini 3.1 Pro Preview",
+      "lab": "Google",
+      "score": 3.9,
+      "margin": 1.34
+    },
+    {
+      "rank": 42,
+      "model": "Mistral Large 4",
+      "lab": "Mistral",
+      "score": 4.46,
+      "margin": 1.92
+    },
+    {
+      "rank": 43,
+      "model": "Beam 1.0 501B A23B",
+      "lab": "Reflection",
+      "score": 4.6,
+      "margin": 2.23
+    },
+    {
+      "rank": 44,
+      "model": "GPT-6 Luna (Low)",
+      "lab": "OpenAI",
+      "score": 4.8,
+      "margin": 1.31
+    },
+    {
+      "rank": 45,
+      "model": "Hy3",
+      "lab": "Tencent",
+      "score": 6.27,
+      "margin": 1.48
+    },
+    {
+      "rank": 46,
+      "model": "Qwen3.7-Max",
+      "lab": "Alibaba",
+      "score": 6.34,
+      "margin": 1.16
+    },
+    {
+      "rank": 47,
+      "model": "Muse Spark 1.1",
+      "lab": "Meta",
+      "score": 6.57,
+      "margin": 0.66
+    },
+    {
+      "rank": 48,
+      "model": "Qwen3.7-Plus",
+      "lab": "Alibaba",
+      "score": 6.69,
+      "margin": 1.56
+    },
+    {
+      "rank": 49,
+      "model": "Muse Spark 1.2 (xHigh)",
+      "lab": "Meta",
+      "score": 6.73,
+      "margin": 0.84
+    },
+    {
+      "rank": 50,
+      "model": "MiMo-V2.5-Pro",
+      "lab": "Xiaomi",
+      "score": 8.21,
+      "margin": 1.03
+    },
+    {
+      "rank": 51,
+      "model": "MiniMax-M3",
+      "lab": "MiniMax",
+      "score": 9.49,
+      "margin": 1.24
+    },
+    {
+      "rank": 52,
+      "model": "Nemotron 3 Ultra",
+      "lab": "Nvidia",
+      "score": 10.83,
+      "margin": 4.68
+    },
+    {
+      "rank": 53,
+      "model": "Mistral Medium 3.5",
+      "lab": "Mistral",
+      "score": 11.83,
+      "margin": 1.74
+    },
+    {
+      "rank": 54,
+      "model": "Inkling",
+      "lab": "Thinky",
+      "score": 14.67,
+      "margin": 1.43
+    },
+    {
+      "rank": 55,
+      "model": "Inkling-Small",
+      "lab": "Thinky",
+      "score": 15.68,
+      "margin": 1.82
+    },
+    {
+      "rank": 56,
+      "model": "Solar Pro 4",
+      "lab": "Upstage",
+      "score": 19.69,
+      "margin": 2.29
+    }
+  ],
+  "labs": [
+    {
+      "rank": 1,
+      "lab": "Anthropic",
+      "bestRank": 1,
+      "country": "United States",
+      "flag": "🇺🇸",
+      "ceo": "Dario Amodei",
+      "ceoTitle": "CEO",
+      "headOfAi": "Jared Kaplan",
+      "headOfAiTitle": "Chief Science Officer",
+      "samePerson": false,
+      "headOfAiNote": "Co-founder. He heads Anthropic's technical research. Daniela Amodei is president.",
+      "sourceUrl": "https://www.anthropic.com/company",
+      "sourceLabel": "Anthropic company page"
+    },
+    {
+      "rank": 2,
+      "lab": "OpenAI",
+      "bestRank": 2,
+      "country": "United States",
+      "flag": "🇺🇸",
+      "ceo": "Sam Altman",
+      "ceoTitle": "CEO",
+      "headOfAi": null,
+      "samePerson": false,
+      "headOfAiNote": "There is no single head of AI. Mark Chen is chief research officer.",
+      "ceoNote": "Checked against reporting through 14 October 2026. A February 2026 org chart named Jakub Pachocki chief scientist; that title was not reconfirmed for October 2026."
+    },
+    {
+      "rank": 3,
+      "lab": "Google",
+      "bestRank": 6,
+      "country": "United States",
+      "flag": "🇺🇸",
+      "ceo": "Sundar Pichai",
+      "ceoTitle": "CEO, Google and Alphabet",
+      "headOfAi": "Koray Kavukcuoglu",
+      "headOfAiTitle": "SVP of Google DeepMind and Chief AI Architect",
+      "samePerson": false,
+      "headOfAiNote": "He leads Google DeepMind day to day and reports to Sundar Pichai, since 5 August 2026. Demis Hassabis is chair of Google DeepMind and chief scientist of Alphabet, and no longer runs the lab day to day.",
+      "sourceUrl": "https://blog.google/company-news/inside-google/message-ceo/next-chapter-ai-momentum/",
+      "sourceLabel": "Google, August 2026"
+    },
+    {
+      "rank": 4,
+      "lab": "DeepSeek",
+      "bestRank": 11,
+      "country": "China",
+      "flag": "🇨🇳",
+      "ceo": "Liang Wenfeng",
+      "ceoTitle": "Founder and CEO",
+      "headOfAi": "Liang Wenfeng",
+      "samePerson": true,
+      "headOfAiNote": "No separate head of AI is publicly named."
+    },
+    {
+      "rank": 5,
+      "lab": "Meta",
+      "bestRank": 13,
+      "country": "United States",
+      "flag": "🇺🇸",
+      "ceo": "Mark Zuckerberg",
+      "ceoTitle": "CEO",
+      "headOfAi": "Alexandr Wang",
+      "headOfAiTitle": "Chief AI Officer",
+      "samePerson": false,
+      "headOfAiNote": "He leads Meta Superintelligence Labs. The official spelling is Alexandr.",
+      "sourceUrl": "https://www.meta.com/about/leadership/alexandr-wang/",
+      "sourceLabel": "Meta leadership"
+    },
+    {
+      "rank": 6,
+      "lab": "Xiaomi",
+      "bestRank": 14,
+      "country": "China",
+      "flag": "🇨🇳",
+      "ceo": "Lei Jun",
+      "ceoTitle": "Founder, chairman and CEO",
+      "headOfAi": "Luo Fuli",
+      "headOfAiTitle": "Head of the MiMo large-model team",
+      "samePerson": false,
+      "headOfAiNote": "Xiaomi does not publish a company-wide chief AI officer. Luo Fuli leads the MiMo team."
+    },
+    {
+      "rank": 7,
+      "lab": "SpaceXAI",
+      "bestRank": 17,
+      "country": "United States",
+      "flag": "🇺🇸",
+      "ceo": "Elon Musk",
+      "ceoTitle": "Founder; CEO of parent SpaceX",
+      "ceoNote": "Arena lists the lab as SpaceXAI. The lab was xAI until it was merged into SpaceX and rebranded. There is no separate public title of CEO of SpaceXAI.",
+      "headOfAi": "Michael Nicolls",
+      "headOfAiTitle": "President of the AI unit",
+      "samePerson": false,
+      "headOfAiNote": "He leads Grok. He had been Starlink's senior vice president."
+    },
+    {
+      "rank": 8,
+      "lab": "Tencent",
+      "bestRank": 22,
+      "country": "China",
+      "flag": "🇨🇳",
+      "ceo": "Ma Huateng",
+      "ceoTitle": "Chairman and CEO (Pony Ma)",
+      "headOfAi": "Yao Shunyu",
+      "headOfAiTitle": "Chief AI Scientist",
+      "samePerson": false,
+      "headOfAiNote": "Also referred to as Vinces Yao. Appointed 17 December 2025 and still in the role in October 2026. He reports to president Martin Lau."
+    },
+    {
+      "rank": 9,
+      "lab": "Z.ai",
+      "bestRank": 23,
+      "country": "China",
+      "flag": "🇨🇳",
+      "ceo": "Zhang Peng",
+      "ceoTitle": "Co-founder and CEO",
+      "headOfAi": "Tang Jie",
+      "headOfAiTitle": "Co-founder and chief scientist",
+      "samePerson": false,
+      "headOfAiNote": "Z.ai is Zhipu (Hong Kong listing 2513). Chairman Liu Debing is not the head of AI."
+    },
+    {
+      "rank": 10,
+      "lab": "Moonshot",
+      "bestRank": 24,
+      "country": "China",
+      "flag": "🇨🇳",
+      "ceo": "Yang Zhilin",
+      "ceoTitle": "Co-founder and CEO",
+      "headOfAi": "Yang Zhilin",
+      "samePerson": true,
+      "headOfAiNote": "No separate chief scientist or head of AI was found."
+    }
+  ]
+}
