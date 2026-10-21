@@ -37,10 +37,10 @@
       "summary": "Held the overnight target at 2.25%.",
       "sourceUrl": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
       "note": "Bank Rate 2.50% and the deposit rate 2.20% were unchanged. The last change was a cut on 29 October 2025. The next decision, on 28 October 2026, had not been announced.",
-      "rateCheckedOn": "2026-10-20",
+      "rateCheckedOn": "2026-10-21",
       "rateFeed": {
         "source": "Bank of Canada Valet V39079",
-        "asOf": "2026-10-16",
+        "asOf": "2026-10-19",
         "value": 2.25
       }
     },
