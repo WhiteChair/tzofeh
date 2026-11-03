@@ -11,37 +11,37 @@
   "countries": [
     {
       "code": "US",
-      "asOf": "2026-10-30",
+      "asOf": "2026-11-02",
       "source": "U.S. Treasury daily par yield curve",
       "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates",
       "method": "Par yield, percent per annum",
       "note": "Constant-maturity par yields published by the U.S. Treasury.",
       "yields": {
-        "1Y": 4.36,
-        "2Y": 4.56,
+        "1Y": 4.38,
+        "2Y": 4.59,
         "3Y": 4.65,
-        "5Y": 4.71,
-        "7Y": 4.8,
-        "10Y": 4.94,
-        "30Y": 5.31
+        "5Y": 4.7,
+        "7Y": 4.79,
+        "10Y": 4.91,
+        "30Y": 5.28
       },
       "gaps": {}
     },
     {
       "code": "CA",
-      "asOf": "2026-10-29",
+      "asOf": "2026-10-30",
       "source": "Bank of Canada benchmark bond yields",
       "sourceUrl": "https://www.bankofcanada.ca/rates/interest-rates/canadian-bonds/",
       "method": "Benchmark bond yield, percent",
       "note": "The Bank of Canada does not publish a 1-year benchmark bond. The long-term benchmark is the 30-year point.",
       "yields": {
         "1Y": null,
-        "2Y": 3.36,
-        "3Y": 3.46,
-        "5Y": 3.58,
-        "7Y": 3.67,
-        "10Y": 3.84,
-        "30Y": 4.13
+        "2Y": 3.28,
+        "3Y": 3.38,
+        "5Y": 3.51,
+        "7Y": 3.6,
+        "10Y": 3.78,
+        "30Y": 4.11
       },
       "gaps": {
         "1Y": "not_published"
@@ -49,43 +49,43 @@
     },
     {
       "code": "GB",
-      "asOf": "2026-10-29",
+      "asOf": "2026-10-30",
       "source": "Bank of England nominal gilt spot curve",
       "sourceUrl": "https://www.bankofengland.co.uk/statistics/yield-curves",
       "method": "Fitted zero-coupon spot rate, percent",
       "note": "Anderson–Sleath fitted nominal government spot curve. This is a spot rate, not a coupon-bond par yield.",
       "yields": {
-        "1Y": 4.4586,
-        "2Y": 4.7047,
-        "3Y": 4.7974,
-        "5Y": 4.9126,
-        "7Y": 5.0485,
-        "10Y": 5.2764,
-        "30Y": 5.7039
+        "1Y": 4.4252,
+        "2Y": 4.6775,
+        "3Y": 4.7741,
+        "5Y": 4.8961,
+        "7Y": 5.0392,
+        "10Y": 5.2767,
+        "30Y": 5.7233
       },
       "gaps": {}
     },
     {
       "code": "DE",
-      "asOf": "2026-10-30",
+      "asOf": "2026-11-02",
       "source": "Deutsche Bundesbank, listed federal securities",
       "sourceUrl": "https://www.bundesbank.de/en/statistics/money-and-capital-markets/interest-rates-and-yields/daily-term-structure-on-listed-federal-securities-651570",
       "method": "Par yield from the Svensson curve, annual coupon, percent",
       "note": "Yields derived from the Bundesbank term structure for listed federal securities with annual coupon payments.",
       "yields": {
-        "1Y": 2.93,
-        "2Y": 3.06,
-        "3Y": 3.08,
-        "5Y": 3.13,
-        "7Y": 3.23,
-        "10Y": 3.38,
-        "30Y": 3.69
+        "1Y": 2.92,
+        "2Y": 3.03,
+        "3Y": 3.05,
+        "5Y": 3.1,
+        "7Y": 3.2,
+        "10Y": 3.34,
+        "30Y": 3.67
       },
       "gaps": {}
     },
     {
       "code": "FR",
-      "asOf": "2026-10-09",
+      "asOf": "2026-10-30",
       "source": "Banque de France TEC 10, via comptespublics.fr",
       "sourceUrl": "https://comptespublics.fr/series/tec-10",
       "method": "Constant-maturity yield, percent",
@@ -96,7 +96,7 @@
         "3Y": null,
         "5Y": null,
         "7Y": null,
-        "10Y": 4.795,
+        "10Y": 4.93,
         "30Y": null
       },
       "gaps": {
@@ -132,19 +132,19 @@
     },
     {
       "code": "JP",
-      "asOf": "2026-10-29",
+      "asOf": "2026-10-30",
       "source": "Japan Ministry of Finance JGB interest rates",
       "sourceUrl": "https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/index.htm",
       "method": "JGB yield, percent",
       "note": "Daily Japanese government bond yields published by the Ministry of Finance.",
       "yields": {
-        "1Y": 1.677,
-        "2Y": 1.901,
-        "3Y": 2.016,
-        "5Y": 2.285,
-        "7Y": 2.479,
-        "10Y": 2.876,
-        "30Y": 3.956
+        "1Y": 1.659,
+        "2Y": 1.875,
+        "3Y": 1.982,
+        "5Y": 2.237,
+        "7Y": 2.424,
+        "10Y": 2.817,
+        "30Y": 3.908
       },
       "gaps": {}
     },
@@ -172,19 +172,19 @@
     },
     {
       "code": "CN",
-      "asOf": "2026-10-30",
+      "asOf": "2026-11-02",
       "source": "ChinaBond government bond yield curve (CCDC)",
       "sourceUrl": "https://yield.chinabond.com.cn/cbweb-pbc-web/pbc/more?locale=en_US",
       "method": "Yield to maturity, percent",
       "note": "The public ChinaBond government curve shows 3M, 6M, 1Y, 3Y, 5Y, 7Y, 10Y and 30Y. There is no 2Y point on that page.",
       "yields": {
-        "1Y": 1.1714,
+        "1Y": 1.1676,
         "2Y": null,
-        "3Y": 1.264,
-        "5Y": 1.3532,
-        "7Y": 1.4597,
-        "10Y": 1.65,
-        "30Y": 2.0826
+        "3Y": 1.2542,
+        "5Y": 1.3477,
+        "7Y": 1.444,
+        "10Y": 1.6343,
+        "30Y": 2.066
       },
       "gaps": {
         "2Y": "not_published"
@@ -192,23 +192,23 @@
     },
     {
       "code": "IN",
-      "asOf": "2026-10-30",
+      "asOf": "2026-11-02",
       "source": "Financial Benchmarks India G-Sec par yield curve",
       "sourceUrl": "https://www.fbil.org.in/",
       "method": "Par yield, semi-annual YTM, percent per annum",
       "note": "FBIL par-yield curve. The figure used is the published semi-annual YTM, not the annualized column.",
       "yields": {
-        "1Y": 6.66,
-        "2Y": 6.94,
-        "3Y": 7.23,
-        "5Y": 7.35,
-        "7Y": 7.4,
-        "10Y": 7.45,
-        "30Y": 7.84
+        "1Y": 6.54,
+        "2Y": 6.88,
+        "3Y": 7.07,
+        "5Y": 7.24,
+        "7Y": 7.33,
+        "10Y": 7.36,
+        "30Y": 7.79
       },
       "gaps": {}
     }
   ],
   "compoundingNote": "Yields are shown as each source publishes them. Compounding conventions differ by market and are not converted.",
-  "fetchedAt": "2026-10-31T01:15:19Z"
+  "fetchedAt": "2026-11-03T03:11:06Z"
 }
