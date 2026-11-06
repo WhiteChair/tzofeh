@@ -11,37 +11,37 @@
   "countries": [
     {
       "code": "US",
-      "asOf": "2026-11-04",
+      "asOf": "2026-11-05",
       "source": "U.S. Treasury daily par yield curve",
       "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates",
       "method": "Par yield, percent per annum",
       "note": "Constant-maturity par yields published by the U.S. Treasury.",
       "yields": {
-        "1Y": 4.39,
-        "2Y": 4.58,
-        "3Y": 4.64,
-        "5Y": 4.69,
-        "7Y": 4.77,
-        "10Y": 4.9,
-        "30Y": 5.28
+        "1Y": 4.28,
+        "2Y": 4.46,
+        "3Y": 4.53,
+        "5Y": 4.59,
+        "7Y": 4.7,
+        "10Y": 4.84,
+        "30Y": 5.25
       },
       "gaps": {}
     },
     {
       "code": "CA",
-      "asOf": "2026-11-03",
+      "asOf": "2026-11-04",
       "source": "Bank of Canada benchmark bond yields",
       "sourceUrl": "https://www.bankofcanada.ca/rates/interest-rates/canadian-bonds/",
       "method": "Benchmark bond yield, percent",
       "note": "The Bank of Canada does not publish a 1-year benchmark bond. The long-term benchmark is the 30-year point.",
       "yields": {
         "1Y": null,
-        "2Y": 3.26,
-        "3Y": 3.36,
-        "5Y": 3.49,
-        "7Y": 3.58,
-        "10Y": 3.77,
-        "30Y": 4.09
+        "2Y": 3.22,
+        "3Y": 3.32,
+        "5Y": 3.43,
+        "7Y": 3.52,
+        "10Y": 3.7,
+        "30Y": 4.04
       },
       "gaps": {
         "1Y": "not_published"
@@ -49,37 +49,37 @@
     },
     {
       "code": "GB",
-      "asOf": "2026-11-03",
+      "asOf": "2026-11-04",
       "source": "Bank of England nominal gilt spot curve",
       "sourceUrl": "https://www.bankofengland.co.uk/statistics/yield-curves",
       "method": "Fitted zero-coupon spot rate, percent",
       "note": "Anderson–Sleath fitted nominal government spot curve. This is a spot rate, not a coupon-bond par yield.",
       "yields": {
-        "1Y": 4.3955,
-        "2Y": 4.6436,
-        "3Y": 4.7342,
-        "5Y": 4.8493,
-        "7Y": 4.9915,
-        "10Y": 5.2314,
-        "30Y": 5.6936
+        "1Y": 4.3232,
+        "2Y": 4.5785,
+        "3Y": 4.6701,
+        "5Y": 4.7776,
+        "7Y": 4.9116,
+        "10Y": 5.146,
+        "30Y": 5.6255
       },
       "gaps": {}
     },
     {
       "code": "DE",
-      "asOf": "2026-11-04",
+      "asOf": "2026-11-05",
       "source": "Deutsche Bundesbank, listed federal securities",
       "sourceUrl": "https://www.bundesbank.de/en/statistics/money-and-capital-markets/interest-rates-and-yields/daily-term-structure-on-listed-federal-securities-651570",
       "method": "Par yield from the Svensson curve, annual coupon, percent",
       "note": "Yields derived from the Bundesbank term structure for listed federal securities with annual coupon payments.",
       "yields": {
-        "1Y": 2.94,
-        "2Y": 3.05,
-        "3Y": 3.07,
-        "5Y": 3.12,
-        "7Y": 3.21,
-        "10Y": 3.35,
-        "30Y": 3.68
+        "1Y": 2.91,
+        "2Y": 3.01,
+        "3Y": 3.03,
+        "5Y": 3.07,
+        "7Y": 3.16,
+        "10Y": 3.31,
+        "30Y": 3.65
       },
       "gaps": {}
     },
@@ -132,19 +132,19 @@
     },
     {
       "code": "JP",
-      "asOf": "2026-11-04",
+      "asOf": "2026-11-05",
       "source": "Japan Ministry of Finance JGB interest rates",
       "sourceUrl": "https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/index.htm",
       "method": "JGB yield, percent",
       "note": "Daily Japanese government bond yields published by the Ministry of Finance.",
       "yields": {
-        "1Y": 1.676,
-        "2Y": 1.891,
-        "3Y": 1.997,
-        "5Y": 2.269,
-        "7Y": 2.465,
-        "10Y": 2.855,
-        "30Y": 3.979
+        "1Y": 1.658,
+        "2Y": 1.86,
+        "3Y": 1.953,
+        "5Y": 2.21,
+        "7Y": 2.396,
+        "10Y": 2.806,
+        "30Y": 3.915
       },
       "gaps": {}
     },
@@ -172,19 +172,19 @@
     },
     {
       "code": "CN",
-      "asOf": "2026-11-04",
+      "asOf": "2026-11-05",
       "source": "ChinaBond government bond yield curve (CCDC)",
       "sourceUrl": "https://yield.chinabond.com.cn/cbweb-pbc-web/pbc/more?locale=en_US",
       "method": "Yield to maturity, percent",
       "note": "The public ChinaBond government curve shows 3M, 6M, 1Y, 3Y, 5Y, 7Y, 10Y and 30Y. There is no 2Y point on that page.",
       "yields": {
-        "1Y": 1.166,
+        "1Y": 1.171,
         "2Y": null,
-        "3Y": 1.236,
-        "5Y": 1.3255,
-        "7Y": 1.4192,
-        "10Y": 1.6077,
-        "30Y": 2.0415
+        "3Y": 1.2397,
+        "5Y": 1.3236,
+        "7Y": 1.4161,
+        "10Y": 1.6038,
+        "30Y": 2.0425
       },
       "gaps": {
         "2Y": "not_published"
@@ -192,23 +192,23 @@
     },
     {
       "code": "IN",
-      "asOf": "2026-11-04",
+      "asOf": "2026-11-05",
       "source": "Financial Benchmarks India G-Sec par yield curve",
       "sourceUrl": "https://www.fbil.org.in/",
       "method": "Par yield, semi-annual YTM, percent per annum",
       "note": "FBIL par-yield curve. The figure used is the published semi-annual YTM, not the annualized column.",
       "yields": {
-        "1Y": 6.62,
-        "2Y": 6.88,
-        "3Y": 6.94,
-        "5Y": 7.12,
-        "7Y": 7.23,
+        "1Y": 6.49,
+        "2Y": 6.75,
+        "3Y": 6.95,
+        "5Y": 7.02,
+        "7Y": 7.16,
         "10Y": 7.23,
-        "30Y": 7.68
+        "30Y": 7.64
       },
       "gaps": {}
     }
   ],
   "compoundingNote": "Yields are shown as each source publishes them. Compounding conventions differ by market and are not converted.",
-  "fetchedAt": "2026-11-05T01:54:40Z"
+  "fetchedAt": "2026-11-06T01:55:59Z"
 }
